@@ -1,0 +1,19 @@
+{
+  "name": "lazy-loading-vrscans-library",
+  "version": "0.0.0",
+  "description": "React-based load-on-demand library showing VRScans materials from a pre-defined REST API",
+  "main": "./src/main.jsx",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/ivatsaneva/lazy-loading-vrscans-library.git"
+  },
+  "keywords": [
+    "n"
+  ],
+  "author": "Iva Tsaneva & Georgi Levov",
+  "license": "https://choosealicense.com/licenses/",
+  "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
