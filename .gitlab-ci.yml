@@ -24,8 +24,8 @@ build:
     paths:
       - dist/
   only:
-    - master
-
+    - main
+    
 pages:
   stage: deploy
   script:
