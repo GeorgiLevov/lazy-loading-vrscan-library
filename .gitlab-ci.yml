@@ -1,43 +1,3 @@
-image: node:latest
-
-stages:
-  - install
-  - build
-  - deploy
-
-cache:
-  paths:
-    - node_modules/
-
-install_dependencies:
-  stage: install
-  script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
-
-build:
-  stage: build
-  script:
-    - npm run build
-  artifacts:
-    paths:
-      - dist/
-  only:
-    - master
-
-pages:
-  stage: deploy
-  script:
-    - mv dist public
-  artifacts:
-    paths:
-      - public
-    expire_in: 30 days
-  only:
-    - master
-
 image: node:18
 
 variables:
@@ -55,6 +15,7 @@ pages:
   rules:
 
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    
 
 
 
