@@ -4,22 +4,11 @@ stages:
   - build
   - deploy
 
-cache:
-  paths:
-    - node_modules/
-
-install_dependencies:
-  stage: build
-  script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
-
 build:
   stage: build
   script:
-    - npm run build  
+    - npm install
+    - npm run build --verbose
   artifacts:
     paths:
       - dist/
@@ -29,7 +18,7 @@ build:
 pages:
   stage: deploy
   script:
-    - mv dist public  
+    - mv dist public
   artifacts:
     paths:
       - public
