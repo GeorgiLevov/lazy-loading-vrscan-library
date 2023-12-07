@@ -12,8 +12,7 @@
         "webpack-dev-server": "webpack-dev-server",
         "dev": "npm run webpack-dev-server -- --env mode=development",
         "prod": "npm run webpack -- --env mode=production",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "npm run prod"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Iva Tsaneva & Georgi Levov",
     "license": "https://choosealicense.com/licenses/",
