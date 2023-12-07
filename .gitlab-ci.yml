@@ -1,12 +1,37 @@
 image: node:latest
 
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: build
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm run prod
+  artifacts:
+    paths:
+      - dist/
+  only:
+    - master
+
 pages:
   stage: deploy
   script:
-  - npm install
-  - npm run build-gitlab
+    - mv dist public
   artifacts:
     paths:
-    - public
+      - public
   only:
-  - master
+    - master
