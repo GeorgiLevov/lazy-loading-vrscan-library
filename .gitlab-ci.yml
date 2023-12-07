@@ -1,6 +1,7 @@
 image: node:latest
 
 stages:
+  - install
   - build
   - deploy
 
@@ -9,7 +10,7 @@ cache:
     - node_modules/
 
 install_dependencies:
-  stage: build
+  stage: install
   script:
     - npm install
   artifacts:
@@ -19,8 +20,7 @@ install_dependencies:
 build:
   stage: build
   script:
-    - npm run build  
-    - npm run build --verbose
+    - npm run build
   artifacts:
     paths:
       - dist/
@@ -30,9 +30,30 @@ build:
 pages:
   stage: deploy
   script:
-    - mv dist public  
+    - mv dist public
   artifacts:
     paths:
       - public
+    expire_in: 30 days
   only:
     - master
+
+image: node:18
+
+variables:
+    PUBLIC_URL: / 
+
+before_script:
+  - npm install
+pages:
+  script:
+    - npm run prod
+    - cp public/index.html public/404.html
+  artifacts:
+    paths:
+      - public
+  rules:
+
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+
+
