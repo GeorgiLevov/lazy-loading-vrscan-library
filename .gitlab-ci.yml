@@ -15,6 +15,8 @@ install_dependencies:
   artifacts:
     paths:
       - node_modules/
+  only:
+    - main
 
 build:
   stage: build
@@ -25,7 +27,8 @@ build:
       - dist/
   only:
     - main
-    
+  timeout: 1h  # Increase the timeout to 1 hour
+
 pages:
   stage: deploy
   script:
@@ -34,4 +37,4 @@ pages:
     paths:
       - public
   only:
-    - master
+    - main
