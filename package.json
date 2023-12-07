@@ -12,10 +12,11 @@
         "webpack-dev-server": "webpack-dev-server",
         "dev": "npm run webpack-dev-server -- --env mode=development",
         "prod": "npm run webpack -- --env mode=production",
+        "build": "npm run prod",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Iva Tsaneva & Georgi Levov",
-    "license": "https://choosealicense.com/licenses/",
+    "license": "MIT", 
     "devDependencies": {
         "@babel/core": "7.23.5",
         "@babel/preset-env": "7.23.5",
@@ -45,7 +46,7 @@
         "styled-components": "^6.1.1",
         "webpack": "5.89.0",
         "webpack-cli": "5.1.4",
-        "webpack-dev-server": "4.15.1"
+        "webpack-dev-server": "^4.15.1"
     },
     "dependencies": {
         "appwrite": "^13.0.1"
