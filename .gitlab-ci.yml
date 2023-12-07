@@ -1,21 +1,12 @@
-image: node:18
+image: node:latest
 
-variables:
-    PUBLIC_URL: / 
-
-before_script:
-  - npm install
 pages:
+  stage: deploy
   script:
-    - npm run prod
-    - cp public/index.html public/404.html
+  - npm install
+  - npm run build-gitlab
   artifacts:
     paths:
-      - public
-  rules:
-
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-    
-
-
-
+    - public
+  only:
+  - master
