@@ -1,4 +1,4 @@
-image: node:latest  
+image: node:latest
 
 stages:
   - build
@@ -19,7 +19,7 @@ install_dependencies:
 build:
   stage: build
   script:
-    - npm run prod  
+    - npm run build  
   artifacts:
     paths:
       - dist/
