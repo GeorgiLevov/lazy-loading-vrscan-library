@@ -13,14 +13,15 @@
 	"scripts": {
 		"webpack": "webpack",
 		"webpack-dev-server": "webpack-dev-server",
-		"dev": "npm run webpack-dev-server",
+		"dev": "npm run webpack-dev-server -- --env mode=developement",
 		"prod": "npm run webpack -- --env mode=production",
 		"test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npm run prod",
 		"lint": "eslint . --fix --max-warnings=0",
 		"format": "prettier . --write"
 	},
 	"author": "Iva Tsaneva & Georgi Levov",
-	"license": "https://choosealicense.com/licenses/",
+	"license": "MIT",
 	"devDependencies": {
 		"@babel/core": "^7.23.6",
 		"@babel/preset-env": "^7.23.6",
