@@ -14,6 +14,9 @@
 		"no-unused-vars": "off",
 		"no-undef": "off",
 		"linebreak-style": ["error", "windows"],
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "no-restricted-exports":"off",
+        "import/export": 0,
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
 	}
 }
