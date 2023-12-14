@@ -11,6 +11,7 @@ function App() {
         <>
             <StylishHeading>VRScans!</StylishHeading>
             <GlobalStyles />
+            <GlobalStyles />
         </>
     );
 }
