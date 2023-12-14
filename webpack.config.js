@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
-    const isProduction = argv.mode === 'production';
+    const isProduction = argv.mode === 'developement';
 
     return {
         entry: path.join(__dirname, 'src', 'main.js'),
@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /\.(jsx|js)$/,
+                    test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
                         loader: 'babel-loader',
