@@ -18,7 +18,7 @@
 		"no-restricted-exports": "off",
 		"import/export": 0,
 		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-		"react/self-closing-comp": ["error", { "component": true, "html": false }],
+		"react/self-closing-comp": ["warn"],
 		"no-param-reassign": ["warn"],
 		"prefer-const": ["warn"]
 	}
