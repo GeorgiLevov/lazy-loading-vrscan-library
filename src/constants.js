@@ -1,24 +1,39 @@
 export const COLORS = {
-	white: '0deg 0% 100%',
+	black: '#000000',
+	white: '#FFFFFF',
+	primaryBlue: '#17A2DF',
+	red: '#FF0000',
 	gray: {
-		100: '185deg 5% 95%',
-		300: '190deg 5% 80%',
-		500: '196deg 4% 60%',
-		700: '220deg 5% 40%',
-		900: '220deg 3% 20%',
+		body: '#F2F2F2',
+		card: '#F2F2F2',
+		filter: '#E9E9E9',
+		devider: '#DEDEDE',
+		tag: '#DDDDDD',
+		breadcrumb: '#A5A5A5',
 	},
-	primary: '0deg 90% 90%',
-	secondary: '359deg 90% 90%',
 };
 
 export const BREAKPOINTS = {
-	phone: 600,
-	tablet: 950,
-	laptop: 1300,
+	phone: 480,
+	tablet: 768,
+	laptop: 1280,
 };
 
 export const QUERIES = {
-	phoneAndDown: `(max-width: ${BREAKPOINTS.phone})`,
-	tabletAndDown: `(max-width: ${BREAKPOINTS.tablet})`,
-	laptopAndDown: `(max-width: ${BREAKPOINTS.laptop})`,
+	phoneAndDown: `(max-width: ${BREAKPOINTS.phone}px)`,
+	tabletAndDown: `(max-width: ${BREAKPOINTS.tablet}px)`,
+	laptopAndDown: `(max-width: ${BREAKPOINTS.laptop}px)`,
 };
+
+export const FONTS = {
+	text: {
+		normal: `${16 / 16}rem`,
+		small: `${12 / 16}rem`,
+	},
+	heading: {
+		large: `${40 / 16}rem`,
+		normal: `${20 / 16}rem`,
+		small: `${12 / 16}rem`,
+	},
+};
+

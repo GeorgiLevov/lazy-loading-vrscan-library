@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
-	const isProduction = argv.mode === 'developement';
+	const isProduction = argv.mode === 'development';
 
 	return {
 		entry: path.join(__dirname, 'src', 'main.js'),
@@ -38,6 +38,13 @@ module.exports = (env, argv) => {
 					test: /\.svg$/,
 					use: ['@svgr/webpack'],
 				},
+				{
+					test: /\.(woff|woff2|eot|ttf|otf)$/,
+					type: 'asset/resource',
+					generator: {
+						filename: 'assets/fonts/[name][ext]',
+					},
+				},
 			],
 		},
 		plugins: [
@@ -47,3 +54,4 @@ module.exports = (env, argv) => {
 		],
 	};
 };
+

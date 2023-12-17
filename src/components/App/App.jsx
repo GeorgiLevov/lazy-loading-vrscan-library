@@ -1,18 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../../../GlobalStyles';
+import Home from '../../pages/Home/Home.js';
 
-const StylishHeading = styled.h1`
-	font-family: Georgia, serif;
-	color: violet;
-`;
 function App() {
 	return (
 		<>
-			<StylishHeading>VRScans!</StylishHeading>
+			<Home />
 			<GlobalStyles />
 		</>
 	);
 }
 
 export default App;
+
