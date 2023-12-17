@@ -17,8 +17,7 @@
 		"dev": "npm run webpack-dev-server",
 		"prod": "npm run webpack -- --env mode=production",
 		"lint": "eslint . --fix --max-warnings=0",
-		"format": "prettier . --write",
-		"build": "npm run prod"
+		"format": "prettier . --write"
 	},
 	"author": "Iva Tsaneva & Georgi Levov",
 	"license": "MIT",
@@ -64,3 +63,4 @@
 		"styled-components": "^6.1.1"
 	}
 }
+
