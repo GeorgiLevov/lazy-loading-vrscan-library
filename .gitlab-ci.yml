@@ -27,7 +27,8 @@ build:
       - dist/
   only:
     - main
-  timeout: 1h
+  timeout: 1h # Increase the timeout to 1 hour
+
 pages:
   stage: deploy
   script:
