@@ -1,6 +1,7 @@
 image: node:latest
 
 stages:
+  - install
   - build
   - deploy
 
@@ -9,14 +10,13 @@ cache:
     - node_modules/
 
 install_dependencies:
-  stage: build
+  stage: install
   script:
     - npm install
   artifacts:
     paths:
       - node_modules/
-  only:
-    - main
+  timeout: 1h
 
 build:
   stage: build
@@ -27,7 +27,7 @@ build:
       - dist/
   only:
     - main
-  timeout: 1h # Increase the timeout to 1 hour
+  timeout: 1h
 
 pages:
   stage: deploy
@@ -36,6 +36,7 @@ pages:
   artifacts:
     paths:
       - public
+    expire_in: 30 days
   only:
     - main
 
