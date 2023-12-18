@@ -1,7 +1,0 @@
-{
-	"plugins": [
-		"@babel/plugin-transform-react-jsx-development",
-		"babel-plugin-styled-components",
-		"@babel/plugin-syntax-dynamic-import"
-	]
-}

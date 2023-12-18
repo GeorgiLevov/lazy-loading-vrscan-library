@@ -12,3 +12,9 @@ const range = (start, end, step = 1) => {
 	}
 	return output;
 };
+
+export const capitalize = (word = '') =>
+	// prettier-ignore
+	word.length 
+    ? word[0].toUpperCase() + word.substring(1) 
+    : word;

@@ -58,6 +58,8 @@ const GlobalStyles = createGlobalStyle`
   */
   #root, #__next {
     isolation: isolate;
+    height: 100%;
+    height: 100dvh;
   }
 `;
 
