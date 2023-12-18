@@ -11,13 +11,14 @@
 		"defaults"
 	],
 	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
 		"webpack": "webpack",
 		"webpack-dev-server": "webpack-dev-server",
-		"dev": "webpack serve --env mode=development",
-		"start": "npm run dev",
-		"build": "webpack --env mode=production",
+		"dev": "npm run webpack-dev-server",
+		"prod": "npm run webpack -- --env mode=production",
 		"lint": "eslint . --fix --max-warnings=0",
-		"format": "prettier . --write"
+		"format": "prettier . --write",
+		"build": "webpack --mode production"
 	},
 	"author": "Iva Tsaneva & Georgi Levov",
 	"license": "MIT",

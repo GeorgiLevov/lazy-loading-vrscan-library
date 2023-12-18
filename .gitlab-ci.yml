@@ -1,4 +1,4 @@
-image: node:latest
+image: node:14
 
 stages:
   - install
@@ -6,6 +6,7 @@ stages:
   - deploy
 
 cache:
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
 
@@ -32,7 +33,8 @@ build:
 pages:
   stage: deploy
   script:
-    - mv dist public
+    - mkdir public
+    - cp -r dist/* public/
   artifacts:
     paths:
       - public
