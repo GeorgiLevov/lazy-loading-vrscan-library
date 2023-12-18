@@ -100,6 +100,8 @@ const GlobalStyles = createGlobalStyle`
  
   #root, #__next {
     isolation: isolate;
+    height: 100%;
+    height: 100dvh;
   }
 
   ul{margin:0; padding:0; list-style: none;}
