@@ -1,17 +1,15 @@
-image: node:14
+image: node:latest
 
 stages:
-  - install
   - build
   - deploy
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - node_modules/
 
 install_dependencies:
-  stage: install
+  stage: build
   script:
     - npm install
   artifacts:
@@ -19,18 +17,17 @@ install_dependencies:
       - node_modules/
   only:
     - main
-  timeout: 20 minutes
 
 build:
   stage: build
   script:
-    - npm run build
+    - npm run prod
   artifacts:
     paths:
       - dist/
   only:
     - main
-  timeout: 30 minutes
+  timeout: 1h # Increase the timeout to 1 hour
 
 pages:
   stage: deploy
@@ -39,7 +36,6 @@ pages:
   artifacts:
     paths:
       - public
-    expire_in: 1 week
   only:
     - main
 
