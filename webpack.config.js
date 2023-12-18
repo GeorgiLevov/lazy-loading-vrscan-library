@@ -2,13 +2,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
-	const isProduction = argv.mode === 'development';
+	const isProduction = argv.mode === 'production';
 
 	return {
 		entry: path.join(__dirname, 'src', 'main.js'),
 		mode: isProduction ? 'production' : 'development',
 		resolve: {
-			extensions: ['', '.js', '.jsx'],
+			extensions: ['.js', '.jsx'],
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
