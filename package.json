@@ -13,8 +13,9 @@
 	"scripts": {
 		"webpack": "webpack",
 		"webpack-dev-server": "webpack-dev-server",
-		"dev": "npm run webpack-dev-server -- --env mode=development",
-		"prod": "npm run webpack -- --env mode=production",
+		"dev": "webpack serve --env mode=development",
+		"start": "npm run dev",
+		"build": "webpack --env mode=production",
 		"lint": "eslint . --fix --max-warnings=0",
 		"format": "prettier . --write"
 	},

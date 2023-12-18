@@ -5,7 +5,7 @@ module.exports = {
 	entry: path.join(__dirname, 'src', 'main.js'),
 	mode: 'development',
 	resolve: {
-		extensions: ['', '.js', '.jsx'],
+		extensions: ['.js', '.jsx'],
 	},
 
 	output: {
