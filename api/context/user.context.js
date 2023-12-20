@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { account } from './appwrite';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { account } from '../appwrite';
+import { ID } from 'appwrite';
 
 const UserContext = createContext();
 
@@ -16,13 +16,13 @@ export function UserProvider({ children }) {
 		setUser(loggedIn);
 	}
 
-	// async function logout() {
-	//   await account.deleteSession("current");
-	//   setUser(null);
-	// }
+	async function logout() {
+		await account.deleteSessions();
+		setUser(null);
+	}
 
-	async function signup(email, password) {
-		await account.create(email, password);
+	async function register(email, password) {
+		await account.create(ID.unique(), email, password);
 		await login(email, password);
 	}
 
@@ -40,13 +40,8 @@ export function UserProvider({ children }) {
 	}, []);
 
 	return (
-		// eslint-disable-next-line react/jsx-no-constructed-context-values
-		<UserContext.Provider value={{ current: user, login, signup }}>
+		<UserContext.Provider value={{ current: user, login, logout, register }}>
 			{children}
 		</UserContext.Provider>
 	);
 }
-
-UserProvider.propTypes = {
-	children: PropTypes.node.isRequired,
-};
