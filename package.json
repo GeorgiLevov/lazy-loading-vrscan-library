@@ -41,6 +41,7 @@
 	"dependencies": {
 		"appwrite": "^13.0.1",
 		"esbuild": "^0.19.9",
+		"feather-icons-react": "^0.6.2",
 		"new-component": "^5.0.2",
 		"npm": "^10.2.5",
 		"prettier": "^3.1.0",

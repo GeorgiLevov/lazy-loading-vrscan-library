@@ -1,7 +1,7 @@
 import { useEffect, useState, useId } from 'react';
 import { useUser } from '../../../api/context/user.context';
-import useResponsivePadding from '../Catalog/ResponsvieContainer';
-import { Container } from '../Catalog/CatalogStyles';
+import useResponsivePadding from '../../hooks/ResponsvieContainer';
+import { Container } from '../../components/Main/MainContainerStyle';
 import { Link } from 'react-router-dom';
 
 function Login() {
@@ -120,3 +120,4 @@ function Login() {
 }
 
 export default Login;
+

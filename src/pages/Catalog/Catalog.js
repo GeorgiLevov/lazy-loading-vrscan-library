@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container } from './CatalogStyles';
-import useResponsivePadding from './ResponsvieContainer';
+import { Container } from '../../components/Main/MainContainerStyle';
+import useResponsivePadding from '../../hooks/ResponsvieContainer';
 
 function Catalog() {
 	const padding = useResponsivePadding();
