@@ -18,21 +18,7 @@ const rollupPlugin = (matchers) => ({
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
-		react({
-			babel: {
-				plugins: [
-					[
-						'babel-plugin-styled-components',
-						{
-							pure: true,
-							transpileTemplateLiterals: false,
-						},
-					],
-				],
-				babelrc: true,
-				configFile: true,
-			},
-		}),
+		react()
 	],
 	build: {
 		rollupOptions: {
