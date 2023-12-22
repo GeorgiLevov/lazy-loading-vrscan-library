@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '../../components/Main/MainContainerStyle';
+import Container from '../../components/Container';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
 
 function Catalog() {
@@ -15,4 +15,3 @@ function Catalog() {
 }
 
 export default Catalog;
-

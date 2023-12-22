@@ -38,13 +38,14 @@ export const SPACING = {
 
 export const FONTS = {
 	text: {
+		large: `${20 / 16}rem`,
 		normal: `${16 / 16}rem`,
 		small: `${12 / 16}rem`,
 	},
 	heading: {
 		large: `${40 / 16}rem`,
-		normal: `${20 / 16}rem`,
-		small: `${12 / 16}rem`,
+		normal: `${24 / 16}rem`,
+		small: `${20 / 16}rem`,
 	},
 };
 

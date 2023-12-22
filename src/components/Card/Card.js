@@ -27,6 +27,7 @@ const CardBase = styled.article`
 	padding: ${SPACING.medium};
 	border-radius: 20px;
 	box-shadow: ${SHADOWS.low};
+	overflow: hidden;
 
 	display: flex;
 	flex-direction: column;
@@ -34,8 +35,10 @@ const CardBase = styled.article`
 
 const CardInverted = styled(CardBase)`
 	flex-direction: row;
-	align-items: center;
+	align-items: stretch;
 	justify-content: center;
+
+	/* flex wrap or props below */
 	flex-wrap: wrap;
 
 	// expecting only 2 children in inverted card format
@@ -47,3 +50,13 @@ const CardInverted = styled(CardBase)`
 `;
 
 export default Card;
+
+/* 	${(props) =>
+    props.className === 'login' &&
+    css`
+        margin-top: 3px;
+
+        @media ${QUERIES.tabletAndDown} {
+            flex-direction: column;
+        }
+    `} */

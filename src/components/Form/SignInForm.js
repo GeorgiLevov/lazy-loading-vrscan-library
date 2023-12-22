@@ -109,7 +109,7 @@ function SignInForm({ user, login, signup }) {
 				<FormSubmitContainer>
 					<Button
 						variant="primary"
-						size="medium"
+						size="large"
 						type="submit"
 						disabled={status === 'loading'}
 						onClick={handleSubmit}>
@@ -117,7 +117,7 @@ function SignInForm({ user, login, signup }) {
 					</Button>
 					<Button
 						variant="secondary"
-						size="medium"
+						size="large"
 						type="submit"
 						onClick={toggleIsSignupShown}>
 						{userActionText}

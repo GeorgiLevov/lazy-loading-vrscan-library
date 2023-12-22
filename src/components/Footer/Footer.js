@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '../Main/MainContainerStyle';
+import Container from '../Container';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
 
 function Footer() {
@@ -14,4 +14,3 @@ function Footer() {
 }
 
 export default Footer;
-
