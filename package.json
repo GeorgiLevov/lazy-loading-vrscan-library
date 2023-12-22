@@ -44,6 +44,7 @@
 		"appwrite": "^13.0.1",
 		"esbuild": "^0.19.9",
 		"feather-icons-react": "^0.6.2",
+		"framer-motion": "^10.16.16",
 		"new-component": "^5.0.2",
 		"npm": "^10.2.5",
 		"prettier": "^3.1.0",
@@ -53,5 +54,8 @@
 		"react-router": "^6.20.1",
 		"react-router-dom": "^6.21.0",
 		"styled-components": "^6.1.1"
+	},
+	"optionalDependencies": {
+		"@rollup/rollup-linux-x64-gnu": "4.6.1"
 	}
 }
