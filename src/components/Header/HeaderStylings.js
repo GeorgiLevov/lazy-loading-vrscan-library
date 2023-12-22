@@ -9,10 +9,18 @@ export const HeaderWrap = styled.div`
 	width: 100%;
 	margin: 0 auto;
 
+	@media ${QUERIES.tabletAndDown} {
+		display: block;
+	}
+
 	.logo-container {
 		margin-right: auto;
 		display: flex;
 		justify-content: center;
+
+		@media ${QUERIES.tabletAndDown} {
+			margin-bottom: 20px;
+		}
 	}
 	img {
 		max-width: 220px;
@@ -86,4 +94,3 @@ export const HeaderWrap = styled.div`
 		}
 	}
 `;
-

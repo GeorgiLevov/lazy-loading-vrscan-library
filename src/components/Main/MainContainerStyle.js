@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { QUERIES } from '/src/constants.js';
+import { css } from 'styled-components';
 
 export const Container = styled.div`
 	max-width: 1360px;
@@ -28,3 +29,23 @@ export const ContainerHeader = styled.div`
 		$isScrolled ? `all 0.2s ease-in` : `none`};
 `;
 
+export const CardHorizontal = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: space-between;
+	background: #fff;
+	border-radius: 20px;
+	border-radius: 20px;
+	overflow: hidden;
+
+	${(props) =>
+		props.className === 'login' &&
+		css`
+			margin-top: 3px;
+
+			@media ${QUERIES.tabletAndDown} {
+				flex-direction: column;
+			}
+		`}
+`;

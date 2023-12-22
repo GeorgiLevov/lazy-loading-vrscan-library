@@ -5,6 +5,7 @@ import { Container } from '../../components/Main/MainContainerStyle';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
 import HeroText from './HeroText';
 import { ArrowRight, Compass } from 'feather-icons-react/build/IconComponents';
+import Footer from '../../components/Footer/Footer';
 
 function Home() {
 	const padding = useResponsivePadding();
@@ -36,7 +37,7 @@ function Home() {
 					</HeroContainer>
 				</FlexCenterWrapper>
 			</Container>
-			
+			<Footer/>
 		</>
 	);
 }

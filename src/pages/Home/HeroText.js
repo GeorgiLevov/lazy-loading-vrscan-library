@@ -7,7 +7,7 @@ function HeroText() {
 	return (
 		<HeroTextContainer>
 			 <div className="card">
-                <h1>Vr Scan Library</h1>
+                <h1>VrScans Library</h1>
             </div>
 		</HeroTextContainer>
 	);
