@@ -1,18 +1,17 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { QUERIES } from '../../constants';
+import { QUERIES, SPACING } from '../../constants';
 
 export const SliderContainer = styled.div`
 	width: 100%;
-	min-height: 60vh;
-    height: 100%;
+	/* min-height: 60vh; */
+	height: 100%;
 	margin: auto;
 	overflow: hidden;
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	@media ${QUERIES.phoneAndDown} {
 		min-height: 40vh;
 	}
@@ -25,9 +24,4 @@ export const Slide = styled(motion.div)`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	img {
-		width: 50%;
-		max-height: 100%;
-	}
 `;

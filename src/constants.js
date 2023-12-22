@@ -2,6 +2,7 @@ export const COLORS = {
 	transparent: '0deg 0% 100% / 0%',
 	black: '#000000',
 	white: '#FFFFFF',
+	offwhite: '#F3F3F3',
 	primaryBlue: '#17A2DF',
 	red: '#FF0000',
 	gray: {

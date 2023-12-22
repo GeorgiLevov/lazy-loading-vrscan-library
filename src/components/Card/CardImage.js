@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Picture from '../Picture/Picture';
-import { GRADIENTS } from '../../constants';
+import { GRADIENTS, QUERIES, SPACING } from '../../constants';
 
 function CardImage({ src, source2x, source3x, alt, background }) {
 	return (
@@ -12,10 +12,23 @@ function CardImage({ src, source2x, source3x, alt, background }) {
 			alt={alt}></StyledCardImage>
 	);
 }
+
+export const CardImageContainer = styled.div`
+	flex-grow: 1;
+	margin: -${SPACING.medium};
+	background: #e9e9e9;
+	@media ${QUERIES.tabletAndDown} {
+		width: 100%;
+	}
+`;
+
 const StyledCardImage = styled(Picture)`
 	// expected to be flex child
-	flex-grow: 1;
-	max-width: 320px;
+	/* flex-grow: 1; */
+	/* max-width: 320px; */
+	width: 50%;
+	max-height: 100%;
+	padding: ${SPACING.medium};
 `;
 
 export default CardImage;

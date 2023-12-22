@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FONTS } from '../../constants';
 
 function FormTitle({ children }) {
 	return <StyledTitle>{children}</StyledTitle>;
@@ -7,7 +8,7 @@ function FormTitle({ children }) {
 
 const StyledTitle = styled.h1`
 	display: block;
-	font-size: 1.75rem;
+	font-size: ${FONTS.heading.large};
 `;
 
 export default FormTitle;
