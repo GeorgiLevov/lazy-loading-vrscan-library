@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ContainerHeader } from '../Main/MainContainerStyle';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
-import Logo from './Logo';
-import UserNav from './UserNav';
-import { HeaderWrap } from './HeaderStylings';
 
-function Header() {
+import { ContainerHeader, HeaderWrap } from './HeaderStylings';
+
+function Header({ children }) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const padding = useResponsivePadding();
 
@@ -22,13 +20,9 @@ function Header() {
 
 	return (
 		<ContainerHeader className="header" $isScrolled={isScrolled}>
-			<HeaderWrap style={{ padding: `0 ${padding}` }}>
-				<Logo />
-				<UserNav />
-			</HeaderWrap>
+			<HeaderWrap style={{ padding: `0 ${padding}` }}>{children}</HeaderWrap>
 		</ContainerHeader>
 	);
 }
 
 export default Header;
-

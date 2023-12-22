@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from './MainContainerStyle';
+import Container from '../Container';
 
 function Main({ children }) {
 	return <Container>{children}</Container>;

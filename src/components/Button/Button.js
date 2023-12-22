@@ -1,27 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, QUERIES, SHADOWS } from '../../constants';
+import { COLORS, QUERIES, SHADOWS, FONTS } from '../../constants';
 
 const SIZES = {
 	small: {
 		'--borderRadius': 24 + 'px',
-		'--fontSize': 16 / 16 + 'rem',
-		'--padding': '4px 12px',
+		'--fontSize': `${FONTS.text.small}`,
+		'--padding': '4px 10px',
 	},
 	medium: {
-		'--borderRadius': 24 + 'px',
-		'--fontSize': 20 / 16 + 'rem',
-		'--padding': '6px 20px',
+		'--borderRadius': 30 + 'px',
+		'--fontSize': `${FONTS.text.normal}`,
+		'--padding': '12px 20px',
 	},
 	large: {
 		'--borderRadius': 32 + 'px',
-		'--fontSize': 24 / 16 + 'rem',
-		'--padding': '10px 36px',
+		'--fontSize': `${FONTS.text.normal}`,
+		'--padding': '16px 28px',
 	},
 	xl: {
 		'--borderRadius': 32 + 'px',
-		'--fontSize': 30 / 16 + 'rem',
-		'--padding': '12px 60px',
+		'--fontSize': `${FONTS.heading.small}`,
+		'--padding': '12px 48px',
 	},
 };
 
@@ -61,6 +61,8 @@ const ButtonBase = styled.button`
 	background: transparent;
 	font-family: 'Helvetica', sans-serif;
 	font-weight: 300;
+	border: 0;
+	overflow: hidden;
 	cursor: pointer;
 	text-decoration: none;
 	touch-action: manipulation;
@@ -69,7 +71,6 @@ const ButtonBase = styled.button`
 
 	font-size: var(--fontSize);
 	padding: var(--padding);
-	border: 2px solid transparent;
 	border-radius: var(--borderRadius);
 
 	&:focus {
@@ -84,14 +85,45 @@ const ButtonBase = styled.button`
 const PrimaryButton = styled(ButtonBase)`
 	background-color: ${COLORS.primaryBlue};
 	color: ${COLORS.white};
+	z-index: 1;
+	position: relative;
 
 	&:hover {
-		background-color: ${COLORS.gray.dark};
+	}
+
+	&:after {
+		content: '';
+		background: #000;
+		position: absolute;
+		z-index: -1;
+		left: -20%;
+		right: -20%;
+		top: 0;
+		bottom: 0;
+		transform: skewX(-45deg) scale(0, 1);
+		transition: all 0.5s;
+		border: 0;
+	}
+
+	&:hover:after {
+		transform: skewX(-45deg) scale(1, 1);
+		-webkit-transition: all 0.5s;
+		transition: all 0.5s;
+	}
+
+	svg {
+		margin: 0 0 0 8px;
 	}
 `;
 
-const SecondaryButton = styled(ButtonBase)``;
+const SecondaryButton = styled(ButtonBase)`
+	color: ${COLORS.primaryBlue};
+`;
 
-const IconButton = styled(ButtonBase)``;
+const IconButton = styled(PrimaryButton)`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
 
 export default Button;
