@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+	// Automatically reruns effects
 	<React.StrictMode>
 		<BrowserRouter>
 			<App />

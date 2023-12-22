@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { QUERIES } from '/src/constants.js';
+import useResponsivePadding from '../../hooks/ResponsvieContainer';
 import { css } from 'styled-components';
 
 export const Container = styled.div`
@@ -28,7 +29,6 @@ export const ContainerHeader = styled.div`
 	transition: ${({ $isScrolled }) =>
 		$isScrolled ? `all 0.2s ease-in` : `none`};
 `;
-
 export const CardHorizontal = styled.div`
 	display: flex;
 	flex-direction: row;
