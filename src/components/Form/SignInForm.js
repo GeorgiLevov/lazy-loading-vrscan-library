@@ -7,6 +7,7 @@ import StyledInput from './StyledInput';
 import FormSubmitContainer from './FormSubmitContainer';
 import Button from '../Button/Button';
 import useToggle from '../../hooks/useToggle.hook';
+import { redirect } from 'react-router';
 
 function SignInForm({ user, login, signup }) {
 	const [isSignupShown, toggleIsSignupShown] = useToggle(false);
@@ -28,16 +29,21 @@ function SignInForm({ user, login, signup }) {
 	const userActionText = isSignupShown ? 'Sign Up' : 'Login';
 	const userOppositeActionText = isSignupShown ? 'Login' : 'Sign Up';
 
-	async function handleSubmit(event) {
+	function handleSubmit(event) {
 		event.preventDefault();
 		setStatus('loading');
 		login(email, password);
 		// signup(email, password);
 
+		handleUser(user);
+	}
+
+	async function handleUser(user) {
 		const response = await user;
 
 		if (response) {
 			setStatus('success');
+			redirect('/login');
 		} else {
 			setStatus('error');
 		}

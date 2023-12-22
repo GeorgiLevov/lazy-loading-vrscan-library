@@ -28,6 +28,12 @@ export default defineConfig({
 							transpileTemplateLiterals: false,
 						},
 					],
+					[
+						'@babel/plugin-transform-react-jsx',
+						{
+							runtime: 'automatic',
+						},
+					],
 				],
 				babelrc: true,
 				configFile: true,

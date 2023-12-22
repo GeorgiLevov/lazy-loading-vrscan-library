@@ -5,8 +5,8 @@ const FormResponseField = ({ children }) => {
 	return <ErrorResponse>{children}</ErrorResponse>;
 };
 
-const ErrorResponse = styled.h3`
-	background: orangered;
+const ErrorResponse = styled.p`
+	/* background: orangered; */
 	color: red;
 `;
 
