@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SliderContainer, Slide } from './ScanSliderStyles';
 import { AnimatePresence } from 'framer-motion';
+import CardImage from '../Card/CardImage';
 
 const variants = {
 	enter: { y: '-100%', opacity: 0 },
@@ -36,7 +37,10 @@ function ScansSlider({ products, autoplaySpeed = 3000 }) {
 					initial="enter"
 					animate="center"
 					exit="exit">
-					<img src={products[pageIndex].image} alt={products[pageIndex].name} />
+					<CardImage
+						src={products[pageIndex].image}
+						alt={products[pageIndex].name}
+					/>
 				</Slide>
 			</AnimatePresence>
 		</SliderContainer>

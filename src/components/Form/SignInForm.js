@@ -26,6 +26,7 @@ function SignInForm({ user, login, signup }) {
 	const passwordId = `${id}-password`;
 
 	const userActionText = isSignupShown ? 'Sign Up' : 'Login';
+	const userOppositeActionText = isSignupShown ? 'Login' : 'Sign Up';
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -120,7 +121,7 @@ function SignInForm({ user, login, signup }) {
 						size="large"
 						type="submit"
 						onClick={toggleIsSignupShown}>
-						{userActionText}
+						{userOppositeActionText}
 					</Button>
 				</FormSubmitContainer>
 				{status === 'error' && (

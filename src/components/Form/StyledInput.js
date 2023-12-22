@@ -19,10 +19,13 @@ const StyledWrapper = styled.div`
 	}
 
 	& > input {
-		flex: 1;
-		background-color: ${COLORS.white};
+		width: inherit;
+		background-color: ${COLORS.offwhite};
+		color: ${COLORS.black};
 		padding: ${SPACING.small};
-		border-radius: 20px;
+		border-radius: 30px;
+		line-height: 1.5;
+		font-weight: 300;
 
 		&::placeholder {
 			color: ${COLORS.gray.text};

@@ -8,16 +8,11 @@ import { HeaderWrap } from '../../components/Header/HeaderStylings';
 import Logo from '../../components/Header/Logo';
 import Main from '../../components/Main/Main';
 import Card from '../../components/Card/Card';
-import CardImage from '../../components/Card/CardImage';
+import CardImage, { CardImageContainer } from '../../components/Card/CardImage';
 import CardDetails from '../../components/Card/CardDetails';
 import SignInForm from '../../components/Form/SignInForm';
 import Footer from '../../components/Footer/Footer';
 import ScansSlider from '../../components/ScansSlider';
-import {
-	ProductSliderContainer,
-	LoginRegisterFormContainerOuter,
-	LoginRegisterFormContainerInner,
-} from './LoginStyles';
 
 function Login() {
 	const products = [
@@ -36,7 +31,6 @@ function Login() {
 	return (
 		<>
 			<Header>
-				<HeaderWrap style={{ padding: `0 ${padding}` }} />
 				<Logo />
 			</Header>
 			<Main style={{ padding: `0 ${padding}` }}>
@@ -53,7 +47,12 @@ function Login() {
 				) : (
 					<>
 						<Card variant="inverted">
-							<CardImage src="https://download.chaosgroup.com/images/vrscans/thumb/leather_white_s"></CardImage>
+							{/* <CardImage src="https://download.chaosgroup.com/images/vrscans/thumb/leather_white_s"></CardImage> */}
+							<CardImageContainer>
+								<ScansSlider products={products} />
+							</CardImageContainer>
+							{/* <LoginRegisterFormContainerOuter>
+						<LoginRegisterFormContainerInner> */}
 							<CardDetails>
 								<SignInForm user={user} login={login} signup={register} />
 							</CardDetails>

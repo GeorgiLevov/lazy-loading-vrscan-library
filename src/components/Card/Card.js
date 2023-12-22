@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SPACING, SHADOWS, COLORS } from '../../constants';
+import { SPACING, SHADOWS, COLORS, QUERIES } from '../../constants';
 
 function Card({ variant, children }) {
 	let StyledComponent;
@@ -37,26 +37,19 @@ const CardInverted = styled(CardBase)`
 	flex-direction: row;
 	align-items: stretch;
 	justify-content: center;
-
-	/* flex wrap or props below */
-	flex-wrap: wrap;
+	min-height: 50vh;
 
 	// expecting only 2 children in inverted card format
 	& > * {
 		// preventing card break
+		flex-basis: 50%;
 		min-width: 0px;
 		margin: ${SPACING.large};
+	}
+
+	@media ${QUERIES.tabletAndDown} {
+		flex-direction: column;
 	}
 `;
 
 export default Card;
-
-/* 	${(props) =>
-    props.className === 'login' &&
-    css`
-        margin-top: 3px;
-
-        @media ${QUERIES.tabletAndDown} {
-            flex-direction: column;
-        }
-    `} */
