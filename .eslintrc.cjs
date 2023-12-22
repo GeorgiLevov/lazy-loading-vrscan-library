@@ -6,6 +6,7 @@ module.exports = {
 		'plugin:react/recommended',
 		'plugin:react/jsx-runtime',
 		'plugin:react-hooks/recommended',
+		'plugin:@tanstack/eslint-plugin-query/recommended',
 		'prettier',
 	],
 	ignorePatterns: ['dist', '.eslintrc.cjs'],
@@ -17,6 +18,8 @@ module.exports = {
 			'warn',
 			{ allowConstantExport: true },
 		],
-		'react/no-unescaped-entities': 'warn',
+		'react/no-unescaped-entities': ['warn'],
+		'no-unused-vars': ['warn'],
+		'no-console': ['warn'],
 	},
 };

@@ -2,12 +2,14 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { account } from '../appwrite';
 import { ID } from 'appwrite';
 
+// Creating/Exporting the User context here
 const UserContext = createContext();
 
 export function useUser() {
 	return useContext(UserContext);
 }
 
+// creating Provider component for User context
 export function UserProvider({ children }) {
 	const [user, setUser] = useState(null);
 
@@ -35,12 +37,13 @@ export function UserProvider({ children }) {
 		}
 	}
 
+	// On mount - the app will check for a user session and will log in the user automatically
 	useEffect(() => {
 		init();
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ current: user, login, logout, register }}>
+		<UserContext.Provider value={{ user, login, logout, register }}>
 			{children}
 		</UserContext.Provider>
 	);

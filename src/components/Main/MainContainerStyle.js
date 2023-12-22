@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 import { QUERIES } from '/src/constants.js';
+import useResponsivePadding from '../../hooks/ResponsvieContainer';
 
 export const Container = styled.div`
 	max-width: 1360px;
 	width: 100%;
 	margin: 0 auto;
 	padding: 0 80px;
+
+	/* added by Georgi */
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: flex-start;
 
 	@media ${QUERIES.laptopAndDown} {
 		padding: 0 80px;
@@ -27,4 +34,3 @@ export const ContainerHeader = styled.div`
 	transition: ${({ $isScrolled }) =>
 		$isScrolled ? `all 0.2s ease-in` : `none`};
 `;
-

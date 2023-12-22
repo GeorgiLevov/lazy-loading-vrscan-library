@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container } from './MainContainerStyle';
 
-function Main() {
-	return <div></div>;
+function Main({ children }) {
+	return <Container>{children}</Container>;
 }
 
 export default Main;
-
