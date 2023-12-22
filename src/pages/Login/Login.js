@@ -1,14 +1,21 @@
 import { useEffect, useState, useId } from 'react';
 import { useUser } from '../../../api/context/user.context';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
-import { CardHorizontal, Container } from '../../components/Main/MainContainerStyle';
+import {
+	CardHorizontal,
+	Container,
+} from '../../components/Main/MainContainerStyle';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import ScansSlider from '../../components/ScansSlider';
-import { ProductSliderContainer, LoginRegisterFormContainerOuter,  LoginRegisterFormContainerInner} from './LoginStyles';
+import {
+	ProductSliderContainer,
+	LoginRegisterFormContainerOuter,
+	LoginRegisterFormContainerInner,
+} from './LoginStyles';
 import { ButtonPrimary } from '../Home/HomeStyles';
 import { ArrowRight } from 'feather-icons-react/build/IconComponents';
-
 
 function Login() {
 	const products = [
@@ -38,7 +45,7 @@ function Login() {
 		<>
 			<Header />
 			<Container style={{ padding: `0 ${padding}` }}>
-				<CardHorizontal className='login'>
+				<CardHorizontal className="login">
 					<ProductSliderContainer>
 						<ScansSlider products={products} />
 					</ProductSliderContainer>
@@ -80,11 +87,11 @@ function Login() {
 													setPassword(event.target.value);
 												}}
 											/>
-											<div className='submit-btn'>
+											<div className="submit-btn">
 												<ButtonPrimary
 													type="button"
 													onClick={() => user.login(email, password)}>
-													Sign In <ArrowRight strokeWidth="1.1"/>
+													Sign In <ArrowRight strokeWidth="1.1" />
 												</ButtonPrimary>
 											</div>
 										</form>
@@ -127,11 +134,11 @@ function Login() {
 													setPassword(event.target.value);
 												}}
 											/>
-											<div className='submit-btn'>
+											<div className="submit-btn">
 												<ButtonPrimary
 													type="button"
 													onClick={() => user.register(email, password)}>
-													Sign Up <ArrowRight strokeWidth="1.1"/>
+													Sign Up <ArrowRight strokeWidth="1.1" />
 												</ButtonPrimary>
 											</div>
 										</form>
@@ -142,8 +149,10 @@ function Login() {
 					</LoginRegisterFormContainerOuter>
 				</CardHorizontal>
 			</Container>
+			{/* <Footer /> */}
 		</>
 	);
 }
 
 export default Login;
+
