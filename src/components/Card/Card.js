@@ -24,7 +24,7 @@ const CardBase = styled.article`
 	/* min-width: 0px; */
 	background: ${COLORS.white};
 	margin: ${SPACING.small};
-	padding: ${SPACING.medium};
+
 	border-radius: 20px;
 	box-shadow: ${SHADOWS.low};
 	overflow: hidden;
@@ -44,7 +44,6 @@ const CardInverted = styled(CardBase)`
 		// preventing card break
 		flex-basis: 50%;
 		min-width: 0px;
-		margin: ${SPACING.large};
 	}
 
 	@media ${QUERIES.tabletAndDown} {
@@ -53,3 +52,4 @@ const CardInverted = styled(CardBase)`
 `;
 
 export default Card;
+

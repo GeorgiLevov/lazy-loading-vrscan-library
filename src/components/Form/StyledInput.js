@@ -22,16 +22,16 @@ const StyledWrapper = styled.div`
 		width: inherit;
 		background-color: ${COLORS.offwhite};
 		color: ${COLORS.black};
-		padding: ${SPACING.small};
+		padding: ${SPACING.small} ${SPACING.medium};
 		border-radius: 30px;
-		line-height: 1.5;
+		line-height: 2;
 		font-weight: 300;
 
 		&::placeholder {
 			color: ${COLORS.gray.text};
 			opacity: 0.8;
 			font-weight: 300;
-			padding-left: ${SPACING.medium};
+			padding-left: ${SPACING.large};
 		}
 		&::-webkit-input-placeholder {
 			color: ${COLORS.gray.text};
@@ -55,3 +55,4 @@ const StyledWrapper = styled.div`
 `;
 
 export default StyledInput;
+

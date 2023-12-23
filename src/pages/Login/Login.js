@@ -28,9 +28,8 @@ function Login() {
 
 	return (
 		<>
-			<Header>
-				<Logo />
-			</Header>
+			<Header />
+
 			<Main style={{ padding: `0 ${padding}` }}>
 				{user ? (
 					<section>
@@ -43,17 +42,15 @@ function Login() {
 						</Link>
 					</section>
 				) : (
-					<Main>
-						<Card variant="inverted">
-							{/* <CardImage src="https://download.chaosgroup.com/images/vrscans/thumb/leather_white_s"></CardImage> */}
-							<CardImageContainer>
-								<ScansSlider products={products} />
-							</CardImageContainer>
-							<CardDetails>
-								<SignInForm user={user} login={login} signup={register} />
-							</CardDetails>
-						</Card>
-					</Main>
+					<Card variant="inverted">
+						{/* <CardImage src="https://download.chaosgroup.com/images/vrscans/thumb/leather_white_s"></CardImage> */}
+						<CardImageContainer>
+							<ScansSlider products={products} />
+						</CardImageContainer>
+						<CardDetails>
+							<SignInForm user={user} login={login} signup={register} />
+						</CardDetails>
+					</Card>
 				)}
 			</Main>
 		</>
@@ -61,3 +58,4 @@ function Login() {
 }
 
 export default Login;
+

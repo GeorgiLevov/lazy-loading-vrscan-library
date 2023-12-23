@@ -12,11 +12,10 @@ const StyledCardDetails = styled.section`
 	flex-direction: column;
 	flex-grow: 1;
 	align-items: center;
-	width: 50%;
 
 	@media ${QUERIES.tabletAndDown} {
-		width: 100%;
 	}
 `;
 
 export default CardDetails;
+

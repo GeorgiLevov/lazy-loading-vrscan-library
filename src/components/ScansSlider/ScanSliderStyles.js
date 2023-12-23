@@ -4,7 +4,7 @@ import { QUERIES, SPACING } from '../../constants';
 
 export const SliderContainer = styled.div`
 	width: 100%;
-	/* min-height: 60vh; */
+	min-height: 60vh;
 	height: 100%;
 	margin: auto;
 	overflow: hidden;
@@ -25,3 +25,4 @@ export const Slide = styled(motion.div)`
 	justify-content: center;
 	align-items: center;
 `;
+

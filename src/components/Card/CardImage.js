@@ -15,7 +15,7 @@ function CardImage({ src, source2x, source3x, alt, background }) {
 
 export const CardImageContainer = styled.div`
 	flex-grow: 1;
-	margin: -${SPACING.medium};
+
 	background: #e9e9e9;
 	@media ${QUERIES.tabletAndDown} {
 		width: 100%;
@@ -32,3 +32,4 @@ const StyledCardImage = styled(Picture)`
 `;
 
 export default CardImage;
+

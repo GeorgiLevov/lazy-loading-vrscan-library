@@ -1,6 +1,6 @@
 import { useState, useId } from 'react';
 import styled from 'styled-components';
-import { SPACING } from '../../constants';
+import { SPACING, QUERIES } from '../../constants';
 import FormTitle from './FormTitle';
 import FormResponseField from './FormResponseField';
 import StyledInput from './StyledInput';
@@ -148,7 +148,11 @@ const StyledForm = styled.form`
 	align-content: flex-start;
 	align-items: baseline;
 
-	padding: 0 ${SPACING.large};
+	padding: ${SPACING.large} ${SPACING.large};
+
+	@media ${QUERIES.tabletAndDown} {
+		padding: ${SPACING.large} ${SPACING.large};
+	}
 
 	& > * {
 		margin-bottom: ${SPACING.medium};
@@ -156,3 +160,4 @@ const StyledForm = styled.form`
 `;
 
 export default SignInForm;
+
