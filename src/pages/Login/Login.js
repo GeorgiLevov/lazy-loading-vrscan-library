@@ -14,12 +14,12 @@ import ScansSlider from '../../components/ScansSlider';
 
 function Login() {
 	const products = [
-		{ id: 1, name: 'Product 1', image: '/src/assets/images/product1.png' },
-		{ id: 2, name: 'Product 2', image: '/src/assets/images/product2.png' },
-		{ id: 2, name: 'Product 2', image: '/src/assets/images/product3.png' },
-		{ id: 2, name: 'Product 2', image: '/src/assets/images/product4.png' },
-		{ id: 2, name: 'Product 2', image: '/src/assets/images/product5.png' },
-		{ id: 2, name: 'Product 2', image: '/src/assets/images/product6.png' },
+		{ id: 1, name: 'Product 1', image: '/images/product1.png' },
+		{ id: 2, name: 'Product 2', image: '/images/product2.png' },
+		{ id: 2, name: 'Product 2', image: '/images/product3.png' },
+		{ id: 2, name: 'Product 2', image: '/images/product4.png' },
+		{ id: 2, name: 'Product 2', image: '/images/product5.png' },
+		{ id: 2, name: 'Product 2', image: '/images/product6.png' },
 	];
 
 	const padding = useResponsivePadding();
