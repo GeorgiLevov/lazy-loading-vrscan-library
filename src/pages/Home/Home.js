@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import { HomeBackground, HeroContainer, FlexCenterWrapper } from './HomeStyles';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
@@ -18,7 +18,7 @@ function Home() {
 		<>
 			<Header>
 				<Logo />
-				{user && <UserNav />}
+				{user && <UserNav name={user.name} />}
 			</Header>
 			<HomeBackground>
 				<video

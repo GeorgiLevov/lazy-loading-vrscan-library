@@ -7,10 +7,16 @@ import StyledInput from './StyledInput';
 import FormSubmitContainer from './FormSubmitContainer';
 import Button from '../Button/Button';
 import useToggle from '../../hooks/useToggle.hook';
-import { redirect } from 'react-router';
+import { useUser } from '../../../api/context/user.context';
+import { Navigate } from 'react-router';
 
-function SignInForm({ user, login, signup }) {
+function SignInForm() {
+	const { user, login, signup, logout } = useUser();
+
 	const [isSignupShown, toggleIsSignupShown] = useToggle(false);
+	const [formErrorMessage, setFormErrorMessage] = useToggle(
+		'There was an issue with your request, please try again.'
+	);
 
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -29,28 +35,32 @@ function SignInForm({ user, login, signup }) {
 	const userActionText = isSignupShown ? 'Sign Up' : 'Login';
 	const userOppositeActionText = isSignupShown ? 'Login' : 'Sign Up';
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
 		setStatus('loading');
-		login(email, password);
-		// signup(email, password);
 
-		handleUser(user);
-	}
+		try {
+			const response = isSignupShown
+				? await signup(firstName, lastName, email, password)
+				: await login(email, password);
 
-	async function handleUser(user) {
-		const response = await user;
-
-		if (response) {
-			setStatus('success');
-			redirect('/login');
-		} else {
-			setStatus('error');
+			if (await response) {
+				setStatus('success');
+			}
+		} catch (error) {
+			console.log(status);
+			setFormErrorMessage(error.message);
+			console.error('the error:', error);
+			console.error(error.type);
+			console.error(error.code);
+			console.error(error.message);
 		}
 	}
 
 	return (
 		<>
+			{user && <Navigate to="/catalog" replace={true} />}
+
 			<StyledForm onSubmit={handleSubmit}>
 				<FormTitle>{userActionText}</FormTitle>
 				{isSignupShown && (
@@ -130,10 +140,8 @@ function SignInForm({ user, login, signup }) {
 						{userOppositeActionText}
 					</Button>
 				</FormSubmitContainer>
-				{status === 'error' && (
-					<FormResponseField>
-						There was an error with your request!
-					</FormResponseField>
+				{formErrorMessage && (
+					<FormResponseField>{formErrorMessage}</FormResponseField>
 				)}
 			</StyledForm>
 		</>

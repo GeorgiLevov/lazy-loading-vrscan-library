@@ -1,22 +1,22 @@
 import { User, Heart } from 'feather-icons-react';
-
-function UserNav() {
+import { getFirstName } from './Header.utils';
+import { Link, NavLink } from 'react-router-dom';
+function UserNav({ name }) {
 	return (
 		<div className="userNav-container">
 			<ul>
 				<li>
-					<a href="">
-						<User strokeWidth="1.1" /> <span>Hi, Georgi</span>
-					</a>
+					<Link to="/profile">
+						<User strokeWidth="1.1" /> <span>Hi, {getFirstName(name)}</span>
+					</Link>
 				</li>
 				<li>
-					<a href="">
+					<Link to="/favorites">
 						<Heart strokeWidth="1.1" /> <span>Favourites</span>
-					</a>
+					</Link>
 				</li>
 			</ul>
 		</div>
 	);
 }
 export default UserNav;
-
