@@ -30,7 +30,7 @@ const Button = ({
 	variant,
 	size,
 	icon: Icon,
-	iconfirst = false,
+	iconfirst,
 	href,
 	children,
 	onClick,
@@ -46,6 +46,11 @@ const Button = ({
 		StyledComponent = SecondaryButton;
 	} else if (variant === 'icon') {
 		StyledComponent = IconButton;
+		if (Icon === undefined) {
+			throw new Error(
+				`Please apply an icon to your button before rendering an IconButton!`
+			);
+		}
 	} else {
 		throw new Error(`Unrecognized Button variant: ${variant}`);
 	}
@@ -58,7 +63,7 @@ const Button = ({
 			$iconfirst={iconfirst}
 			style={styles}
 			onClick={() => onClick()}>
-			<Icon strokeWidth={1.1}></Icon>
+			{variant === 'icon' && <Icon strokeWidth={1.1} />}
 			{children}
 		</StyledComponent>
 	);

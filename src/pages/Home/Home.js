@@ -35,16 +35,16 @@ function Home() {
 						{user ? (
 							<Button
 								href="/catalog"
-								icon={Compass}
 								variant="icon"
+								icon={Compass}
 								size="large">
 								Explore Library
 							</Button>
 						) : (
 							<Button
 								href="/login"
-								icon={ArrowRight}
 								variant="icon"
+								icon={ArrowRight}
 								size="large">
 								Sign In
 							</Button>
