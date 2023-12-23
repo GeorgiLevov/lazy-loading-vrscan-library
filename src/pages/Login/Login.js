@@ -11,15 +11,16 @@ import CardDetails from '../../components/Card/CardDetails';
 import SignInForm from '../../components/Form/SignInForm';
 import Footer from '../../components/Footer/Footer';
 import ScansSlider from '../../components/ScansSlider';
+import ImageHandler from '../../components/Picture/ImageHandler';
 
 function Login() {
 	const products = [
-		{ id: 1, name: 'Product 1', image: '/images/product1.png' },
-		{ id: 2, name: 'Product 2', image: '/images/product2.png' },
-		{ id: 2, name: 'Product 2', image: '/images/product3.png' },
-		{ id: 2, name: 'Product 2', image: '/images/product4.png' },
-		{ id: 2, name: 'Product 2', image: '/images/product5.png' },
-		{ id: 2, name: 'Product 2', image: '/images/product6.png' },
+		{ id: 1, name: 'Product 1', image: ImageHandler.product1 },
+		{ id: 2, name: 'Product 2', image: ImageHandler.product2 },
+		{ id: 3, name: 'Product 3', image: ImageHandler.product3 },
+		{ id: 4, name: 'Product 4', image: ImageHandler.product4 },
+		{ id: 5, name: 'Product 5', image: ImageHandler.product5 },
+		{ id: 6, name: 'Product 6', image: ImageHandler.product6 },
 	];
 
 	const padding = useResponsivePadding();
