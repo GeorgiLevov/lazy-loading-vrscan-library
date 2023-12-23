@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import { HomeBackground, HeroContainer, FlexCenterWrapper } from './HomeStyles';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
@@ -16,7 +16,10 @@ function Home() {
 	const { user } = useUser();
 	return (
 		<>
-			<Header />
+			<Header>
+				<Logo />
+				{user && <UserNav name={user.name} />}
+			</Header>
 			<HomeBackground>
 				<video
 					src="https://res.cloudinary.com/boil-agency/video/upload/v1702747030/Chaos_Scans_Library_Various_Material_Samples_p9pttt.mp4"
@@ -58,4 +61,3 @@ function Home() {
 }
 
 export default Home;
-

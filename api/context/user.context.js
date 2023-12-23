@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { account } from '../appwrite';
 import { ID } from 'appwrite';
+import { userPreferences } from '../user.config';
 
 // Creating/Exporting the User context here
 const UserContext = createContext();
@@ -23,9 +24,16 @@ export function UserProvider({ children }) {
 		setUser(null);
 	}
 
-	async function register(email, password) {
-		await account.create(ID.unique(), email, password);
+	async function signup(fname, lname, email, password) {
+		const username = `${fname} ${lname}`;
+		const userID = ID.unique();
+		await account.create(userID, email, password, username);
 		await login(email, password);
+		await setPreferences();
+	}
+
+	async function setPreferences() {
+		await account.updatePrefs(userPreferences);
 	}
 
 	async function init() {
@@ -43,7 +51,7 @@ export function UserProvider({ children }) {
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ user, login, logout, register }}>
+		<UserContext.Provider value={{ user, login, logout, signup }}>
 			{children}
 		</UserContext.Provider>
 	);
