@@ -1,22 +1,18 @@
 import React from 'react';
-import Container from '../../components/Container';
-import useResponsivePadding from '../../hooks/ResponsvieContainer';
 import Header from '../../components/Header/Header';
+import Main from '../../components/Main';
 
 function Catalog() {
-	const padding = useResponsivePadding();
-
 	return (
 		<>
 			<Header />
-			<Container style={{ padding: `0 ${padding}` }}>
+			<Main>
 				<h1>Catalog page</h1>
 
 				<a href="#">Link to something</a>
-			</Container>
+			</Main>
 		</>
 	);
 }
 
 export default Catalog;
-

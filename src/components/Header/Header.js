@@ -5,7 +5,7 @@ import { useUser } from '../../../api/context/user.context';
 import Logo from './Logo';
 import UserNav from './UserNav';
 
-function Header({ children }) {
+function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const padding = useResponsivePadding();
 	const { user } = useUser();
@@ -25,11 +25,10 @@ function Header({ children }) {
 		<ContainerHeader className="header" $isScrolled={isScrolled}>
 			<HeaderWrap style={{ padding: `0 ${padding}` }}>
 				<Logo />
-				{user && <UserNav />}
+				{user && <UserNav name={user.name} />}
 			</HeaderWrap>
 		</ContainerHeader>
 	);
 }
 
 export default Header;
-

@@ -11,12 +11,10 @@ import { useUser } from '../../../api/context/user.context';
 import { Navigate } from 'react-router';
 
 function SignInForm() {
-	const { user, login, signup, logout } = useUser();
+	const { user, login, signup } = useUser();
 
 	const [isSignupShown, toggleIsSignupShown] = useToggle(false);
-	const [formErrorMessage, setFormErrorMessage] = useToggle(
-		'There was an issue with your request, please try again.'
-	);
+	const [formErrorMessage, setFormErrorMessage] = useState('');
 
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -32,12 +30,19 @@ function SignInForm() {
 	const emailId = `${id}-email`;
 	const passwordId = `${id}-password`;
 
+	const canSignUp = firstName && lastName && email && password;
+	const canLogIn = email && password;
+
 	const userActionText = isSignupShown ? 'Sign Up' : 'Login';
 	const userOppositeActionText = isSignupShown ? 'Login' : 'Sign Up';
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 		setStatus('loading');
+
+		// preventing empty requests from happening
+		if (isSignupShown && !canSignUp) return;
+		if (!isSignupShown && !canLogIn) return;
 
 		try {
 			const response = isSignupShown
@@ -48,12 +53,9 @@ function SignInForm() {
 				setStatus('success');
 			}
 		} catch (error) {
-			console.log(status);
+			setStatus('error');
 			setFormErrorMessage(error.message);
-			console.error('the error:', error);
-			console.error(error.type);
-			console.error(error.code);
-			console.error(error.message);
+			console.error(error);
 		}
 	}
 
@@ -61,7 +63,7 @@ function SignInForm() {
 		<>
 			{user && <Navigate to="/catalog" replace={true} />}
 
-			<StyledForm onSubmit={handleSubmit}>
+			<StyledForm onSubmit={(event) => handleSubmit(event)}>
 				<FormTitle>{userActionText}</FormTitle>
 				{isSignupShown && (
 					<>
@@ -140,7 +142,7 @@ function SignInForm() {
 						{userOppositeActionText}
 					</Button>
 				</FormSubmitContainer>
-				{formErrorMessage && (
+				{status === 'error' && (
 					<FormResponseField>{formErrorMessage}</FormResponseField>
 				)}
 			</StyledForm>
