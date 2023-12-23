@@ -1,4 +1,4 @@
-import { useState, useId } from 'react';
+import { useState, useId, useEffect } from 'react';
 import styled from 'styled-components';
 import { SPACING, QUERIES } from '../../constants';
 import FormTitle from './FormTitle';
@@ -168,4 +168,3 @@ const StyledForm = styled.form`
 `;
 
 export default SignInForm;
-

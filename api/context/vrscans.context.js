@@ -1,25 +1,25 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { databases } from '../appwrite';
-import { ID, Query } from 'appwrite';
+import { ID, Query, Permission, Role } from 'appwrite';
 
 export const DATABASE_ID = import.meta.env.VITE_DB_KEY;
 export const VRSCANS_COLLECTION_ID = import.meta.env.VITE_CL_VRSCANS_KEY;
 
-const IdeasContext = createContext();
+const vrScansContext = createContext();
 
-export function useIdeas() {
-	return useContext(IdeasContext);
+export function useVRScans() {
+	return useContext(vrScansContext);
 }
 
-export function IdeasProvider({ children }) {
+export function VRScansProvider({ children }) {
 	const [loginVRScans, setLoginVRScans] = useState([]);
 	const [vrScans, setVRScans] = useState([]);
 
-	async function get10Random() {
+	async function get10VRScans() {
 		const response = await databases.listDocuments(
 			DATABASE_ID,
 			VRSCANS_COLLECTION_ID,
-			[Query.orderDesc('$createdAt'), Query.limit(10)]
+			[Query.limit(10)]
 		);
 		setLoginVRScans(response.documents);
 	}
@@ -33,12 +33,13 @@ export function IdeasProvider({ children }) {
 	}
 
 	useEffect(() => {
+		get10VRScans();
 		init();
 	}, []);
 
 	return (
-		<IdeasContext.Provider value={{ vrScans, loginVRScans, get10Random }}>
+		<vrScansContext.Provider value={{ vrScans, loginVRScans, get10VRScans }}>
 			{children}
-		</IdeasContext.Provider>
+		</vrScansContext.Provider>
 	);
 }
