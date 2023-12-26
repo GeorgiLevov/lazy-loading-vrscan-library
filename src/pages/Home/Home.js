@@ -24,37 +24,29 @@ function Home() {
 				/>
 			</HomeBackground>
 
-			<Main>
-				<FlexCenterWrapper>
-					<HeroContainer>
-						<HeroText />
-						<p>
-							React-based load-on-demand library showing VRScans materials from
-							a pre-defined REST API
-						</p>
-						{user ? (
-							<Button
-								href="/catalog"
-								variant="icon"
-								icon={Compass}
-								size="large">
-								Explore Library
-							</Button>
-						) : (
-							<Button
-								href="/login"
-								variant="icon"
-								icon={ArrowRight}
-								size="large">
-								Sign In
-							</Button>
-						)}
-					</HeroContainer>
-				</FlexCenterWrapper>
-			</Main>
+			<FlexCenterWrapper>
+				<HeroContainer>
+					<HeroText />
+					<p>
+						React-based load-on-demand library showing VRScans materials from a
+						pre-defined REST API
+					</p>
+					{user ? (
+						<Button href="/catalog" variant="icon" icon={Compass} size="large">
+							Explore Library
+						</Button>
+					) : (
+						<Button href="/login" variant="icon" icon={ArrowRight} size="large">
+							Sign In
+						</Button>
+					)}
+				</HeroContainer>
+			</FlexCenterWrapper>
+
 			<Footer />
 		</>
 	);
 }
 
 export default Home;
+

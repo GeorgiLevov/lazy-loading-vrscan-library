@@ -43,6 +43,9 @@ export const FlexCenterWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	height: 80vh;
+	@media ${QUERIES.laptopAndDown} {
+		padding: 0 32px;
+	}
 `;
 
 export const HeroContainer = styled.div`
@@ -97,3 +100,4 @@ export const HeroTextContainer = styled.div`
 		}
 	}
 `;
+

@@ -18,8 +18,9 @@ export const StyledContainer = styled.div`
 	padding: ${(p) => (p.$padding !== undefined ? `0 ${p.$padding}` : '0 80px')};
 
 	@media ${QUERIES.laptopAndDown} {
-		padding: 0 80px;
+		/* padding: 0 80px; */
 	}
 `;
 
 export default Container;
+
