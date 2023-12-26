@@ -1,48 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header/Header';
+import React, { useState, useEffect, useRef } from 'react';
 import Main from '../../components/Main/Main';
-import Card from '../../components/Card/Card';
-import { ProfileContainer } from './ProfileStyles';
-import UserCard from './UserCard';
-import { useUser } from '../../../api/context/user.context';
 import Button from '../../components/Button';
-import Main from '../../components/Main';
-import { updateName } from './profile.utils';
+import { storage } from '../../../api/appwrite';
+import { useUser } from '../../../api/context/user.context';
+import Breadcrumbs from '../../components/Breadcrumbs';
 
 function Profile() {
-	const { user, logout, update } = useUser();
+	const { user, update, updateProfileImage } = useUser();
 
 	const [firstname, setFirstname] = useState('');
 	const [lastname, setLastname] = useState('');
 	const [email, setEmail] = useState('');
 	const [profileUrl, setProfileUrl] = useState('');
-
-	console.log(user);
+	const [isEditing, setIsEditing] = useState({
+		firstname: false,
+		lastname: false,
+		email: false,
+	});
+	const [showEmailPopup, setShowEmailPopup] = useState(false);
+	const [password, setPassword] = useState('');
+	const fileInputRef = useRef(null);
 
 	useEffect(() => {
-		setFirstname(user?.name.split(' ')[0]);
-		setLastname(user?.name.split(' ')[1]);
-		setEmail(user?.email);
-		setProfileUrl(user?.prefs.photo_url);
+		if (user) {
+			setFirstname(user?.name.split(' ')[0]);
+			setLastname(user?.name.split(' ')[1]);
+			setEmail(user?.email);
+			setProfileUrl(user?.prefs.photo_url);
+		}
 	}, [user]);
 
-	const handleFirstNameChange = (name) => {
-		setFirstname(name);
-		update.name(updateName(`${user.name}`, 'first', name));
+	const toggleEdit = (field) => {
+		setIsEditing((prev) => ({ ...prev, [field]: !prev[field] }));
 	};
-	const handleLastNameChange = (name) => {
-		setLastname(name);
-		update.name(updateName(`${user.name}`, 'last', name));
+
+	const handleFirstNameChange = () => {
+		update.name(firstname + ' ' + lastname);
+		toggleEdit('firstname');
 	};
-	const handleEmailChange = (email, password) => {
-		setEmail(email);
+
+	const handleLastNameChange = () => {
+		update.name(firstname + ' ' + lastname);
+		toggleEdit('lastname');
+	};
+
+	const handleEmailEdit = () => {
+		setIsEditing((prev) => ({ ...prev, email: true }));
+	};
+
+	const handleEmailFocusOut = () => {
+		if (email !== user?.email) {
+			setShowEmailPopup(true);
+		}
+		setIsEditing((prev) => ({ ...prev, email: false }));
+	};
+
+	const handleEmailUpdate = () => {
 		update.email(email, password);
+		setShowEmailPopup(false);
 	};
-	const handleProfileURLChange = (profileURL) => {
-		setProfileUrl(profileURL);
-		update.photo({
-			photo_url: profileURL,
-		});
+
+	const handleEditProfileImageClick = () => {
+		fileInputRef.current.click();
+	};
+
+	const handleFileChange = async (event) => {
+		const file = event.target.files[0];
+		if (file) {
+			await updateProfileImage(file);
+		}
 	};
 
 	return (
@@ -50,45 +76,75 @@ function Profile() {
 			<h1>Profile</h1>
 			{user && (
 				<>
-					<Button variant="secondary" size="medium" onClick={() => logout()}>
-						<span>Log out</span>
-					</Button>
 					<div style={{ display: 'flex', flexDirection: 'column' }}>
 						<div>First Name</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() => handleFirstNameChange('Bash')}>
-							<div>Change: {firstname}</div>
+						<input
+							type="text"
+							value={firstname}
+							readOnly={!isEditing.firstname}
+							onChange={(e) => setFirstname(e.target.value)}
+						/>
+						<Button variant="secondary" onClick={() => toggleEdit('firstname')}>
+							Edit
 						</Button>
+						{isEditing.firstname && (
+							<Button variant="secondary" onClick={handleFirstNameChange}>
+								Save
+							</Button>
+						)}
+
 						<div>Last Name</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() => handleLastNameChange('Crash')}>
-							<div>Change: {lastname}</div>
+						<input
+							type="text"
+							value={lastname}
+							readOnly={!isEditing.lastname}
+							onChange={(e) => setLastname(e.target.value)}
+						/>
+						<Button variant="secondary" onClick={() => toggleEdit('lastname')}>
+							Edit
 						</Button>
-						<div>email</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() =>
-								handleEmailChange('new@hotmail.com', 'masterpassword')
-							}>
-							<div>Change: {email}</div>
+						{isEditing.lastname && (
+							<Button variant="secondary" onClick={handleLastNameChange}>
+								Save
+							</Button>
+						)}
+
+						<div>Email</div>
+						<input
+							type="email"
+							value={email}
+							readOnly={!isEditing.email}
+							onChange={(e) => setEmail(e.target.value)}
+							onBlur={handleEmailFocusOut}
+						/>
+						<Button variant="secondary" onClick={handleEmailEdit}>
+							Edit
 						</Button>
-						{/* NEED SOME SORT OF VERIFICATION IF USER IS UPLOADING AN IMAGE OR SOMETHING ELSE THROUGH URL? */}
+						{showEmailPopup && (
+							<div className="popup">
+								<p>New Email: {email}</p>
+								<input
+									type="password"
+									placeholder="Enter password"
+									onChange={(e) => setPassword(e.target.value)}
+								/>
+								<Button variant="secondary" onClick={handleEmailUpdate}>
+									Confirm
+								</Button>
+							</div>
+						)}
+
 						<div>Photo URL</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() =>
-								handleProfileURLChange(
-									'https://static.vecteezy.com/system/resources/previews/026/576/517/large_2x/woman-pretty-smiling-professional-business-woman-happy-confiden-photo.jpg'
-								)
-							}>
-							<div>Change: {profileUrl}</div>
+						<input
+							type="file"
+							style={{ display: 'none' }}
+							ref={fileInputRef}
+							onChange={handleFileChange}
+						/>
+						<Button variant="secondary" onClick={handleEditProfileImageClick}>
+							Edit Profile Image
 						</Button>
+						<img src={profileUrl} alt="Profile" />
 					</div>
 				</>
 			)}
