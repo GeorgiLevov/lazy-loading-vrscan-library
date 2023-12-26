@@ -25,4 +25,3 @@ const useResponsivePadding = () => {
 };
 
 export default useResponsivePadding;
-

@@ -1,4 +1,4 @@
-import { useState, useId } from 'react';
+import { useState, useId, useEffect } from 'react';
 import styled from 'styled-components';
 import { SPACING, QUERIES } from '../../constants';
 import FormTitle from './FormTitle';
@@ -7,10 +7,14 @@ import StyledInput from './StyledInput';
 import FormSubmitContainer from './FormSubmitContainer';
 import Button from '../Button/Button';
 import useToggle from '../../hooks/useToggle.hook';
-import { redirect } from 'react-router';
+import { useUser } from '../../../api/context/user.context';
+import { Navigate } from 'react-router';
 
-function SignInForm({ user, login, signup }) {
+function SignInForm() {
+	const { user, login, signup } = useUser();
+
 	const [isSignupShown, toggleIsSignupShown] = useToggle(false);
+	const [formErrorMessage, setFormErrorMessage] = useState('');
 
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -26,35 +30,44 @@ function SignInForm({ user, login, signup }) {
 	const emailId = `${id}-email`;
 	const passwordId = `${id}-password`;
 
+	const canSignUp = firstName && lastName && email && password;
+	const canLogIn = email && password;
+
 	const userActionText = isSignupShown ? 'Sign Up' : 'Login';
 	const userOppositeActionText = isSignupShown ? 'Login' : 'Sign Up';
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
 		setStatus('loading');
-		login(email, password);
-		// signup(email, password);
 
-		handleUser(user);
-	}
+		// preventing empty requests from happening
+		if (isSignupShown && !canSignUp) return;
+		if (!isSignupShown && !canLogIn) return;
 
-	async function handleUser(user) {
-		const response = await user;
+		try {
+			const response = isSignupShown
+				? await signup(firstName, lastName, email, password)
+				: await login(email, password);
 
-		if (response) {
-			setStatus('success');
-			redirect('/login');
-		} else {
+			if (await response) {
+				setStatus('success');
+			}
+		} catch (error) {
 			setStatus('error');
+			setFormErrorMessage(error.message);
+			console.error(error);
 		}
 	}
 
 	return (
 		<>
-			<StyledForm onSubmit={handleSubmit}>
+			{user && <Navigate to="/catalog" replace={true} />}
+
+			<StyledForm onSubmit={(event) => handleSubmit(event)}>
 				<FormTitle>{userActionText}</FormTitle>
 				{isSignupShown && (
 					<>
+						{/* NEED TO HAVE VALIDATION AND MAKE SURE WE ONLY ACCEPT 1 NAME PER FIELD, AKA - NO SPACES OR SPECIAL CHARACTERS */}
 						<StyledInput>
 							{/* <label htmlFor={firstNameId}>First Name</label> */}
 							<input
@@ -131,9 +144,7 @@ function SignInForm({ user, login, signup }) {
 					</Button>
 				</FormSubmitContainer>
 				{status === 'error' && (
-					<FormResponseField>
-						There was an error with your request!
-					</FormResponseField>
+					<FormResponseField>{formErrorMessage}</FormResponseField>
 				)}
 			</StyledForm>
 		</>
@@ -160,4 +171,3 @@ const StyledForm = styled.form`
 `;
 
 export default SignInForm;
-

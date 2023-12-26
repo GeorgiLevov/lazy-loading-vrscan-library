@@ -1,28 +1,33 @@
-import { User, Heart } from 'feather-icons-react';
-import { useUser } from '../../../api/context/user.context';
+import { User, Heart } from 'react-feather';
+import Button from '../Button/Button';
+import { getFirstName } from './Header.utils';
 
-function UserNav() {
-	const { user, login, signup: register, logout } = useUser();
-
+function UserNav({ name }) {
 	return (
 		<div className="userNav-container">
 			<ul>
 				<li>
-					<a href="">
-						<User strokeWidth="1.1" />{' '}
-						<span>
-							Hi, <span>{user.name}</span>
-						</span>
-					</a>
+					<Button
+						variant="icon"
+						iconfirst={true}
+						size="medium"
+						icon={User}
+						href="/profile">
+						<span>Hi, {getFirstName(name)}</span>
+					</Button>
 				</li>
 				<li>
-					<a href="">
-						<Heart strokeWidth="1.1" /> <span>Favourites</span>
-					</a>
+					<Button
+						variant="icon"
+						iconfirst={true}
+						size="medium"
+						icon={Heart}
+						href="/favorites">
+						<span>Favourites</span>
+					</Button>
 				</li>
 			</ul>
 		</div>
 	);
 }
 export default UserNav;
-

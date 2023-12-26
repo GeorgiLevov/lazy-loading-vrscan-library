@@ -61,44 +61,6 @@ export const HeaderWrap = styled.div`
 					margin-right: 0;
 				}
 
-				a {
-					display: flex;
-					align-items: center;
-					text-decoration: none;
-					color: ${COLORS.black};
-					font-weight: 300;
-					font-size: ${FONTS.text.normal};
-					letter-spacing: 0.2px;
-					position: relative;
-					line-height: 2;
-
-					&::before {
-						content: '';
-						width: 0;
-						height: 1.5px;
-						border-radius: 2px;
-						background-color: #000;
-						position: absolute;
-						bottom: -0.25rem;
-						right: 0;
-						transition:
-							right 0.4s,
-							width 0.4s,
-							left 0.4s;
-					}
-
-					&:hover::before {
-						width: 100%;
-						left: 0;
-					}
-
-					svg {
-						margin-right: 8px;
-						min-width: 22px;
-						width: 22px;
-					}
-				}
-
 				@media ${QUERIES.tabletAndDown} {
 					margin-right: 20px;
 					text-align: center;

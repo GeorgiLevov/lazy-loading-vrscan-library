@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, QUERIES, SHADOWS, FONTS } from '../../constants';
+import { COLORS, QUERIES, SHADOWS, FONTS, SPACING } from '../../constants';
+import { Link } from 'react-router-dom';
 
 const SIZES = {
 	small: {
@@ -28,10 +29,11 @@ const SIZES = {
 const Button = ({
 	variant,
 	size,
+	icon: Icon,
+	iconfirst,
+	href,
 	children,
-	onClick = () => {
-		return;
-	},
+	onClick,
 }) => {
 	const styles = SIZES[size];
 
@@ -44,12 +46,24 @@ const Button = ({
 		StyledComponent = SecondaryButton;
 	} else if (variant === 'icon') {
 		StyledComponent = IconButton;
+		if (Icon === undefined) {
+			throw new Error(
+				`Please apply an icon to your button before rendering an IconButton!`
+			);
+		}
 	} else {
 		throw new Error(`Unrecognized Button variant: ${variant}`);
 	}
 
+	// Dynamic tag setup based on: https://styled-components.com/docs/api#as-polymorphic-prop
 	return (
-		<StyledComponent role="button" style={styles} onClick={() => onClick()}>
+		<StyledComponent
+			to={href}
+			as={href ? Link : 'button'}
+			$iconfirst={iconfirst}
+			style={styles}
+			onClick={() => onClick()}>
+			{variant === 'icon' && <Icon strokeWidth={1.1} />}
 			{children}
 		</StyledComponent>
 	);
@@ -57,11 +71,10 @@ const Button = ({
 
 const ButtonBase = styled.button`
 	margin: 0;
-	padding: 0;
+	border: 0;
 	background: transparent;
 	font-family: 'Helvetica', sans-serif;
 	font-weight: 300;
-	border: 0;
 	overflow: hidden;
 	cursor: pointer;
 	text-decoration: none;
@@ -84,6 +97,8 @@ const ButtonBase = styled.button`
 
 const PrimaryButton = styled(ButtonBase)`
 	background-color: ${COLORS.primaryBlue};
+	font-size: ${FONTS.text.normal};
+	letter-spacing: 0.2px;
 	color: ${COLORS.white};
 	z-index: 1;
 	position: relative;
@@ -91,9 +106,10 @@ const PrimaryButton = styled(ButtonBase)`
 	&:hover {
 	}
 
+	/* Effect on Hover styles */
 	&:after {
 		content: '';
-		background: #000;
+		background: ${COLORS.black};
 		position: absolute;
 		z-index: -1;
 		left: -20%;
@@ -110,10 +126,6 @@ const PrimaryButton = styled(ButtonBase)`
 		-webkit-transition: all 0.5s;
 		transition: all 0.5s;
 	}
-
-	svg {
-		margin: 0 0 0 8px;
-	}
 `;
 
 const SecondaryButton = styled(ButtonBase)`
@@ -124,6 +136,14 @@ const IconButton = styled(PrimaryButton)`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: ${(p) => (p.$iconfirst ? 'row' : 'row-reverse')};
+
+	& > svg {
+		display: block;
+		margin-right: ${(p) => (p.$iconfirst ? SPACING.small : '0px')};
+		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.small)};
+		min-width: 24px;
+	}
 `;
 
 export default Button;

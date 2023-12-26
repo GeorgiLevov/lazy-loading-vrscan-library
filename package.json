@@ -53,9 +53,11 @@
 		"prop-types": "^15.8.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
+		"react-feather": "^2.0.10",
 		"react-router": "^6.20.1",
 		"react-router-dom": "^6.21.0",
-		"styled-components": "^6.1.1"
+		"styled-components": "^6.1.1",
+		"swr": "^2.2.4"
 	},
 	"optionalDependencies": {
 		"@rollup/rollup-linux-x64-gnu": "4.6.1"

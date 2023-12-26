@@ -30,19 +30,21 @@ function ScansSlider({ products, autoplaySpeed = 3000 }) {
 
 	return (
 		<SliderContainer>
-			<AnimatePresence initial={false}>
-				<Slide
-					key={page}
-					variants={variants}
-					initial="enter"
-					animate="center"
-					exit="exit">
-					<CardImage
-						src={products[pageIndex].image}
-						alt={products[pageIndex].name}
-					/>
-				</Slide>
-			</AnimatePresence>
+			{products && (
+				<AnimatePresence initial={false}>
+					<Slide
+						key={page}
+						variants={variants}
+						initial="enter"
+						animate="center"
+						exit="exit">
+						<CardImage
+							src={products[pageIndex]?.thumb}
+							alt={`${products[pageIndex]?.name} | Image`}
+						/>
+					</Slide>
+				</AnimatePresence>
+			)}
 		</SliderContainer>
 	);
 }

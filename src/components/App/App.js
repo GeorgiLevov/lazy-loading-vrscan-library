@@ -10,6 +10,7 @@ import Reviews from '../../pages/Reviews';
 import Profile from '../../pages/Profile';
 import NotFound from '../../pages/NotFound';
 import { UserProvider } from '../../../api/context/user.context';
+import { VRScansProvider } from '../../../api/context/vrscans.context';
 
 function App() {
 	const location = useLocation();
@@ -17,22 +18,24 @@ function App() {
 	return (
 		<>
 			<UserProvider>
-				<Routes location={location} key={location.pathname}>
-					{/* Routes */}
-					<Route index path="/" element={<Home />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/catalog" element={<Catalog />} />
-					<Route path="/profile" element={<Profile />} />
-					<Route path="/profile/reviews" element={<Reviews />} />
-					<Route path="/profile/favorites" element={<Favorites />} />
-					{/* prettier-ignore */}
-					<Route path="/reviews" element={<Navigate to="/profile/reviews" />} />
-					{/* prettier-ignore */}
-					<Route path="/favorites" element={<Navigate to="/profile/favorites" />} />
+				<VRScansProvider>
+					<Routes location={location} key={location.pathname}>
+						{/* Routes */}
+						<Route index path="/" element={<Home />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/catalog" element={<Catalog />} />
+						<Route path="/profile" element={<Profile />} />
+						<Route path="/profile/reviews" element={<Reviews />} />
+						<Route path="/profile/favorites" element={<Favorites />} />
+						{/* prettier-ignore */}
+						<Route path="/reviews" element={<Navigate to="/profile/reviews" />} />
+						{/* prettier-ignore */}
+						<Route path="/favorites" element={<Navigate to="/profile/favorites" />} />
 
-					{/* 404 page */}
-					<Route path="*" element={<NotFound />} />
-				</Routes>
+						{/* 404 page */}
+						<Route path="*" element={<NotFound />} />
+					</Routes>
+				</VRScansProvider>
 			</UserProvider>
 
 			<GlobalStyles />
