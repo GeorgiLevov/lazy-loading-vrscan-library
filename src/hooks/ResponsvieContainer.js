@@ -9,7 +9,6 @@ const useResponsivePadding = () => {
 		if (viewportWidth <= BREAKPOINTS.laptop) {
 			// prettier-ignore
 			const newPadding = Math.max(20,80 - (40 * (BREAKPOINTS.laptop - viewportWidth)) / (BREAKPOINTS.laptop - BREAKPOINTS.phone));
-			console.log(newPadding);
 			setPadding(`${newPadding}px`);
 		} else {
 			setPadding('80px');
