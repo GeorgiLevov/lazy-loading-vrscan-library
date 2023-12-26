@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header/Header';
+import Main from '../../components/Main/Main';
+import Card from '../../components/Card/Card';
+import { ProfileContainer } from './ProfileStyles';
+import UserCard from './UserCard';
 import { useUser } from '../../../api/context/user.context';
 import Button from '../../components/Button';
 import Main from '../../components/Main';

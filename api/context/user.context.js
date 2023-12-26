@@ -59,7 +59,11 @@ export function UserProvider({ children }) {
 	async function init() {
 		try {
 			const loggedIn = await account.get();
-			setUser(loggedIn);
+			const preferences = await account.getPrefs();
+			setUser({
+				...loggedIn,
+				photo_url: preferences.photo_url,
+			});
 		} catch (err) {
 			setUser(null);
 		}
@@ -87,3 +91,4 @@ export function UserProvider({ children }) {
 		</UserContext.Provider>
 	);
 }
+
