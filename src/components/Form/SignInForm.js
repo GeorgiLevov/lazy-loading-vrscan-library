@@ -67,6 +67,7 @@ function SignInForm() {
 				<FormTitle>{userActionText}</FormTitle>
 				{isSignupShown && (
 					<>
+						{/* NEED TO HAVE VALIDATION AND MAKE SURE WE ONLY ACCEPT 1 NAME PER FIELD, AKA - NO SPACES OR SPECIAL CHARACTERS */}
 						<StyledInput>
 							{/* <label htmlFor={firstNameId}>First Name</label> */}
 							<input

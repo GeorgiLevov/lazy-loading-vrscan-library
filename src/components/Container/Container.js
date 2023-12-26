@@ -15,8 +15,7 @@ export const StyledContainer = styled.div`
 	max-width: 1360px;
 	width: 100%;
 	margin: 0 auto;
-	padding: ${(p) =>
-		p.$padding !== undefined ? `0 ${p.$padding}px'` : '0 80px'};
+	padding: ${(p) => (p.$padding !== undefined ? `0 ${p.$padding}` : '0 80px')};
 
 	@media ${QUERIES.laptopAndDown} {
 		padding: 0 80px;

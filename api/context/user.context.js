@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { account } from '../appwrite';
 import { ID } from 'appwrite';
-import { userPreferences } from '../user.config';
+import { newUserEmptyPreferences } from '../user.config';
 
 // Creating/Exporting the User context here
 const UserContext = createContext();
@@ -29,13 +29,33 @@ export function UserProvider({ children }) {
 		const userID = ID.unique();
 		await account.create(userID, email, password, username);
 		await login(email, password);
-		await setPreferences();
+		await setEmptyPreferences();
 	}
 
-	async function setPreferences() {
-		await account.updatePrefs(userPreferences);
+	async function setEmptyPreferences() {
+		await account.updatePrefs(newUserEmptyPreferences);
 	}
 
+	async function updateEmail(newEmail, userPassword) {
+		await account.updateEmail(newEmail, userPassword);
+		await refetchUser();
+	}
+
+	async function updateName(newName) {
+		await account.updateName(newName);
+		await refetchUser();
+	}
+
+	async function updatePreferences(newPreferences) {
+		const userPrefs = await account.getPrefs();
+		await account.updatePrefs({ ...userPrefs, ...newPreferences });
+		await refetchUser();
+	}
+
+	async function refetchUser() {
+		const loggedInUser = await account.get();
+		setUser(loggedInUser);
+	}
 	async function init() {
 		try {
 			const loggedIn = await account.get();
@@ -51,7 +71,18 @@ export function UserProvider({ children }) {
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ user, login, logout, signup }}>
+		<UserContext.Provider
+			value={{
+				user,
+				login,
+				logout,
+				signup,
+				update: {
+					email: updateEmail,
+					name: updateName,
+					photo: updatePreferences,
+				},
+			}}>
 			{children}
 		</UserContext.Provider>
 	);
