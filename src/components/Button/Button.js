@@ -44,6 +44,8 @@ const Button = ({
 		StyledComponent = PrimaryButton;
 	} else if (variant === 'secondary') {
 		StyledComponent = SecondaryButton;
+	} else if (variant === 'underline') {
+		StyledComponent = UnderlineButton;
 	} else if (variant === 'icon') {
 		StyledComponent = IconButton;
 		if (Icon === undefined) {
@@ -64,6 +66,8 @@ const Button = ({
 			style={styles}
 			onClick={() => onClick()}>
 			{variant === 'icon' && <Icon strokeWidth={1.1} />}
+			{variant === 'underline' && <Icon strokeWidth={1.1} />}
+			{variant === 'secondary' && <Icon strokeWidth={1.1} />}
 			{children}
 		</StyledComponent>
 	);
@@ -104,6 +108,7 @@ const PrimaryButton = styled(ButtonBase)`
 	position: relative;
 
 	&:hover {
+		color: ${COLORS.white};
 	}
 
 	/* Effect on Hover styles */
@@ -130,6 +135,19 @@ const PrimaryButton = styled(ButtonBase)`
 
 const SecondaryButton = styled(ButtonBase)`
 	color: ${COLORS.primaryBlue};
+	display: flex;
+	align-items: center;
+	align-content: center;
+	transition: color 0.2s ease-in-out;
+	&:hover {
+		color: #7d7d7d;
+	}
+
+	svg {
+		display: inline;
+		margin-right: 10px;
+		max-width: 22px;
+	}
 `;
 
 const IconButton = styled(PrimaryButton)`
@@ -139,7 +157,55 @@ const IconButton = styled(PrimaryButton)`
 	flex-direction: ${(p) => (p.$iconfirst ? 'row' : 'row-reverse')};
 
 	& > svg {
-		display: block;
+		margin-right: ${(p) => (p.$iconfirst ? SPACING.small : '0px')};
+		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.small)};
+		min-width: 24px;
+	}
+`;
+
+const UnderlineButton = styled.button`
+	font-family: 'Helvetica', sans-serif;
+	font-weight: 300;
+	color: #000;
+	background: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: ${(p) => (p.$iconfirst ? 'row' : 'row-reverse')};
+	font-weight: 300;
+	cursor: pointer;
+	position: relative;
+	border: none;
+	transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+	transition-duration: 400ms;
+	transition-property: color;
+
+	&:focus,
+	&:hover {
+		color: #000;
+	}
+
+	&:focus:after,
+	&:hover:after {
+		width: 100%;
+		left: 0%;
+	}
+
+	&:after {
+		content: '';
+		pointer-events: none;
+		bottom: -8px;
+		left: 50%;
+		position: absolute;
+		width: 0%;
+		height: 1px;
+		background-color: #000;
+		transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+		transition-duration: 400ms;
+		transition-property: width, left;
+	}
+
+	& > svg {
 		margin-right: ${(p) => (p.$iconfirst ? SPACING.small : '0px')};
 		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.small)};
 		min-width: 24px;
@@ -147,3 +213,4 @@ const IconButton = styled(PrimaryButton)`
 `;
 
 export default Button;
+

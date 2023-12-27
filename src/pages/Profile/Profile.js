@@ -4,10 +4,13 @@ import Button from '../../components/Button';
 import { storage } from '../../../api/appwrite';
 import { useUser } from '../../../api/context/user.context';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import Header from '../../components/Header/Header';
+import { ProfileContainer, InputField, SaveButton } from './ProfileStyles';
+import { Edit, ArrowRight } from 'react-feather';
+import Footer from '../../components/Footer';
 
 function Profile() {
 	const { user, update, updateProfileImage } = useUser();
-
 	const [firstname, setFirstname] = useState('');
 	const [lastname, setLastname] = useState('');
 	const [email, setEmail] = useState('');
@@ -20,6 +23,7 @@ function Profile() {
 	const [showEmailPopup, setShowEmailPopup] = useState(false);
 	const [password, setPassword] = useState('');
 	const fileInputRef = useRef(null);
+	const inputRef = useRef({ firstname: null, lastname: null, email: null });
 
 	useEffect(() => {
 		if (user) {
@@ -31,7 +35,13 @@ function Profile() {
 	}, [user]);
 
 	const toggleEdit = (field) => {
-		setIsEditing((prev) => ({ ...prev, [field]: !prev[field] }));
+		setIsEditing((prev) => {
+			const isFieldEditing = !prev[field];
+			if (isFieldEditing) {
+				setTimeout(() => inputRef.current[field]?.focus(), 0);
+			}
+			return { ...prev, [field]: isFieldEditing };
+		});
 	};
 
 	const handleFirstNameChange = () => {
@@ -72,83 +82,189 @@ function Profile() {
 	};
 
 	return (
-		<Main>
-			<h1>Profile</h1>
-			{user && (
-				<>
-					<div style={{ display: 'flex', flexDirection: 'column' }}>
-						<div>First Name</div>
-						<input
-							type="text"
-							value={firstname}
-							readOnly={!isEditing.firstname}
-							onChange={(e) => setFirstname(e.target.value)}
-						/>
-						<Button variant="secondary" onClick={() => toggleEdit('firstname')}>
-							Edit
-						</Button>
-						{isEditing.firstname && (
-							<Button variant="secondary" onClick={handleFirstNameChange}>
-								Save
-							</Button>
-						)}
-
-						<div>Last Name</div>
-						<input
-							type="text"
-							value={lastname}
-							readOnly={!isEditing.lastname}
-							onChange={(e) => setLastname(e.target.value)}
-						/>
-						<Button variant="secondary" onClick={() => toggleEdit('lastname')}>
-							Edit
-						</Button>
-						{isEditing.lastname && (
-							<Button variant="secondary" onClick={handleLastNameChange}>
-								Save
-							</Button>
-						)}
-
-						<div>Email</div>
-						<input
-							type="email"
-							value={email}
-							readOnly={!isEditing.email}
-							onChange={(e) => setEmail(e.target.value)}
-							onBlur={handleEmailFocusOut}
-						/>
-						<Button variant="secondary" onClick={handleEmailEdit}>
-							Edit
-						</Button>
-						{showEmailPopup && (
-							<div className="popup">
-								<p>New Email: {email}</p>
-								<input
-									type="password"
-									placeholder="Enter password"
-									onChange={(e) => setPassword(e.target.value)}
-								/>
-								<Button variant="secondary" onClick={handleEmailUpdate}>
-									Confirm
-								</Button>
+		<>
+			<Header />
+			<Main>
+				<Breadcrumbs />
+				<h1>Profile</h1>
+				<ProfileContainer>
+					{user && (
+						<>
+							<div className="section-profile-info">
+								<div className="profile-image-container">
+									<img src={profileUrl} alt="Profile" />
+								</div>
+								<div className="update-image">
+									<input
+										type="file"
+										style={{ display: 'none' }}
+										ref={fileInputRef}
+										onChange={handleFileChange}
+									/>
+									<Button
+										variant="secondary"
+										iconfirst={true}
+										size="medium"
+										icon={Edit}
+										onClick={handleEditProfileImageClick}>
+										Edit Profile Image
+									</Button>
+								</div>
+								<div className="user-details">
+									<div className="fullname">{user.name}</div>
+									<div className="email">{user.email}</div>
+								</div>
 							</div>
-						)}
+							<div className="section-profile-settings">
+								<div className="profile-settings-wrap">
+									<div className="section-heading">
+										<h2>Account settings</h2>
+									</div>
+									<div className="edit-row">
+										<label>First Name</label>
+										<div className="input">
+											<InputField
+												ref={(el) => (inputRef.current.firstname = el)}
+												type="text"
+												value={firstname}
+												readOnly={!isEditing.firstname}
+												$isEditing={isEditing.firstname}
+												onChange={(e) => setFirstname(e.target.value)}
+											/>
+											{isEditing.firstname ? (
+												<SaveButton onClick={handleFirstNameChange}>
+													Save
+												</SaveButton>
+											) : (
+												<Button
+													variant="secondary"
+													iconfirst={true}
+													size="medium"
+													icon={Edit}
+													onClick={() => toggleEdit('firstname')}>
+													Edit
+												</Button>
+											)}
+										</div>
+									</div>
 
-						<div>Photo URL</div>
-						<input
-							type="file"
-							style={{ display: 'none' }}
-							ref={fileInputRef}
-							onChange={handleFileChange}
-						/>
-						<Button variant="secondary" onClick={handleEditProfileImageClick}>
-							Edit Profile Image
-						</Button>
-						<img src={profileUrl} alt="Profile" />
-					</div>
-				</>
-			)}
-		</Main>
+									<div className="edit-row">
+										<label>Last Name</label>
+										<div className="input">
+											<InputField
+												ref={(el) => (inputRef.current.lastname = el)}
+												type="text"
+												value={lastname}
+												readOnly={!isEditing.lastname}
+												onChange={(e) => setLastname(e.target.value)}
+												$isEditing={isEditing.lastname}
+											/>
+											{isEditing.lastname ? (
+												<SaveButton onClick={handleLastNameChange}>
+													Save
+												</SaveButton>
+											) : (
+												<Button
+													variant="secondary"
+													iconfirst={true}
+													size="medium"
+													icon={Edit}
+													onClick={() => toggleEdit('lastname')}>
+													Edit
+												</Button>
+											)}
+										</div>
+									</div>
+
+									<div className="edit-row">
+										<label>Email</label>
+										<div className="edit-row-helper">
+											<div className="input email-wrap">
+												<InputField
+													ref={(el) => (inputRef.current.email = el)}
+													type="email"
+													value={email}
+													readOnly={!isEditing.email}
+													onChange={(e) => setEmail(e.target.value)}
+													onBlur={handleEmailFocusOut}
+													$isEditing={isEditing.email}
+												/>
+												{isEditing.email ? (
+													<SaveButton onClick={handleEmailEdit}>
+														Save
+													</SaveButton>
+												) : (
+													<Button
+														variant="secondary"
+														iconfirst={true}
+														size="medium"
+														icon={Edit}
+														onClick={handleEmailEdit}>
+														Edit
+													</Button>
+												)}
+											</div>
+
+											<div className="pass-popup-wrap">
+												{showEmailPopup && (
+													<div className="popup">
+														<div className="popup-warning">
+															<label>
+																{' '}
+																Your email will be changed to:{' '}
+																<span>{email}</span>
+															</label>
+															<p>Please enter your password</p>
+														</div>
+														<div className="input">
+															<InputField
+																type="password"
+																placeholder="Enter password"
+																onChange={(e) => setPassword(e.target.value)}
+															/>
+															<SaveButton onClick={handleEmailUpdate}>
+																Confirm
+															</SaveButton>
+														</div>
+													</div>
+												)}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className="additional-links-wrap">
+									<div className="section-heading">
+										<h2>Reviews & Favorites</h2>
+									</div>
+									<ul>
+										<li>
+											<Button
+												variant="secondary"
+												iconfirst={true}
+												size="medium"
+												icon={ArrowRight}
+												href="/reviews">
+												My Reviews
+											</Button>
+										</li>
+										<li>
+											<Button
+												variant="secondary"
+												iconfirst={true}
+												size="medium"
+												icon={ArrowRight}
+												href="/favorites">
+												<span>Favourites</span>
+											</Button>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</>
+					)}
+				</ProfileContainer>
+			</Main>
+		</>
 	);
 }
 

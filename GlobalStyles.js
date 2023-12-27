@@ -65,11 +65,15 @@ const GlobalStyles = createGlobalStyle`
     height: auto;
   }
 
+  label {font-family: 'Helvetica', sans-serif;
+    font-size: ${FONTS.text['normal']};
+  font-weight: 300;}
+
   input, button, textarea, select {
     font-family: 'Helvetica', sans-serif;
     font-size: ${FONTS.text['normal']};
     border: 1px solid ${COLORS.gray['devider']};
-    border-radius: 5px;
+    border-radius: 30px;
     padding: 8px 15px;
   }
 
