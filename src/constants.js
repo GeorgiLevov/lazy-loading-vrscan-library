@@ -1,6 +1,8 @@
 export const COLORS = {
 	transparent: '0deg 0% 100% / 0%',
+	almostTransparent: '0deg 0% 100% / 25%',
 	black: '#000000',
+	black75: '0deg 0% 0% / 0.75',
 	white: '#FFFFFF',
 	offwhite: '#F3F3F3',
 	primaryBlue: '#17A2DF',

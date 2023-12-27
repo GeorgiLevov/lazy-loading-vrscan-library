@@ -6,6 +6,8 @@ import { useUser } from '../../../api/context/user.context';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Header from '../../components/Header/Header';
 import { ProfileContainer, InputField, SaveButton } from './ProfileStyles';
+import Modal from '../../components/Modal/Modal';
+import useToggle from '../../hooks/useToggle.hook';
 import { Edit, ArrowRight } from 'react-feather';
 import Footer from '../../components/Footer';
 
@@ -269,4 +271,3 @@ function Profile() {
 }
 
 export default Profile;
-

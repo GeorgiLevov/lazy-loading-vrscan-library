@@ -94,7 +94,7 @@ const GlobalStyles = createGlobalStyle`
   button:focus,
   textarea:focus,
   select:focus{
-    outline: none;
+    outline: hsl(${COLORS.almostTransparent});
     border-color: ${COLORS.primaryBlue};
   }
 
@@ -113,4 +113,3 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export default GlobalStyles;
-
