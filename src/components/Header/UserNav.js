@@ -8,7 +8,7 @@ function UserNav({ name }) {
 			<ul>
 				<li>
 					<Button
-						variant="icon"
+						variant="underline"
 						iconfirst={true}
 						size="medium"
 						icon={User}
@@ -18,7 +18,7 @@ function UserNav({ name }) {
 				</li>
 				<li>
 					<Button
-						variant="icon"
+						variant="underline"
 						iconfirst={true}
 						size="medium"
 						icon={Heart}
@@ -31,3 +31,4 @@ function UserNav({ name }) {
 	);
 }
 export default UserNav;
+

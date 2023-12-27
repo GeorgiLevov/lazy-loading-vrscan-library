@@ -35,7 +35,7 @@ function Breadcrumbs({ children }) {
 }
 
 const BreadcrumbList = styled.ol`
-	padding: 0;
+	padding: 20px 0;
 	margin: 0;
 	list-style-type: none;
 `;
@@ -54,6 +54,8 @@ const CrumbWrapper = styled.li`
 	display: inline;
 	--spacing: 12px;
 	color: hsl(${COLORS.gray[500]});
+	font-weight: 300;
+	color: #838282;
 
 	&:last-of-type {
 		color: hsl(${COLORS.white});
@@ -61,6 +63,7 @@ const CrumbWrapper = styled.li`
 
 	&:not(:first-of-type) {
 		margin-left: var(--spacing);
+		color: #000;
 
 		&::before {
 			content: '';
@@ -80,7 +83,8 @@ const CrumbLink = styled(NavLink)`
 	text-decoration: none;
 
 	&:hover {
-		text-decoration: revert;
+		text-decoration: none;
+		color: ${COLORS.black};
 	}
 `;
 
@@ -104,3 +108,4 @@ Crumb.defaultProps = {
 	target: '/',
 	isCurrentPage: false,
 };
+

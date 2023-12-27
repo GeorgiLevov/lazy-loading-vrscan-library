@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { account } from '../appwrite';
+import { account, storage } from '../appwrite';
 import { ID } from 'appwrite';
 import { newUserEmptyPreferences } from '../user.config';
+import { v4 as uuidv4 } from 'uuid';
 
 // Creating/Exporting the User context here
 const UserContext = createContext();
@@ -52,6 +53,29 @@ export function UserProvider({ children }) {
 		await refetchUser();
 	}
 
+	async function updateProfileImage(file) {
+		if (!file) return;
+
+		try {
+			const formData = new FormData();
+			formData.append('file', file);
+
+			const bucketId = '658b3164673f481188e9';
+			const uniqueFileId = uuidv4();
+
+			const response = await storage.createFile(bucketId, uniqueFileId, file);
+
+			const fileURL = `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${
+				response.$id
+			}/view?project=${import.meta.env.VITE_API_KEY}`;
+
+			await updatePreferences({ photo_url: fileURL });
+			await refetchUser();
+		} catch (error) {
+			console.error('Error uploading profile image:', error);
+		}
+	}
+
 	async function refetchUser() {
 		const loggedInUser = await account.get();
 		setUser(loggedInUser);
@@ -81,10 +105,12 @@ export function UserProvider({ children }) {
 				login,
 				logout,
 				signup,
+				updateProfileImage,
 				update: {
 					email: updateEmail,
 					name: updateName,
 					photo: updatePreferences,
+					profileImage: updateProfileImage,
 				},
 			}}>
 			{children}
