@@ -170,6 +170,10 @@ const IconButton = styled(PrimaryButton)`
 		margin-right: ${(p) => (p.$iconfirst ? SPACING.small : '0px')};
 		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.small)};
 		min-width: 24px;
+
+		@media ${QUERIES.tabletAndDown} {
+			margin: 0;
+		}
 	}
 `;
 

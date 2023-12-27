@@ -10,6 +10,8 @@ import Modal from '../../components/Modal/Modal';
 import useToggle from '../../hooks/useToggle.hook';
 import { Edit, ArrowRight } from 'react-feather';
 import Footer from '../../components/Footer';
+import Modal from '../../components/Modal/Modal';
+import useToggle from '../../hooks/useToggle.hook';
 
 function Profile() {
 	const { user, update, updateProfileImage } = useUser();
