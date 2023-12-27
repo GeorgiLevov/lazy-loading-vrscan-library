@@ -51,6 +51,8 @@ const Button = ({
 				`Please apply an icon to your button before rendering an IconButton!`
 			);
 		}
+	} else if (variant === 'close') {
+		StyledComponent = CloseButton;
 	} else {
 		throw new Error(`Unrecognized Button variant: ${variant}`);
 	}
@@ -95,6 +97,14 @@ const ButtonBase = styled.button`
 	}
 `;
 
+const CloseButton = styled(ButtonBase)`
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: ${SPACING.medium};
+	transform: translateY(-100%);
+	color: ${COLORS.white};
+`;
 const PrimaryButton = styled(ButtonBase)`
 	background-color: ${COLORS.primaryBlue};
 	font-size: ${FONTS.text.normal};
@@ -143,6 +153,10 @@ const IconButton = styled(PrimaryButton)`
 		margin-right: ${(p) => (p.$iconfirst ? SPACING.small : '0px')};
 		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.small)};
 		min-width: 24px;
+
+		@media ${QUERIES.tabletAndDown} {
+			margin: 0;
+		}
 	}
 `;
 

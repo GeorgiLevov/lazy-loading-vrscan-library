@@ -3,6 +3,8 @@ import { useUser } from '../../../api/context/user.context';
 import Button from '../../components/Button';
 import Main from '../../components/Main';
 import { updateName } from './profile.utils';
+import Modal from '../../components/Modal/Modal';
+import useToggle from '../../hooks/useToggle.hook';
 
 function Profile() {
 	const { user, logout, update } = useUser();
@@ -21,70 +23,22 @@ function Profile() {
 		setProfileUrl(user?.prefs.photo_url);
 	}, [user]);
 
-	const handleFirstNameChange = (name) => {
-		setFirstname(name);
-		update.name(updateName(`${user.name}`, 'first', name));
-	};
-	const handleLastNameChange = (name) => {
-		setLastname(name);
-		update.name(updateName(`${user.name}`, 'last', name));
-	};
-	const handleEmailChange = (email, password) => {
-		setEmail(email);
-		update.email(email, password);
-	};
-	const handleProfileURLChange = (profileURL) => {
-		setProfileUrl(profileURL);
-		update.photo({
-			photo_url: profileURL,
-		});
-	};
+	const [isModalOpen, toggleIsModalOpen] = useToggle(false);
 
 	return (
 		<Main>
 			<h1>Profile</h1>
 			{user && (
 				<>
-					<Button variant="secondary" size="medium" onClick={() => logout()}>
-						<span>Log out</span>
-					</Button>
-					<div style={{ display: 'flex', flexDirection: 'column' }}>
-						<div>First Name</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() => handleFirstNameChange('Bash')}>
-							<div>Change: {firstname}</div>
-						</Button>
-						<div>Last Name</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() => handleLastNameChange('Crash')}>
-							<div>Change: {lastname}</div>
-						</Button>
-						<div>email</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() =>
-								handleEmailChange('new@hotmail.com', 'masterpassword')
-							}>
-							<div>Change: {email}</div>
-						</Button>
-						{/* NEED SOME SORT OF VERIFICATION IF USER IS UPLOADING AN IMAGE OR SOMETHING ELSE THROUGH URL? */}
-						<div>Photo URL</div>
-						<Button
-							variant="secondary"
-							size="medium"
-							onClick={() =>
-								handleProfileURLChange(
-									'https://static.vecteezy.com/system/resources/previews/026/576/517/large_2x/woman-pretty-smiling-professional-business-woman-happy-confiden-photo.jpg'
-								)
-							}>
-							<div>Change: {profileUrl}</div>
-						</Button>
-					</div>
+					{isModalOpen && (
+						<Modal title="Testing Modal" closeDialog={toggleIsModalOpen}>
+							<p>
+								Hey, I'm some text in here, don't click on the X button because
+								I'll disappear!
+							</p>
+						</Modal>
+					)}
+					<button onClick={toggleIsModalOpen}>Toggle modal</button>
 				</>
 			)}
 		</Main>
