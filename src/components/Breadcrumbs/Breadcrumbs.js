@@ -53,12 +53,12 @@ export const Crumb = ({ target = '/', isCurrentPage = false, children }) => {
 const CrumbWrapper = styled.li`
 	display: inline;
 	--spacing: 12px;
-	color: hsl(${COLORS.gray[500]});
+	color: ${COLORS.gray.text};
 	font-weight: 300;
 	color: #838282;
 
 	&:last-of-type {
-		color: hsl(${COLORS.white});
+		color: ${COLORS.white};
 	}
 
 	&:not(:first-of-type) {
@@ -108,4 +108,3 @@ Crumb.defaultProps = {
 	target: '/',
 	isCurrentPage: false,
 };
-

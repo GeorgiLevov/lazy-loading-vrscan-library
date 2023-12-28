@@ -72,7 +72,7 @@ const GlobalStyles = createGlobalStyle`
   input, button, textarea, select {
     font-family: 'Helvetica', sans-serif;
     font-size: ${FONTS.text['normal']};
-    border: 1px solid ${COLORS.gray['devider']};
+    border: 1px solid ${COLORS.gray.divider};
     border-radius: 30px;
     padding: 8px 15px;
   }
@@ -94,7 +94,7 @@ const GlobalStyles = createGlobalStyle`
   button:focus,
   textarea:focus,
   select:focus{
-    outline: hsl(${COLORS.almostTransparent});
+    outline: ${COLORS.almostTransparent};
     border-color: ${COLORS.primaryBlue};
   }
 

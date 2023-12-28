@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { SPACING, COLORS } from '../../constants';
 
 const StyledInput = ({ children }) => {
-	return <StyledWrapper>{children}</StyledWrapper>;
+	return <StyledInputWrapper>{children}</StyledInputWrapper>;
 };
 
-const StyledWrapper = styled.div`
+const StyledInputWrapper = styled.div`
 	width: 100%;
 	display: flex;
 	align-items: baseline;
@@ -22,7 +22,7 @@ const StyledWrapper = styled.div`
 		width: inherit;
 		background-color: ${COLORS.offwhite};
 		color: ${COLORS.black};
-		padding: ${SPACING.small} ${SPACING.medium};
+		padding: ${SPACING.xs} ${SPACING.small};
 		border-radius: 30px;
 		line-height: 2;
 		font-weight: 300;

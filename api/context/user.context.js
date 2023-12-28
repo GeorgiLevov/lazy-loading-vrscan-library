@@ -1,8 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { account, storage } from '../appwrite';
+import { account, storage, storageBucket, avatars } from '../appwrite';
 import { ID } from 'appwrite';
 import { newUserEmptyPreferences } from '../user.config';
-import { v4 as uuidv4 } from 'uuid';
 
 // Creating/Exporting the User context here
 const UserContext = createContext();
@@ -39,18 +38,27 @@ export function UserProvider({ children }) {
 
 	async function updateEmail(newEmail, userPassword) {
 		await account.updateEmail(newEmail, userPassword);
-		await refetchUser();
+		await fetchUser();
 	}
 
 	async function updateName(newName) {
 		await account.updateName(newName);
-		await refetchUser();
+		await fetchUser();
 	}
 
 	async function updatePreferences(newPreferences) {
 		const userPrefs = await account.getPrefs();
 		await account.updatePrefs({ ...userPrefs, ...newPreferences });
-		await refetchUser();
+		await fetchUser();
+	}
+
+	async function getProfileImage() {
+		const userPrefs = await account.getPrefs();
+		const photo = userPrefs.photo
+			? storage.getFileDownload(storageBucket, userPrefs.photo)
+			: avatars.getInitials();
+
+		return photo;
 	}
 
 	async function updateProfileImage(file) {
@@ -60,33 +68,29 @@ export function UserProvider({ children }) {
 			const formData = new FormData();
 			formData.append('file', file);
 
-			const bucketId = '658b3164673f481188e9';
-			const uniqueFileId = uuidv4();
+			const uniqueFileId = ID.unique();
 
-			const response = await storage.createFile(bucketId, uniqueFileId, file);
+			const response = await storage.createFile(
+				storageBucket,
+				uniqueFileId,
+				file
+			);
 
-			const fileURL = `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${
-				response.$id
-			}/view?project=${import.meta.env.VITE_API_KEY}`;
-
-			await updatePreferences({ photo_url: fileURL });
-			await refetchUser();
+			// prettier-ignore
+			const fileURL = `https://cloud.appwrite.io/v1/storage/buckets/${storageBucket}/files/${response.$id}/view?project=${import.meta.env.VITE_API_KEY}`;
+			await updatePreferences({ photo_url: fileURL, photo: response.$id });
 		} catch (error) {
 			console.error('Error uploading profile image:', error);
 		}
 	}
 
-	async function refetchUser() {
-		const loggedInUser = await account.get();
-		setUser(loggedInUser);
-	}
-	async function init() {
+	async function fetchUser() {
 		try {
 			const loggedIn = await account.get();
-			const preferences = await account.getPrefs();
+			const profileImg = await getProfileImage();
 			setUser({
 				...loggedIn,
-				photo_url: preferences.photo_url,
+				photo: profileImg,
 			});
 		} catch (err) {
 			setUser(null);
@@ -95,7 +99,7 @@ export function UserProvider({ children }) {
 
 	// On mount - the app will check for a user session and will log in the user automatically
 	useEffect(() => {
-		init();
+		fetchUser();
 	}, []);
 
 	return (
@@ -105,16 +109,13 @@ export function UserProvider({ children }) {
 				login,
 				logout,
 				signup,
-				updateProfileImage,
 				update: {
 					email: updateEmail,
 					name: updateName,
-					photo: updatePreferences,
-					profileImage: updateProfileImage,
+					photo: updateProfileImage,
 				},
 			}}>
 			{children}
 		</UserContext.Provider>
 	);
 }
-

@@ -33,13 +33,9 @@ function Modal({ closeDialog, title, children }) {
 					{/* Backdrop should not a button because we don't want it to be focusable */}
 					<Backdrop onClick={closeDialog} />
 					<Dialog role="dialog" aria-modal="true" aria-label={title}>
-						<Button
-							variant="close"
-							size="medium"
-							onClick={closeDialog}
-							aria-label="Close Dialog">
-							<X />
-						</Button>
+						<CloseButton onClick={closeDialog} aria-label="Close Dialog">
+							<X strokeWidth={2} />
+						</CloseButton>
 						{children}
 					</Dialog>
 				</Wrapper>
@@ -54,21 +50,35 @@ const Wrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 16px;
 `;
 
 const Backdrop = styled.div`
 	position: absolute;
 	inset: 0;
-	background: hsl(${COLORS.black75});
+	background: ${COLORS.black75};
 `;
 
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/dialog_role
 const Dialog = styled.div`
 	position: relative;
-	background: ${COLORS.gray.body};
+	background: ${COLORS.gray.light};
 	border-radius: 20px;
 	padding: ${SPACING.large};
+`;
+
+const CloseButton = styled.button`
+	margin: 0;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-bottom: ${SPACING.small};
+	transform: translateY(-100%);
+	color: ${COLORS.white};
+	cursor: pointer;
 `;
 
 export default Modal;

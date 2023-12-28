@@ -8,6 +8,8 @@ function Card({ variant, children }) {
 		StyledComponent = CardBase;
 	} else if (variant === 'inverted') {
 		StyledComponent = CardInverted;
+	} else if (variant === 'profile') {
+		StyledComponent = CardProfile;
 	} else {
 		throw new Error(`Unrecognized Button variant: ${variant}`);
 	}
@@ -23,7 +25,7 @@ const CardBase = styled.article`
 	/* flex: 1; */
 	/* min-width: 0px; */
 	background: ${COLORS.white};
-	margin: ${SPACING.small};
+	margin: ${SPACING.xs};
 
 	border-radius: 20px;
 	box-shadow: ${SHADOWS.low};
@@ -51,5 +53,23 @@ const CardInverted = styled(CardBase)`
 	}
 `;
 
-export default Card;
+const CardProfile = styled(CardBase)`
+	margin: 0;
+	padding: ${SPACING.large};
+	max-width: 320px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
+	& > * {
+		margin-bottom: ${SPACING.xs};
+	}
+
+	@media ${QUERIES.tabletAndDown} {
+		width: 100%;
+		text-align: center;
+		max-width: 100%;
+	}
+`;
+
+export default Card;

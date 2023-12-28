@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS, QUERIES, SHADOWS, FONTS, SPACING } from '../../constants';
+import { COLORS, QUERIES, FONTS, SPACING } from '../../constants';
 import { Link } from 'react-router-dom';
 
 const SIZES = {
@@ -46,15 +46,6 @@ const Button = ({
 		StyledComponent = SecondaryButton;
 	} else if (variant === 'underline') {
 		StyledComponent = UnderlineButton;
-	} else if (variant === 'icon') {
-		StyledComponent = IconButton;
-		if (Icon === undefined) {
-			throw new Error(
-				`Please apply an icon to your button before rendering an IconButton!`
-			);
-		}
-	} else if (variant === 'close') {
-		StyledComponent = CloseButton;
 	} else {
 		throw new Error(`Unrecognized Button variant: ${variant}`);
 	}
@@ -67,9 +58,7 @@ const Button = ({
 			$iconfirst={iconfirst}
 			style={styles}
 			onClick={() => onClick()}>
-			{variant === 'icon' && <Icon strokeWidth={1.1} />}
-			{variant === 'underline' && <Icon strokeWidth={1.1} />}
-			{variant === 'secondary' && <Icon strokeWidth={1.1} />}
+			{Icon && <Icon strokeWidth={1.1} />}
 			{children}
 		</StyledComponent>
 	);
@@ -78,6 +67,8 @@ const Button = ({
 const ButtonBase = styled.button`
 	margin: 0;
 	border: 0;
+	position: relative;
+	width: max-content;
 	background: transparent;
 	font-family: 'Helvetica', sans-serif;
 	font-weight: 300;
@@ -99,21 +90,27 @@ const ButtonBase = styled.button`
 	&:focus:not(:focus-visible) {
 		outline: none;
 	}
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: ${(p) => (p.$iconfirst ? 'row' : 'row-reverse')};
+
+	& > svg {
+		margin-right: ${(p) => (p.$iconfirst ? SPACING.xs : '0px')};
+		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.xs)};
+		min-width: 24px;
+
+		@media ${QUERIES.tabletAndDown} {
+			margin: 0;
+		}
+	}
 `;
 
-const CloseButton = styled(ButtonBase)`
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: ${SPACING.medium};
-	transform: translateY(-100%);
-	color: ${COLORS.white};
-`;
 const PrimaryButton = styled(ButtonBase)`
 	background-color: ${COLORS.primaryBlue};
-	font-size: ${FONTS.text.normal};
-	letter-spacing: 0.2px;
 	color: ${COLORS.white};
+	letter-spacing: 0.2px;
 	z-index: 1;
 	position: relative;
 
@@ -145,58 +142,21 @@ const PrimaryButton = styled(ButtonBase)`
 
 const SecondaryButton = styled(ButtonBase)`
 	color: ${COLORS.primaryBlue};
-	display: flex;
-	align-items: center;
-	align-content: center;
 	transition: color 0.2s ease-in-out;
 	&:hover {
-		color: #7d7d7d;
-	}
-
-	svg {
-		display: inline;
-		margin-right: 10px;
-		max-width: 22px;
+		color: ${COLORS.gray.text};
 	}
 `;
 
-const IconButton = styled(PrimaryButton)`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: ${(p) => (p.$iconfirst ? 'row' : 'row-reverse')};
-
-	& > svg {
-		margin-right: ${(p) => (p.$iconfirst ? SPACING.small : '0px')};
-		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.small)};
-		min-width: 24px;
-
-		@media ${QUERIES.tabletAndDown} {
-			margin: 0;
-		}
-	}
-`;
-
-const UnderlineButton = styled.button`
-	font-family: 'Helvetica', sans-serif;
-	font-weight: 300;
-	color: #000;
-	background: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: ${(p) => (p.$iconfirst ? 'row' : 'row-reverse')};
-	font-weight: 300;
-	cursor: pointer;
-	position: relative;
-	border: none;
+const UnderlineButton = styled(ButtonBase)`
+	overflow: visible;
 	transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
 	transition-duration: 400ms;
 	transition-property: color;
 
 	&:focus,
 	&:hover {
-		color: #000;
+		color: ${COLORS.black};
 	}
 
 	&:focus:after,
@@ -218,17 +178,6 @@ const UnderlineButton = styled.button`
 		transition-duration: 400ms;
 		transition-property: width, left;
 	}
-
-	& > svg {
-		margin-right: ${(p) => (p.$iconfirst ? SPACING.small : '0px')};
-		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.small)};
-		min-width: 24px;
-
-		@media ${QUERIES.tabletAndDown} {
-			margin: 0;
-		}
-	}
 `;
 
 export default Button;
-
