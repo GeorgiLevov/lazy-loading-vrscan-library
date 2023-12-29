@@ -59,10 +59,10 @@ export const TextInputWrapper = styled.div`
 	}
 
 	& > input {
+		background: #fff;
 		flex-grow: 1;
 		max-width: 60%;
-		background-color: ${COLORS.white};
-		color: ${COLORS.black};
+		background: #fff;
 		padding: ${SPACING.xs} ${SPACING.small};
 		border-radius: 30px;
 		line-height: 2;
@@ -103,14 +103,12 @@ export const EmailEditInputContainer = styled.div`
 `;
 
 export const InputField = styled.input`
-	background-color: ${({ $isEditing }) =>
-		$isEditing ? `${COLORS.white}` : `${COLORS.white}`};
-	color: ${({ $isEditing }) => ($isEditing ? 'black' : '#808080')};
+	color: ${({ $isEditing }) => ($isEditing ? 'black' : `${COLORS.gray.dark}`)};
 	border: 1px solid transparent;
 	outline: none;
 	padding: ${SPACING.xs} ${SPACING.small};
 	flex-grow: 1;
-
+	background-color: ${COLORS.white};
 	&:focus {
 		outline: none;
 		border: 1px solid
@@ -144,3 +142,17 @@ export const SaveButton = styled.button`
 	font-size: 1rem;
 	padding: 12px 20px;
 `;
+
+export const CancelButton = styled(SaveButton)`
+	color: #8e8e8e;
+	padding: 12px 5px;
+`;
+
+export const ErrorMessage = styled.div`
+	color: red;
+	margin-top: 10px;
+	font-family: 'Helvetica', sans-serif;
+	font-weight: 300;
+	font-size: 14px;
+`;
+

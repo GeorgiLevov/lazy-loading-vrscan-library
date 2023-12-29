@@ -50,6 +50,7 @@ const Wrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 10;
 `;
 
 const Backdrop = styled.div`
@@ -82,3 +83,4 @@ const CloseButton = styled.button`
 `;
 
 export default Modal;
+

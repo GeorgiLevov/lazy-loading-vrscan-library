@@ -28,7 +28,7 @@ const CardBase = styled.article`
 	margin: ${SPACING.xs};
 
 	border-radius: 20px;
-	box-shadow: ${SHADOWS.low};
+
 	overflow: hidden;
 
 	display: flex;
@@ -73,3 +73,4 @@ const CardProfile = styled(CardBase)`
 `;
 
 export default Card;
+
