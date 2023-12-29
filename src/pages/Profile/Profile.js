@@ -15,6 +15,8 @@ import {
 	EmailEditContainer,
 	EmailEditMessage,
 	EmailEditInputContainer,
+	CancelButton,
+	ErrorMessage,
 } from './ProfileStyles';
 import Modal from '../../components/Modal';
 import { Edit, ArrowRight } from 'react-feather';
@@ -25,6 +27,7 @@ import Divider from '../../components/Divider';
 import Card from '../../components/Card';
 import CardDetails from '../../components/Card/CardDetails';
 import useToggle from '../../hooks/useToggle.hook';
+import ProfileImageWithLoader from './ProfileImageWithLoader';
 
 function Profile() {
 	const { user, update } = useUser();
@@ -41,6 +44,8 @@ function Profile() {
 	const [password, setPassword] = useState('');
 	const fileInputRef = useRef(null);
 	const inputRef = useRef({ firstname: null, lastname: null, email: null });
+	const [isUploading, setIsUploading] = useState(false);
+	const [formErrorMessage, setFormErrorMessage] = useState('');
 
 	useEffect(() => {
 		if (user) {
@@ -59,6 +64,19 @@ function Profile() {
 			}
 			return { ...prev, [field]: isFieldEditing };
 		});
+	};
+
+	const cancelEdit = (field) => {
+		setIsEditing((prev) => ({ ...prev, [field]: false }));
+
+		if (field === 'firstname') setFirstname(user?.name.split(' ')[0]);
+		if (field === 'lastname') setLastname(user?.name.split(' ')[1]);
+	};
+
+	const handleCancelEmailEdit = () => {
+		setEmail(user?.email);
+		setFormErrorMessage('');
+		toggleEmailModal();
 	};
 
 	const handleFirstNameUpdate = () => {
@@ -82,9 +100,19 @@ function Profile() {
 		setIsEditing((prev) => ({ ...prev, email: false }));
 	};
 
-	const handleEmailUpdate = () => {
-		update.email(email, password);
-		toggleEmailModal();
+	const handleEmailUpdate = async (event) => {
+		if (event) {
+			event.preventDefault();
+		}
+
+		try {
+			await update.email(email, password);
+			toggleEmailModal();
+			setFormErrorMessage('');
+		} catch (error) {
+			console.error(error);
+			setFormErrorMessage(error.message);
+		}
 	};
 
 	const handleProfileImageUpdate = () => {
@@ -94,11 +122,14 @@ function Profile() {
 	const handleFileChange = async (event) => {
 		const file = event.target.files[0];
 		if (file) {
-			await update.photo(file);
-		} else {
-			throw new Error(
-				`It seems you didn't specify any file, please try again.`
-			);
+			setIsUploading(true);
+			try {
+				await update.photo(file);
+				setIsUploading(false);
+			} catch (error) {
+				console.error(error.message);
+				setIsUploading(false);
+			}
 		}
 	};
 
@@ -113,7 +144,11 @@ function Profile() {
 						<>
 							<ProfileSection>
 								<Card variant="profile">
-									<ProfileImage src={profileUrl} alt="Profile image" />
+									<ProfileImageWithLoader
+										src={profileUrl}
+										alt="Profile image"
+										isLoading={isUploading}
+									/>
 
 									<input
 										type="file"
@@ -150,9 +185,14 @@ function Profile() {
 										onChange={(e) => setFirstname(e.target.value)}
 									/>
 									{isEditing.firstname ? (
-										<SaveButton onClick={handleFirstNameUpdate}>
-											Save
-										</SaveButton>
+										<>
+											<SaveButton onClick={handleFirstNameUpdate}>
+												Save
+											</SaveButton>
+											<CancelButton onClick={() => cancelEdit('firstname')}>
+												Cancel
+											</CancelButton>
+										</>
 									) : (
 										<Button
 											variant="secondary"
@@ -177,7 +217,14 @@ function Profile() {
 										$isEditing={isEditing.lastname}
 									/>
 									{isEditing.lastname ? (
-										<SaveButton onClick={handleLastNameUpdate}>Save</SaveButton>
+										<>
+											<SaveButton onClick={handleLastNameUpdate}>
+												Save
+											</SaveButton>
+											<CancelButton onClick={() => cancelEdit('lastname')}>
+												Cancel
+											</CancelButton>
+										</>
 									) : (
 										<Button
 											variant="secondary"
@@ -203,7 +250,9 @@ function Profile() {
 										onBlur={handleEmailFocusOut}
 									/>{' '}
 									{isEditing.email ? (
-										<SaveButton onClick={handleEmailEdit}>Save</SaveButton>
+										<>
+											<SaveButton onClick={handleEmailEdit}>Save</SaveButton>
+										</>
 									) : (
 										<Button
 											variant="secondary"
@@ -219,7 +268,7 @@ function Profile() {
 								{showEmailModal && (
 									<Modal
 										title="Email Edit Modal"
-										closeDialog={() => toggleEdit('email')}>
+										closeDialog={handleCancelEmailEdit}>
 										<EmailEditContainer>
 											<EmailEditMessage>
 												Are you sure you want to change your email to:{' '}
@@ -235,10 +284,13 @@ function Profile() {
 													placeholder="Enter password"
 													onChange={(e) => setPassword(e.target.value)}
 												/>
-												<SaveButton onClick={handleEmailUpdate}>
+												<SaveButton onClick={(e) => handleEmailUpdate(e)}>
 													Confirm
 												</SaveButton>
 											</EmailEditInputContainer>
+											{formErrorMessage && (
+												<ErrorMessage>{formErrorMessage}</ErrorMessage>
+											)}
 										</EmailEditContainer>
 									</Modal>
 								)}
@@ -271,3 +323,4 @@ function Profile() {
 }
 
 export default Profile;
+
