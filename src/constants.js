@@ -1,6 +1,8 @@
 export const COLORS = {
-	transparent: '0deg 0% 100% / 0%',
+	transparent: 'hsl(0deg 0% 100% / 0%)',
+	almostTransparent: 'hsl(0deg 0% 100% / 25%)',
 	black: '#000000',
+	black75: 'hsl(0deg 0% 0% / 0.75)',
 	white: '#FFFFFF',
 	offwhite: '#F3F3F3',
 	primaryBlue: '#17A2DF',
@@ -8,12 +10,12 @@ export const COLORS = {
 	gray: {
 		body: '#F2F2F2',
 		card: '#F2F2F2',
+		divider: '#DEDEDE',
 		text: '#707070',
-		filter: '#E9E9E9',
-		devider: '#DEDEDE',
+		light: '#E6E6E6',
 		tag: '#DDDDDD',
 		breadcrumb: '#A5A5A5',
-		dark: '#3b3b3b',
+		dark: '#3B3B3B',
 	},
 	shadow: '0deg 0% 0%',
 };
@@ -31,17 +33,19 @@ export const QUERIES = {
 };
 
 export const SPACING = {
-	small: `${8 / 16}rem`,
-	medium: `${16 / 16}rem`,
+	xs: `${8 / 16}rem`,
+	small: `${16 / 16}rem`,
+	medium: `${24 / 16}rem`,
 	large: `${32 / 16}rem`,
 	xl: `${48 / 16}rem`,
 };
 
 export const FONTS = {
 	text: {
-		large: `${20 / 16}rem`,
-		normal: `${16 / 16}rem`,
 		small: `${12 / 16}rem`,
+		label: `${14 / 16}rem`,
+		normal: `${16 / 16}rem`,
+		large: `${20 / 16}rem`,
 	},
 	heading: {
 		large: `${40 / 16}rem`,

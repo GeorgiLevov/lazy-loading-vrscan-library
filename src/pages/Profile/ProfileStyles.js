@@ -1,129 +1,105 @@
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../constants';
-import Button from '../../components/Button';
+import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
+
+import Picture from '../../components/Picture/Picture';
+import { space } from 'postcss/lib/list';
 
 export const ProfileContainer = styled.div`
-	margin-top: 40px;
+	padding-top: ${SPACING.xl};
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: flex-start;
 
-	@media (max-width: 768px) {
+	@media (${QUERIES.tabletAndDown}) {
 		flex-direction: column;
 	}
+`;
 
-	.section-profile-info {
-		max-width: 300px;
-		margin-right: 50px;
-		background: ${COLORS.white};
-		padding: 25px;
-		border-radius: 20px;
-		text-align: center;
-		margin-bottom: 40px;
+export const ProfileSection = styled.section`
+	flex: 1 0;
+	display: flex;
+	margin-right: ${SPACING.xl};
+`;
 
-		@media (max-width: 768px) {
-			width: 100%;
-			text-align: center;
-			max-width: 100%;
+export const ProfileImage = styled(Picture)`
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+`;
 
-			button {
-				margin: 0 auto;
-			}
-		}
+export const ProfileDetails = styled.div`
+	margin-top: 10px;
+	font-family: 'Helvetica', sans-serif;
 
-		.profile-image-container {
-			display: flex;
-			justify-content: center;
-			width: 100%;
-			max-width: 150px;
-			margin: 0 auto;
-			margin-bottom: 10px;
+	& > * {
+		font-weight: 500;
+		font-size: ${FONTS.text};
 
-			img {
-				display: inline-block;
-				width: 150px;
-				height: 150px;
-				border-radius: 50%;
-				object-fit: cover;
-			}
-		}
-
-		.user-details {
-			margin-top: 10px;
-			font-family: 'Helvetica', sans-serif;
-
-			.fullname {
-				font-weight: 500;
-				font-size: ${FONTS.text};
-			}
-			.email {
-				font-weight: 300;
-				font-size: ${FONTS.text};
-			}
+		&:last-child {
+			font-weight: 300;
 		}
 	}
-	.additional-links-wrap {
-		a {
-			padding: 0px !important;
-			margin-bottom: 15px;
-		}
+`;
+
+export const TextInputWrapper = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	margin-bottom: 20px;
+
+	& > label {
+		display: block;
+		flex-basis: 100%;
+		font-size: ${FONTS.text.label};
+		padding-bottom: ${SPACING.xs};
+		color: ${COLORS.gray.text};
 	}
 
-	.section-profile-settings {
-		flex: 1;
-		margin-bottom: 50px;
-		.profile-settings-wrap {
-			padding-bottom: 20px;
-			margin-bottom: 30px;
-			border-bottom: 1px solid #ddd;
-		}
+	& > input {
+		flex-grow: 1;
+		max-width: 60%;
+		background-color: ${COLORS.white};
+		color: ${COLORS.black};
+		padding: ${SPACING.xs} ${SPACING.small};
+		border-radius: 30px;
+		line-height: 2;
+		font-weight: 300;
 
-		h2 {
-			padding-bottom: 20px;
-		}
-		label {
-			padding-bottom: 8px;
-			display: block;
-			font-size: 15px;
-			color: #6c6c6c;
-		}
-
-		.edit-row {
-			margin-bottom: 20px;
-
-			.input {
-				display: flex;
-				justify-content: flex-start;
-				align-items: center;
-			}
-
-			.email-wrap {
-				padding-bottom: 10px;
-			}
-
-			.popup {
-				padding: 20px;
-				background: #eaeaea;
-				border-radius: 20px;
-			}
-			.popup-warning {
-				margin-bottom: 10px;
-				label {
-					color: red;
-					margin-bottom: 0;
-					padding-bottom: 0;
-				}
-				label > span {
-					color: #000;
-					font-weight: 500;
-				}
-				p {
-					font-size: 13px;
-				}
-			}
+		@media (${QUERIES.tabletAndDown}) {
+			max-width: revert;
 		}
 	}
+`;
+
+export const ProfileSettings = styled.section`
+	flex: 3 0;
+`;
+
+export const EmailEditContainer = styled.div`
+	& > * {
+		margin-bottom: ${SPACING.xs};
+	}
+`;
+
+export const EmailEditMessage = styled.label`
+	display: block;
+	color: red;
+
+	& > p {
+		color: ${COLORS.black};
+	}
+	& > span {
+		color: ${COLORS.black};
+		font-weight: 500;
+	}
+`;
+
+export const EmailEditInputContainer = styled.div`
+	width: 100%;
+	display: inline-flex;
 `;
 
 export const InputField = styled.input`
@@ -132,7 +108,8 @@ export const InputField = styled.input`
 	color: ${({ $isEditing }) => ($isEditing ? 'black' : '#808080')};
 	border: 1px solid transparent;
 	outline: none;
-	padding: 10px 15px;
+	padding: ${SPACING.xs} ${SPACING.small};
+	flex-grow: 1;
 
 	&:focus {
 		outline: none;
@@ -143,12 +120,13 @@ export const InputField = styled.input`
 `;
 
 export const EditButton = styled.button`
-	background-color: #000;
-	color: #fff;
+	background-color: ${COLORS.black};
+	color: ${COLORS.white};
 	cursor: pointer;
 `;
 
 export const SaveButton = styled.button`
+	display: inline-block;
 	margin: 0;
 	border: 0;
 	background: transparent;
@@ -166,4 +144,3 @@ export const SaveButton = styled.button`
 	font-size: 1rem;
 	padding: 12px 20px;
 `;
-

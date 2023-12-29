@@ -4,6 +4,7 @@ import styled from 'styled-components';
 // needs to be refactored - there are better ways to return this component
 
 const Picture = ({
+	src,
 	source1x,
 	source2x,
 	source3x,
@@ -35,7 +36,7 @@ const Picture = ({
 			/>
 		);
 	} else {
-		return <img className={className} alt={alt} src={source1x} />;
+		return <img className={className} alt={alt} src={source1x || src} />;
 	}
 };
 

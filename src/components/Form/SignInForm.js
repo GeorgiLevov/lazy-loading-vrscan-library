@@ -1,7 +1,7 @@
 import { useState, useId, useEffect } from 'react';
 import styled from 'styled-components';
 import { SPACING, QUERIES } from '../../constants';
-import FormTitle from './FormTitle';
+import PageTitle from '../PageTitle';
 import FormResponseField from './FormResponseField';
 import StyledInput from './StyledInput';
 import FormSubmitContainer from './FormSubmitContainer';
@@ -64,7 +64,7 @@ function SignInForm() {
 			{user && <Navigate to="/catalog" replace={true} />}
 
 			<StyledForm onSubmit={(event) => handleSubmit(event)}>
-				<FormTitle>{userActionText}</FormTitle>
+				<PageTitle>{userActionText}</PageTitle>
 				{isSignupShown && (
 					<>
 						{/* NEED TO HAVE VALIDATION AND MAKE SURE WE ONLY ACCEPT 1 NAME PER FIELD, AKA - NO SPACES OR SPECIAL CHARACTERS */}

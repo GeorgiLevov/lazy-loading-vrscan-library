@@ -32,11 +32,19 @@ function Home() {
 						pre-defined REST API
 					</p>
 					{user ? (
-						<Button href="/catalog" variant="icon" icon={Compass} size="large">
+						<Button
+							href="/catalog"
+							variant="primary"
+							icon={Compass}
+							size="large">
 							Explore Library
 						</Button>
 					) : (
-						<Button href="/login" variant="icon" icon={ArrowRight} size="large">
+						<Button
+							href="/login"
+							variant="primary"
+							icon={ArrowRight}
+							size="large">
 							Sign In
 						</Button>
 					)}
@@ -49,4 +57,3 @@ function Home() {
 }
 
 export default Home;
-

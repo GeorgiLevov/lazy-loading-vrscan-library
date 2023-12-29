@@ -1,16 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Main from '../../components/Main/Main';
 import Button from '../../components/Button';
-import { storage } from '../../../api/appwrite';
 import { useUser } from '../../../api/context/user.context';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Header from '../../components/Header/Header';
-import { ProfileContainer, InputField, SaveButton } from './ProfileStyles';
+import {
+	ProfileContainer,
+	ProfileSection,
+	InputField,
+	SaveButton,
+	ProfileImage,
+	ProfileSettings,
+	TextInputWrapper,
+	EmailEditContainer,
+	EmailEditMessage,
+	EmailEditInputContainer,
+} from './ProfileStyles';
+import Modal from '../../components/Modal';
 import { Edit, ArrowRight } from 'react-feather';
 import Footer from '../../components/Footer';
+import PageTitle from '../../components/PageTitle';
+import Subheading from '../../components/Subheading';
+import Divider from '../../components/Divider';
+import Card from '../../components/Card';
+import CardDetails from '../../components/Card/CardDetails';
+import useToggle from '../../hooks/useToggle.hook';
 
 function Profile() {
-	const { user, update, updateProfileImage } = useUser();
+	const { user, update } = useUser();
 	const [firstname, setFirstname] = useState('');
 	const [lastname, setLastname] = useState('');
 	const [email, setEmail] = useState('');
@@ -20,7 +37,7 @@ function Profile() {
 		lastname: false,
 		email: false,
 	});
-	const [showEmailPopup, setShowEmailPopup] = useState(false);
+	const [showEmailModal, toggleEmailModal] = useToggle(false);
 	const [password, setPassword] = useState('');
 	const fileInputRef = useRef(null);
 	const inputRef = useRef({ firstname: null, lastname: null, email: null });
@@ -30,7 +47,7 @@ function Profile() {
 			setFirstname(user?.name.split(' ')[0]);
 			setLastname(user?.name.split(' ')[1]);
 			setEmail(user?.email);
-			setProfileUrl(user?.prefs.photo_url);
+			setProfileUrl(user?.photo);
 		}
 	}, [user]);
 
@@ -44,12 +61,12 @@ function Profile() {
 		});
 	};
 
-	const handleFirstNameChange = () => {
+	const handleFirstNameUpdate = () => {
 		update.name(firstname + ' ' + lastname);
 		toggleEdit('firstname');
 	};
 
-	const handleLastNameChange = () => {
+	const handleLastNameUpdate = () => {
 		update.name(firstname + ' ' + lastname);
 		toggleEdit('lastname');
 	};
@@ -60,24 +77,28 @@ function Profile() {
 
 	const handleEmailFocusOut = () => {
 		if (email !== user?.email) {
-			setShowEmailPopup(true);
+			toggleEmailModal();
 		}
 		setIsEditing((prev) => ({ ...prev, email: false }));
 	};
 
 	const handleEmailUpdate = () => {
 		update.email(email, password);
-		setShowEmailPopup(false);
+		toggleEmailModal();
 	};
 
-	const handleEditProfileImageClick = () => {
+	const handleProfileImageUpdate = () => {
 		fileInputRef.current.click();
 	};
 
 	const handleFileChange = async (event) => {
 		const file = event.target.files[0];
 		if (file) {
-			await updateProfileImage(file);
+			await update.photo(file);
+		} else {
+			throw new Error(
+				`It seems you didn't specify any file, please try again.`
+			);
 		}
 	};
 
@@ -86,15 +107,14 @@ function Profile() {
 			<Header />
 			<Main>
 				<Breadcrumbs />
-				<h1>Profile</h1>
+				<PageTitle>Profile</PageTitle>
 				<ProfileContainer>
 					{user && (
 						<>
-							<div className="section-profile-info">
-								<div className="profile-image-container">
-									<img src={profileUrl} alt="Profile" />
-								</div>
-								<div className="update-image">
+							<ProfileSection>
+								<Card variant="profile">
+									<ProfileImage src={profileUrl} alt="Profile image" />
+
 									<input
 										type="file"
 										style={{ display: 'none' }}
@@ -106,160 +126,142 @@ function Profile() {
 										iconfirst={true}
 										size="medium"
 										icon={Edit}
-										onClick={handleEditProfileImageClick}>
+										onClick={handleProfileImageUpdate}>
 										Edit Profile Image
 									</Button>
-								</div>
-								<div className="user-details">
-									<div className="fullname">{user.name}</div>
-									<div className="email">{user.email}</div>
-								</div>
-							</div>
-							<div className="section-profile-settings">
-								<div className="profile-settings-wrap">
-									<div className="section-heading">
-										<h2>Account settings</h2>
-									</div>
-									<div className="edit-row">
-										<label>First Name</label>
-										<div className="input">
-											<InputField
-												ref={(el) => (inputRef.current.firstname = el)}
-												type="text"
-												value={firstname}
-												readOnly={!isEditing.firstname}
-												$isEditing={isEditing.firstname}
-												onChange={(e) => setFirstname(e.target.value)}
-											/>
-											{isEditing.firstname ? (
-												<SaveButton onClick={handleFirstNameChange}>
-													Save
-												</SaveButton>
-											) : (
-												<Button
-													variant="secondary"
-													iconfirst={true}
-													size="medium"
-													icon={Edit}
-													onClick={() => toggleEdit('firstname')}>
-													Edit
-												</Button>
-											)}
-										</div>
-									</div>
+									<CardDetails>
+										<p style={{ fontWeight: '700' }}>{user.name}</p>
+										<p>{user.email}</p>
+									</CardDetails>
+								</Card>
+							</ProfileSection>
 
-									<div className="edit-row">
-										<label>Last Name</label>
-										<div className="input">
-											<InputField
-												ref={(el) => (inputRef.current.lastname = el)}
-												type="text"
-												value={lastname}
-												readOnly={!isEditing.lastname}
-												onChange={(e) => setLastname(e.target.value)}
-												$isEditing={isEditing.lastname}
-											/>
-											{isEditing.lastname ? (
-												<SaveButton onClick={handleLastNameChange}>
-													Save
-												</SaveButton>
-											) : (
-												<Button
-													variant="secondary"
-													iconfirst={true}
-													size="medium"
-													icon={Edit}
-													onClick={() => toggleEdit('lastname')}>
-													Edit
-												</Button>
-											)}
-										</div>
-									</div>
+							<ProfileSettings>
+								<Subheading>Account settings</Subheading>
+								<TextInputWrapper>
+									<label htmlFor="first-name-update-input">First Name</label>
+									<InputField
+										id="first-name-update-input"
+										ref={(el) => (inputRef.current.firstname = el)}
+										type="text"
+										value={firstname}
+										readOnly={!isEditing.firstname}
+										$isEditing={isEditing.firstname}
+										onChange={(e) => setFirstname(e.target.value)}
+									/>
+									{isEditing.firstname ? (
+										<SaveButton onClick={handleFirstNameUpdate}>
+											Save
+										</SaveButton>
+									) : (
+										<Button
+											variant="secondary"
+											iconfirst={true}
+											size="medium"
+											icon={Edit}
+											onClick={() => toggleEdit('firstname')}>
+											Edit
+										</Button>
+									)}
+								</TextInputWrapper>
 
-									<div className="edit-row">
-										<label>Email</label>
-										<div className="edit-row-helper">
-											<div className="input email-wrap">
+								<TextInputWrapper>
+									<label htmlFor="last-name-update-input">Last Name</label>
+									<InputField
+										id="last-name-update-input"
+										ref={(el) => (inputRef.current.lastname = el)}
+										type="text"
+										value={lastname}
+										readOnly={!isEditing.lastname}
+										onChange={(e) => setLastname(e.target.value)}
+										$isEditing={isEditing.lastname}
+									/>
+									{isEditing.lastname ? (
+										<SaveButton onClick={handleLastNameUpdate}>Save</SaveButton>
+									) : (
+										<Button
+											variant="secondary"
+											iconfirst={true}
+											size="medium"
+											icon={Edit}
+											onClick={() => toggleEdit('lastname')}>
+											Edit
+										</Button>
+									)}
+								</TextInputWrapper>
+
+								<TextInputWrapper>
+									<label htmlFor="email-update-input">Email</label>
+									<InputField
+										id="email-update-input"
+										ref={(el) => (inputRef.current.email = el)}
+										type="email"
+										value={email}
+										readOnly={!isEditing.email}
+										$isEditing={isEditing.email}
+										onChange={(e) => setEmail(e.target.value)}
+										onBlur={handleEmailFocusOut}
+									/>{' '}
+									{isEditing.email ? (
+										<SaveButton onClick={handleEmailEdit}>Save</SaveButton>
+									) : (
+										<Button
+											variant="secondary"
+											iconfirst={true}
+											size="medium"
+											icon={Edit}
+											onClick={() => toggleEdit('email')}>
+											Edit
+										</Button>
+									)}
+								</TextInputWrapper>
+
+								{showEmailModal && (
+									<Modal
+										title="Email Edit Modal"
+										closeDialog={() => toggleEdit('email')}>
+										<EmailEditContainer>
+											<EmailEditMessage>
+												Are you sure you want to change your email to:{' '}
+												<span>{email}</span>
+												<p>
+													Please verify this is you by entering your password
+													below:
+												</p>
+											</EmailEditMessage>
+											<EmailEditInputContainer>
 												<InputField
-													ref={(el) => (inputRef.current.email = el)}
-													type="email"
-													value={email}
-													readOnly={!isEditing.email}
-													onChange={(e) => setEmail(e.target.value)}
-													onBlur={handleEmailFocusOut}
-													$isEditing={isEditing.email}
+													type="password"
+													placeholder="Enter password"
+													onChange={(e) => setPassword(e.target.value)}
 												/>
-												{isEditing.email ? (
-													<SaveButton onClick={handleEmailEdit}>
-														Save
-													</SaveButton>
-												) : (
-													<Button
-														variant="secondary"
-														iconfirst={true}
-														size="medium"
-														icon={Edit}
-														onClick={handleEmailEdit}>
-														Edit
-													</Button>
-												)}
-											</div>
+												<SaveButton onClick={handleEmailUpdate}>
+													Confirm
+												</SaveButton>
+											</EmailEditInputContainer>
+										</EmailEditContainer>
+									</Modal>
+								)}
 
-											<div className="pass-popup-wrap">
-												{showEmailPopup && (
-													<div className="popup">
-														<div className="popup-warning">
-															<label>
-																{' '}
-																Your email will be changed to:{' '}
-																<span>{email}</span>
-															</label>
-															<p>Please enter your password</p>
-														</div>
-														<div className="input">
-															<InputField
-																type="password"
-																placeholder="Enter password"
-																onChange={(e) => setPassword(e.target.value)}
-															/>
-															<SaveButton onClick={handleEmailUpdate}>
-																Confirm
-															</SaveButton>
-														</div>
-													</div>
-												)}
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className="additional-links-wrap">
-									<div className="section-heading">
-										<h2>Reviews & Favorites</h2>
-									</div>
-									<ul>
-										<li>
-											<Button
-												variant="secondary"
-												iconfirst={true}
-												size="medium"
-												icon={ArrowRight}
-												href="/reviews">
-												My Reviews
-											</Button>
-										</li>
-										<li>
-											<Button
-												variant="secondary"
-												iconfirst={true}
-												size="medium"
-												icon={ArrowRight}
-												href="/favorites">
-												<span>Favourites</span>
-											</Button>
-										</li>
-									</ul>
-								</div>
-							</div>
+								<Divider />
+								<Subheading>Reviews & Favorites</Subheading>
+								<Button
+									variant="secondary"
+									iconfirst={true}
+									size="medium"
+									icon={ArrowRight}
+									href="/reviews">
+									My Reviews
+								</Button>
+								<Button
+									variant="secondary"
+									iconfirst={true}
+									size="medium"
+									icon={ArrowRight}
+									href="/favorites">
+									<span>Favourites</span>
+								</Button>
+							</ProfileSettings>
 						</>
 					)}
 				</ProfileContainer>
@@ -269,4 +271,3 @@ function Profile() {
 }
 
 export default Profile;
-

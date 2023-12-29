@@ -31,4 +31,3 @@ function UserNav({ name }) {
 	);
 }
 export default UserNav;
-
