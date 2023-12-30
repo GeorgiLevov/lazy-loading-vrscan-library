@@ -1,33 +1,30 @@
 import styled from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 
-import Picture from '../../components/Picture/Picture';
-import { space } from 'postcss/lib/list';
-
 export const ProfileContainer = styled.div`
 	padding-top: ${SPACING.xl};
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	align-items: flex-start;
+	align-items: stretch;
 
 	@media (${QUERIES.tabletAndDown}) {
 		flex-direction: column;
+	}
+
+	& > section {
+		margin-right: ${SPACING.xl};
+
+		@media (${QUERIES.tabletAndDown}) {
+			margin: 0;
+			margin-bottom: ${SPACING.xl};
+		}
 	}
 `;
 
 export const ProfileSection = styled.section`
 	flex: 1 0;
 	display: flex;
-	margin-right: ${SPACING.xl};
-`;
-
-export const ProfileImage = styled(Picture)`
-	display: inline-block;
-	width: 150px;
-	height: 150px;
-	border-radius: 50%;
-	object-fit: cover;
 `;
 
 export const ProfileDetails = styled.div`
@@ -155,4 +152,3 @@ export const ErrorMessage = styled.div`
 	font-weight: 300;
 	font-size: 14px;
 `;
-

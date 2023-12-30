@@ -8,7 +8,7 @@ function FormTitle({ children }) {
 
 const StyledTitle = styled.h1`
 	display: block;
-	font-size: ${FONTS.heading.large};
+	font-size: ${FONTS.heading.xl};
 `;
 
 export default FormTitle;

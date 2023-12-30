@@ -61,7 +61,7 @@ function SignInForm() {
 
 	return (
 		<>
-			{user && <Navigate to="/catalog" replace={true} />}
+			{user && <Navigate to="/" replace={true} />}
 
 			<StyledForm onSubmit={(event) => handleSubmit(event)}>
 				<PageTitle>{userActionText}</PageTitle>

@@ -8,7 +8,7 @@ function PageTitle({ children }) {
 
 const StyledPageTitle = styled.h1`
 	display: block;
-	font-size: ${FONTS.heading.large};
+	font-size: ${FONTS.heading.xl};
 `;
 
 export default PageTitle;

@@ -46,12 +46,21 @@ export const FONTS = {
 		label: `${14 / 16}rem`,
 		normal: `${16 / 16}rem`,
 		large: `${20 / 16}rem`,
+		mega: `${32 / 16}rem`,
+		giga: `${40 / 16}rem`,
 	},
 	heading: {
-		large: `${40 / 16}rem`,
+		xl: `${40 / 16}rem`,
+		large: `${32 / 16}rem`,
 		normal: `${24 / 16}rem`,
 		small: `${20 / 16}rem`,
 	},
+};
+
+export const WEIGHTS = {
+	normal: 300,
+	medium: 500,
+	bold: 700,
 };
 
 // generated through: https://www.joshwcomeau.com/shadow-palette/

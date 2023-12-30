@@ -9,7 +9,7 @@ import { useUser } from '../../../api/context/user.context';
 import Button from '../../components/Button/Button';
 
 function Home() {
-	const { user } = useUser();
+	const { user, logout } = useUser();
 	return (
 		<>
 			<Header />
@@ -32,13 +32,18 @@ function Home() {
 						pre-defined REST API
 					</p>
 					{user ? (
-						<Button
-							href="/catalog"
-							variant="primary"
-							icon={Compass}
-							size="large">
-							Explore Library
-						</Button>
+						<>
+							<Button variant="primary" size="large" onClick={() => logout()}>
+								Log out (Testing only)
+							</Button>
+							<Button
+								href="/catalog"
+								variant="primary"
+								icon={Compass}
+								size="large">
+								Explore Library
+							</Button>
+						</>
 					) : (
 						<Button
 							href="/login"

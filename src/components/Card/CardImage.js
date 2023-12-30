@@ -3,24 +3,26 @@ import styled from 'styled-components';
 import Picture from '../Picture/Picture';
 import { COLORS, GRADIENTS, QUERIES, SPACING } from '../../constants';
 
-function CardImage({ src, source2x, source3x, alt, background }) {
+const CardImage = ({ src, source2x, source3x, alt, variant }) => {
+	let StyledImage;
+	if (!variant) {
+		StyledImage = StyledCardImage;
+	} else if (variant === 'profile') {
+		StyledImage = ProfileImage;
+	} else if (variant === 'vrscan') {
+		StyledImage = VRScanImage;
+	} else {
+		throw new Error(`Unrecognized Button variant: ${variant}`);
+	}
+
 	return (
-		<StyledCardImage
+		<StyledImage
 			source1x={src}
 			source2x={source2x}
 			source3x={source3x}
-			alt={alt}></StyledCardImage>
+			alt={alt}></StyledImage>
 	);
-}
-
-export const CardImageContainer = styled.div`
-	flex-grow: 1;
-
-	background: ${COLORS.gray.light};
-	@media ${QUERIES.tabletAndDown} {
-		width: 100%;
-	}
-`;
+};
 
 const StyledCardImage = styled(Picture)`
 	// expected to be flex child
@@ -29,6 +31,22 @@ const StyledCardImage = styled(Picture)`
 	width: 50%;
 	max-height: 100%;
 	padding: ${SPACING.medium};
+`;
+
+const ProfileImage = styled(Picture)`
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+`;
+
+const VRScanImage = styled(Picture)`
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
 `;
 
 export default CardImage;
