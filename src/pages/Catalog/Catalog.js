@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
+import Filters from './Filters';
 
 function Catalog() {
 	return (
@@ -8,11 +9,11 @@ function Catalog() {
 			<Header />
 			<Main>
 				<h1>Catalog page</h1>
-
-				<a href="#">Link to something</a>
+				<Filters />
 			</Main>
 		</>
 	);
 }
 
 export default Catalog;
+
