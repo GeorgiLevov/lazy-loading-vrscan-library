@@ -91,8 +91,8 @@ const CardDetails = styled.section`
 
 const Label = styled.div`
 	position: absolute;
-	bottom: ${`-${SPACING.medium}`};
-	right: ${`-${SPACING.medium}`};
+	bottom: ${`-${SPACING.mega}`};
+	right: ${`-${SPACING.mega}`};
 	background: transparent;
 	height: ${SPACING.large};
 	line-height: ${SPACING.large};
@@ -178,11 +178,7 @@ const ImageWrapper = styled.div`
 		p.variant === 'inverted' ? COLORS.gray.light : COLORS.transparent};
 	position: relative;
 	flex-grow: 1;
-	margin-bottom: ${SPACING.large};
-
-	@media ${QUERIES.tabletAndDown} {
-		width: 100%;
-	}
+	margin-bottom: ${SPACING.mega};
 `;
 
 export default Card;

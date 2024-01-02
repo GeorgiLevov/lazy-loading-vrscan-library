@@ -43,8 +43,10 @@ const ProfileImage = styled(Picture)`
 
 const VRScanImage = styled(Picture)`
 	display: inline-block;
-	width: 150px;
-	height: 150px;
+	width: 100%;
+	max-width: 160px;
+	height: 100%;
+	max-height: 160px;
 	border-radius: 50%;
 	object-fit: cover;
 `;

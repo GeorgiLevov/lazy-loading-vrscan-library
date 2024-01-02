@@ -37,7 +37,8 @@ export const SPACING = {
 	small: `${16 / 16}rem`,
 	medium: `${24 / 16}rem`,
 	large: `${32 / 16}rem`,
-	xl: `${48 / 16}rem`,
+	mega: `${40 / 16}rem`,
+	giga: `${48 / 16}rem`,
 };
 
 export const FONTS = {

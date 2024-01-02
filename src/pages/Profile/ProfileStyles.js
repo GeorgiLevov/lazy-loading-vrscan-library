@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 
 export const ProfileContainer = styled.div`
-	padding-top: ${SPACING.xl};
+	padding-top: ${SPACING.mega};
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -13,11 +13,11 @@ export const ProfileContainer = styled.div`
 	}
 
 	& > section {
-		margin-right: ${SPACING.xl};
+		margin-right: ${SPACING.mega};
 
 		@media (${QUERIES.tabletAndDown}) {
 			margin: 0;
-			margin-bottom: ${SPACING.xl};
+			margin-bottom: ${SPACING.mega};
 		}
 	}
 `;

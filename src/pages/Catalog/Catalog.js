@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
 import PageTitle from '../../components/PageTitle';
 import styled from 'styled-components';
-import { COLORS, FONTS, SPACING } from '../../constants';
+import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
 import CardImage from '../../components/Card/CardImage';
@@ -161,9 +161,21 @@ const SearchInput = styled.input`
 const VRScansContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	/* justify-content: flex-start; */
+	justify-content: space-evenly;
 
+	@media ${QUERIES.laptopAndDown} {
+	}
+
+	/* VRSCAN CARDS */
 	& > * {
-		margin-right: ${SPACING.medium};
+		margin-bottom: ${SPACING.medium};
+		margin-left: calc(${SPACING.small} / 2);
+		margin-right: calc(${SPACING.small} / 2);
+
+		@media ${QUERIES.tabletAndDown} {
+			flex-direction: column;
+		}
 	}
 `;
 
