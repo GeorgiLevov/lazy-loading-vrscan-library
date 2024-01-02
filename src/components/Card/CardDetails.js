@@ -18,4 +18,3 @@ const StyledCardDetails = styled.section`
 `;
 
 export default CardDetails;
-

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SliderContainer, Slide } from './ScanSliderStyles';
+import { SliderContainer, Slide } from './SliderStyles';
 import { AnimatePresence } from 'framer-motion';
 import CardImage from '../Card/CardImage';
 
@@ -17,9 +17,9 @@ const variants = {
 	},
 };
 
-function ScansSlider({ products, autoplaySpeed = 3000 }) {
+function Slider({ contents, autoplaySpeed = 3000 }) {
 	const [[page, direction], setPage] = useState([0, 1]);
-	const pageIndex = page % products.length;
+	const pageIndex = page % contents.length;
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -30,7 +30,7 @@ function ScansSlider({ products, autoplaySpeed = 3000 }) {
 
 	return (
 		<SliderContainer>
-			{products && (
+			{contents && (
 				<AnimatePresence initial={false}>
 					<Slide
 						key={page}
@@ -39,8 +39,8 @@ function ScansSlider({ products, autoplaySpeed = 3000 }) {
 						animate="center"
 						exit="exit">
 						<CardImage
-							src={products[pageIndex]?.thumb}
-							alt={`${products[pageIndex]?.name} | Image`}
+							src={contents[pageIndex]?.thumb}
+							alt={`${contents[pageIndex]?.name} | Image`}
 						/>
 					</Slide>
 				</AnimatePresence>
@@ -49,4 +49,4 @@ function ScansSlider({ products, autoplaySpeed = 3000 }) {
 	);
 }
 
-export default ScansSlider;
+export default Slider;
