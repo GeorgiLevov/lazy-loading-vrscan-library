@@ -69,6 +69,7 @@ function Catalog() {
 							}}
 						/>
 					</form>
+					<Filters />
 					{/* ExpandingFilters
                     Materials / Colors / Tags */}
 				</FiltersContainer>
@@ -124,36 +125,9 @@ const SearchInput = styled.input`
 		font-weight: 300;
 		transition: opacity 0.25s linear;
 	}
-	&::-webkit-input-placeholder {
-		color: ${COLORS.gray.text};
-		opacity: 0.8;
-		font-weight: 300;
-		transition: opacity 0.25s linear;
-	}
-	&::-moz-placeholder {
-		color: ${COLORS.gray.text};
-		opacity: 0.8;
-		font-weight: 300;
-		transition: opacity 0.25s linear;
-	}
-	&:-ms-input-placeholder {
-		color: ${COLORS.gray.text};
-		opacity: 0.8;
-		font-weight: 300;
-		transition: opacity 0.25s linear;
-	}
 
 	&:focus {
 		&::placeholder {
-			opacity: 0;
-		}
-		&::-webkit-input-placeholder {
-			opacity: 0;
-		}
-		&::-moz-placeholder {
-			opacity: 0;
-		}
-		&:-ms-input-placeholder {
 			opacity: 0;
 		}
 	}

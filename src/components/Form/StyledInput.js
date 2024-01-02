@@ -31,27 +31,9 @@ const StyledInputWrapper = styled.div`
 			color: ${COLORS.gray.text};
 			opacity: 0.8;
 			font-weight: 300;
-			padding-left: ${SPACING.large};
-		}
-		&::-webkit-input-placeholder {
-			color: ${COLORS.gray.text};
-			opacity: 0.8;
-			font-weight: 300;
-			padding-left: ${SPACING.medium};
-		}
-		&::-moz-placeholder {
-			color: ${COLORS.gray.text};
-			opacity: 0.8;
-			font-weight: 300;
-			padding-left: ${SPACING.medium};
-		}
-		&:-ms-input-placeholder {
-			color: ${COLORS.gray.text};
-			opacity: 0.8;
-			font-weight: 300;
-			padding-left: ${SPACING.medium};
 		}
 	}
 `;
 
 export default StyledInput;
+
