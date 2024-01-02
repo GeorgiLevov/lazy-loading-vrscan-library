@@ -1,37 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import { FONTS, COLORS } from './src/constants';
-import Monument from './src/assets/fonts/Monument-Extended-Regular.woff2';
-import HelveticaLight from './src/assets/fonts/HelveticaNeue-Light.woff2';
-import HelveticaRegular from './src/assets/fonts/HelveticaNeue-Regular.woff2';
-import HelveticaMedium from './src/assets/fonts/HelveticaNeue-Medium.woff2';
 
 const GlobalStyles = createGlobalStyle`
 
-@font-face {
-  font-family: 'Monument';
-  src: url(${Monument}) format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Helvetica';
-  src: url(${HelveticaLight}) format('woff2');
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Helvetica';
-  src: url(${HelveticaRegular}) format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Helvetica';
-  src: url(${HelveticaMedium}) format('woff2');
-  font-weight: 500;
-  font-style: normal;
-}
 
 :root {
     line-height: 1.5;
@@ -48,6 +19,12 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
   }
 
   body {

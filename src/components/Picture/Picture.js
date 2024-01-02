@@ -1,14 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-
-// needs to be refactored - there are better ways to return this component
-
 const Picture = ({
 	src,
 	source1x,
 	source2x,
 	source3x,
-	alt = 'image',
+	alt = 'Image',
 	className,
 }) => {
 	const threeWays = typeof source3x !== 'undefined';

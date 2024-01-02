@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { QUERIES } from '../../constants';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
 
 function Container({ children }) {
@@ -11,16 +10,19 @@ function Container({ children }) {
 	);
 }
 
-export const StyledContainer = styled.div`
-	max-width: 1360px;
-	width: 100%;
-	margin: 0 auto;
-	padding: ${(p) => (p.$padding !== undefined ? `0 ${p.$padding}` : '0 80px')};
+// export const StyledContainer = styled.div`
+// 	padding: ${(p) => (p.$padding !== undefined ? `0 ${p.$padding}` : '0 80px')};
+// `;
 
-	@media ${QUERIES.laptopAndDown} {
-		/* padding: 0 80px; */
-	}
-`;
+export const StyledContainer = styled.div.attrs((props) => ({
+	style: {
+		padding: `${
+			props.$padding !== undefined ? `0 ${props.$padding}` : '0 80px'
+		}`,
+		maxWidth: '1360px',
+		width: '100%',
+		margin: '0 auto',
+	},
+}))``;
 
 export default Container;
-

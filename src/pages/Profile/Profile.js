@@ -9,7 +9,6 @@ import {
 	ProfileSection,
 	InputField,
 	SaveButton,
-	ProfileImage,
 	ProfileSettings,
 	TextInputWrapper,
 	EmailEditContainer,
@@ -25,9 +24,8 @@ import PageTitle from '../../components/PageTitle';
 import Subheading from '../../components/Subheading';
 import Divider from '../../components/Divider';
 import Card from '../../components/Card';
-import CardDetails from '../../components/Card/CardDetails';
 import useToggle from '../../hooks/useToggle.hook';
-import ProfileImageWithLoader from './ProfileImageWithLoader';
+import Loader from '../../components/Loader/Loader';
 
 function Profile() {
 	const { user, update } = useUser();
@@ -44,7 +42,7 @@ function Profile() {
 	const [password, setPassword] = useState('');
 	const fileInputRef = useRef(null);
 	const inputRef = useRef({ firstname: null, lastname: null, email: null });
-	const [isUploading, setIsUploading] = useState(false);
+	const [isUploading, toggleisUploading] = useToggle(false);
 	const [formErrorMessage, setFormErrorMessage] = useState('');
 
 	useEffect(() => {
@@ -122,13 +120,13 @@ function Profile() {
 	const handleFileChange = async (event) => {
 		const file = event.target.files[0];
 		if (file) {
-			setIsUploading(true);
+			toggleisUploading();
 			try {
 				await update.photo(file);
-				setIsUploading(false);
+				toggleisUploading();
 			} catch (error) {
 				console.error(error.message);
-				setIsUploading(false);
+				toggleisUploading();
 			}
 		}
 	};
@@ -143,32 +141,29 @@ function Profile() {
 					{user && (
 						<>
 							<ProfileSection>
-								<Card variant="profile">
-									<ProfileImageWithLoader
-										src={profileUrl}
-										alt="Profile image"
-										isLoading={isUploading}
-									/>
-
-									<input
-										type="file"
-										style={{ display: 'none' }}
-										ref={fileInputRef}
-										onChange={handleFileChange}
-									/>
-									<Button
-										variant="secondary"
-										iconfirst={true}
-										size="medium"
-										icon={Edit}
-										onClick={handleProfileImageUpdate}>
-										Edit Profile Image
-									</Button>
-									<CardDetails>
+								<Loader isLoading={isUploading}>
+									<Card
+										variant="profile"
+										imageSrc={profileUrl}
+										imageAlt="Profile image">
+										<input
+											type="file"
+											style={{ display: 'none' }}
+											ref={fileInputRef}
+											onChange={handleFileChange}
+										/>
+										<Button
+											variant="secondary"
+											iconfirst={true}
+											size="medium"
+											icon={Edit}
+											onClick={handleProfileImageUpdate}>
+											Edit Profile Image
+										</Button>
 										<p style={{ fontWeight: '700' }}>{user.name}</p>
 										<p>{user.email}</p>
-									</CardDetails>
-								</Card>
+									</Card>
+								</Loader>
 							</ProfileSection>
 
 							<ProfileSettings>
@@ -323,4 +318,3 @@ function Profile() {
 }
 
 export default Profile;
-

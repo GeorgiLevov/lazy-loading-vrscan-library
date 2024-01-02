@@ -5,7 +5,7 @@ function Footer() {
 	return (
 		<Container>
 			<div className="footerNote>">
-				<p align="center" style={{ fontSize: '14px' }}>
+				<p style={{ fontSize: '14px', textAlign: 'center' }}>
 					Team: Georgi Levov & Iva Tsaneva
 				</p>
 			</div>
@@ -14,4 +14,3 @@ function Footer() {
 }
 
 export default Footer;
-

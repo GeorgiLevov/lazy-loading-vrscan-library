@@ -79,7 +79,7 @@ export const HeroTextContainer = styled.div`
 	margin-bottom: 30px;
 
 	h1 {
-		font-size: ${FONTS.heading.large};
+		font-size: ${FONTS.heading.xl};
 		font-style: normal;
 		font-weight: 400;
 		line-height: normal;
@@ -100,4 +100,3 @@ export const HeroTextContainer = styled.div`
 		}
 	}
 `;
-
