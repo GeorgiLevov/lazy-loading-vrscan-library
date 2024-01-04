@@ -26,30 +26,11 @@ const StyledInputWrapper = styled.div`
 		border-radius: 30px;
 		line-height: 2;
 		font-weight: 300;
-
+		/* placeholder padding style doesn't work for Fireforx */
 		&::placeholder {
 			color: ${COLORS.gray.text};
 			opacity: 0.8;
 			font-weight: 300;
-			padding-left: ${SPACING.large};
-		}
-		&::-webkit-input-placeholder {
-			color: ${COLORS.gray.text};
-			opacity: 0.8;
-			font-weight: 300;
-			padding-left: ${SPACING.medium};
-		}
-		&::-moz-placeholder {
-			color: ${COLORS.gray.text};
-			opacity: 0.8;
-			font-weight: 300;
-			padding-left: ${SPACING.medium};
-		}
-		&:-ms-input-placeholder {
-			color: ${COLORS.gray.text};
-			opacity: 0.8;
-			font-weight: 300;
-			padding-left: ${SPACING.medium};
 		}
 	}
 `;
