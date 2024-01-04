@@ -20,21 +20,18 @@ To run the project locally in a DEV environment, please follow these steps:
 
    ```
    npm install
-
    ```
 
 3. Start the development server with the following command:
 
    ```
    npm run dev
-
    ```
 
 4. Access the project in your browser by visiting the following URL:
 
    ```
    https://localhost:3000
-
    ```
 
 Note: Make sure you have Node.js and npm installed on your machine.
