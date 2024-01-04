@@ -26,7 +26,7 @@ const StyledInputWrapper = styled.div`
 		border-radius: 30px;
 		line-height: 2;
 		font-weight: 300;
-
+		/* placeholder padding style doesn't work for Fireforx */
 		&::placeholder {
 			color: ${COLORS.gray.text};
 			opacity: 0.8;

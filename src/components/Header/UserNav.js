@@ -4,30 +4,34 @@ import { getFirstName } from './Header.utils';
 
 function UserNav({ name }) {
 	return (
-		<div className="userNav-container">
-			<ul>
-				<li>
-					<Button
-						variant="underline"
-						iconfirst={true}
-						size="medium"
-						icon={User}
-						href="/profile">
-						<span>Hi, {getFirstName(name)}</span>
-					</Button>
-				</li>
-				<li>
-					<Button
-						variant="underline"
-						iconfirst={true}
-						size="medium"
-						icon={Heart}
-						href="/favorites">
-						<span>Favourites</span>
-					</Button>
-				</li>
-			</ul>
-		</div>
+		<>
+			{name && (
+				<div className="userNav-container">
+					<ul>
+						<li>
+							<Button
+								variant="underline"
+								iconfirst={true}
+								size="medium"
+								icon={User}
+								href="/profile">
+								<span>Hi, {getFirstName(name)}</span>
+							</Button>
+						</li>
+						<li>
+							<Button
+								variant="underline"
+								iconfirst={true}
+								size="medium"
+								icon={Heart}
+								href="/favorites">
+								<span>Favourites</span>
+							</Button>
+						</li>
+					</ul>
+				</div>
+			)}
+		</>
 	);
 }
 export default UserNav;
