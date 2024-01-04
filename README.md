@@ -60,8 +60,6 @@ That's it! You should now be able to view and interact with the project.
 
 - [Trello Board](https://trello.com/invite/b/ZptBuFQL/ATTI70579aa75cbcf8dfa3b117ba367bcc418BD7EF79/lazy-loading-project)
 - [Whimsical Data Relations Board](https://whimsical.com/database-relationships-DGJT5HnKCjcMRcq7uSbF2b@VsSo8s35VKyo1rZvza7hCu)
-- [Trello Board](https://trello.com/invite/b/ZptBuFQL/ATTI70579aa75cbcf8dfa3b117ba367bcc418BD7EF79/lazy-loading-project)
-- [Whimsical Data Relations Board](https://whimsical.com/database-relationships-DGJT5HnKCjcMRcq7uSbF2b@VsSo8s35VKyo1rZvza7hCu)
 - [Figma Project Link](https://www.figma.com/file/3diUaCcuZ1mZBFCvZEiNb7/Lazy-loading-VRScans)
 - [GitLab Project Link](https://gitlab.com/ivatsaneva/lazy-loading-vrscans-library)
 - [Production deploy in Netlify](https://luxury-malasada-09de67.netlify.app/)
