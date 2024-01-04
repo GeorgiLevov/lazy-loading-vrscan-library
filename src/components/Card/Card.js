@@ -133,7 +133,6 @@ const InvertedCard = styled(BaseCard)`
 
 	// expecting only 2 children in inverted card format
 	& > * {
-		// preventing card break
 		flex-basis: 50%;
 		min-width: 0px;
 	}
@@ -194,9 +193,11 @@ const VRScanCard = styled(ProfileCard)`
 	}
 `;
 
+// background color logic not working
+// margin-bottom doesn't need to apply to inverted card
 const ImageWrapper = styled.div`
-	background: ${(p) =>
-		p.variant === 'inverted' ? COLORS.gray.light : COLORS.transparent};
+	background-color: ${(p) =>
+		p.variant === 'inverted' ? COLORS.gray.dark : COLORS.transparent};
 	position: relative;
 	flex-grow: 1;
 `;
