@@ -1,15 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import filtersData from './Filters';
+
+import { COLORS, SPACING } from '../../constants';
 import Button from '../../components/Button/Button';
+import { ArrowDownRight } from 'react-feather';
+import { ArrowUpRight } from 'react-feather';
 
 const FilterBox = styled.div`
-	flex-basis: 30%;
-	margin: 10px;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+	flex-basis: 32%;
+	margin-bottom: 15px;
+	padding: ${SPACING.small};
+	border-radius: 15px;
 	min-height: 180px;
+	background: ${COLORS.gray.light};
 `;
 
 const Header = styled.div`
@@ -28,7 +31,7 @@ const FiltersContainer = styled.div`
 	flex-wrap: wrap;
 	margin-top: 10px;
 	overflow: hidden;
-	transition: max-height 0.3s ease-in-out;
+	transition: all 0.5s ease-in-out;
 
 	${({ $isExpanded }) =>
 		$isExpanded ? 'max-height: 1000px;' : 'max-height: 160px;'}
@@ -41,17 +44,24 @@ const FiltersContainer = styled.div`
 `;
 
 const FilterButton = styled.button`
-	padding: 12px auto;
+	font-family: 'Helvetica', sans-serif !important;
+	font-weight: 300;
+
 	min-height: 40px;
 	border: ${(props) =>
-		props.selected ? '2px solid darkblue' : '1px solid #ccc'};
+		props.selected ? `2px solid ${COLORS.black}` : `1px solid ${COLORS.gray}`};
 	box-sizing: border-box;
 	cursor: pointer;
-	background-color: ${(props) => (props.selected ? '#f0f0f0' : '#f0f0f0')};
+	background-color: ${COLORS.white};
 	color: black;
 	transition: background-color 0.3s ease;
-	height: 40px;
-	margin: 1px;
+	box-shadow: ${(props) =>
+		props.selected
+			? `0 0 0 2px ${COLORS.gray.light} inset;`
+			: `1px solid ${COLORS.gray}`};
+
+	box-sizing: border-box;
+	overflow: hidden;
 	font-size: 15px;
 	height: auto;
 
@@ -62,18 +72,22 @@ const FilterButton = styled.button`
 	&:focus {
 		outline: none;
 		border: ${(props) =>
-			props.selected ? '2px solid darkblue' : '1px solid #ccc'};
+			props.selected
+				? `2px solid ${COLORS.black}`
+				: `1px solid ${COLORS.gray}`};
 	}
 `;
 
 const ColorButton = styled(FilterButton)`
-	background-color: ${(props) =>
-		props.selected ? '#ADD8E6' : props.color || '#fff'};
+	background-color: ${(props) => props.color};
+	border: ${(props) =>
+		props.selected ? `2px solid ${COLORS.black}` : `px solid ${COLORS.gray}`};
 `;
 
 const CollapsibleFilterBox = ({ title, filters, isColor }) => {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [selectedFilters, setSelectedFilters] = useState(new Set());
+	const filterBoxRef = useRef(null);
 
 	const toggleFilter = (filterId) => {
 		setSelectedFilters((prevSelected) => {
@@ -87,14 +101,29 @@ const CollapsibleFilterBox = ({ title, filters, isColor }) => {
 		});
 	};
 
+	const handleClickOutside = (event) => {
+		if (filterBoxRef.current && !filterBoxRef.current.contains(event.target)) {
+			setIsExpanded(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => document.removeEventListener('mousedown', handleClickOutside);
+	}, []);
+
 	const displayedFilters = isExpanded ? filters : filters.slice(0, 6);
 
 	return (
-		<FilterBox>
+		<FilterBox ref={filterBoxRef}>
 			<Header>
 				<Title>{title}</Title>
-				<Button variant="secondary" onClick={() => setIsExpanded(!isExpanded)}>
-					{isExpanded ? 'Show Less' : 'View All'}
+				<Button
+					variant="base"
+					icon={isExpanded ? ArrowUpRight : ArrowDownRight}
+					iconfirst={false}
+					onClick={() => setIsExpanded(!isExpanded)}>
+					{isExpanded ? `Show Less ` : 'View All'}
 				</Button>
 			</Header>
 			<FiltersContainer $isExpanded={isExpanded}>

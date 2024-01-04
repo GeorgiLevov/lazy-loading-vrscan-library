@@ -9,6 +9,7 @@ import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
 import CardImage from '../../components/Card/CardImage';
 import CardDetails from '../../components/Card/CardDetails';
+import BackToTopButton from './BackToTopButton';
 
 function Catalog() {
 	const { vrScans, search } = useVRScans();
@@ -51,6 +52,7 @@ function Catalog() {
 	return (
 		<>
 			<Header />
+			<BackToTopButton />
 			<Main>
 				<PageTitle>VRScans Catalog</PageTitle>
 				<FiltersContainer>
@@ -119,11 +121,27 @@ const SearchInput = styled.input`
 	border: 0;
 	padding: ${SPACING.small};
 
+	@media ${QUERIES.tabletAndDown} {
+		font-size: ${FONTS.heading.small};
+	}
+
+	@media ${QUERIES.phoneAndDown} {
+		font-size: ${FONTS.text.normal};
+	}
+
 	&::placeholder {
 		color: ${COLORS.gray.text};
 		opacity: 0.8;
 		font-weight: 300;
 		transition: opacity 0.25s linear;
+
+		@media ${QUERIES.tabletAndDown} {
+			font-size: ${FONTS.heading.small};
+		}
+
+		@media ${QUERIES.phoneAndDown} {
+			font-size: ${FONTS.text.normal};
+		}
 	}
 
 	&:focus {
@@ -134,24 +152,13 @@ const SearchInput = styled.input`
 `;
 
 const VRScansContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	/* justify-content: flex-start; */
-	justify-content: space-evenly;
-
-	@media ${QUERIES.laptopAndDown} {
-	}
-
-	/* VRSCAN CARDS */
-	& > * {
-		margin-bottom: ${SPACING.medium};
-		margin-left: calc(${SPACING.small} / 2);
-		margin-right: calc(${SPACING.small} / 2);
-
-		@media ${QUERIES.tabletAndDown} {
-			flex-direction: column;
-		}
-	}
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap: 30px;
+	justify-content: center;
+	width: 100%;
+	margin: 0 auto;
+	justify-items: center;
 `;
 
 export default Catalog;

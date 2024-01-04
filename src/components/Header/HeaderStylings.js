@@ -7,6 +7,7 @@ export const ContainerHeader = styled.div`
 	margin: 0 auto;
 	width: 100%;
 
+	z-index: 1000;
 	background-color: ${({ $isScrolled }) =>
 		$isScrolled ? 'rgba(255, 255, 255, 0.4)' : 'transparent'};
 	backdrop-filter: ${({ $isScrolled }) => ($isScrolled ? 'blur(4px)' : 'none')};

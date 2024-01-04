@@ -163,13 +163,34 @@ const ProfileCard = styled(BaseCard)`
 `;
 
 const VRScanCard = styled(ProfileCard)`
-	width: auto;
-	height: auto;
-	min-width: 275px;
-	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	background-color: ${COLORS.white};
+	border-radius: 10px;
 
-	& > * {
-		margin-bottom: ${SPACING.small};
+	overflow: hidden;
+	position: relative;
+
+	.card-image {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+	}
+
+	.card-details {
+		padding: ${SPACING.small};
+	}
+
+	.heart-icon {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		z-index: 10;
+	}
+
+	@media ${QUERIES.phoneAndDown} {
+		margin: 0 auto;
 	}
 `;
 
@@ -178,7 +199,7 @@ const ImageWrapper = styled.div`
 		p.variant === 'inverted' ? COLORS.gray.light : COLORS.transparent};
 	position: relative;
 	flex-grow: 1;
-	margin-bottom: ${SPACING.mega};
 `;
 
 export default Card;
+
