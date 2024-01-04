@@ -1,0 +1,47 @@
+{
+	"materials": [
+		{ "id": 1, "name": "Wood" },
+		{ "id": 2, "name": "Metal" },
+		{ "id": 3, "name": "Glass" },
+		{ "id": 4, "name": "Plastic" },
+		{ "id": 5, "name": "Concrete" },
+		{ "id": 6, "name": "Ceramic" },
+		{ "id": 7, "name": "Leather" },
+		{ "id": 8, "name": "Fabric" },
+		{ "id": 3, "name": "Glass" },
+		{ "id": 4, "name": "Plastic" },
+		{ "id": 5, "name": "Concrete" },
+		{ "id": 6, "name": "Ceramic" },
+		{ "id": 7, "name": "Leather" },
+		{ "id": 8, "name": "Fabric" }
+	],
+	"colors": [
+		{ "id": 1, "name": "Red" },
+		{ "id": 2, "name": "Blue" },
+		{ "id": 3, "name": "Green" },
+		{ "id": 4, "name": "Yellow" },
+		{ "id": 5, "name": "Black" },
+		{ "id": 6, "name": "White" },
+		{ "id": 7, "name": "Orange" },
+		{ "id": 8, "name": "Purple" },
+		{ "id": 1, "name": "Red" },
+		{ "id": 2, "name": "Blue" },
+		{ "id": 3, "name": "Green" },
+		{ "id": 4, "name": "Yellow" },
+		{ "id": 5, "name": "Black" },
+		{ "id": 6, "name": "White" },
+		{ "id": 7, "name": "Orange" },
+		{ "id": 8, "name": "Purple" }
+	],
+	"tags": [
+		{ "id": 1, "name": "Eco-friendly" },
+		{ "id": 2, "name": "Modern" },
+		{ "id": 3, "name": "Classic" },
+		{ "id": 4, "name": "Vintage" },
+		{ "id": 5, "name": "Industrial" },
+		{ "id": 6, "name": "Minimalistic" },
+		{ "id": 7, "name": "Rustic" },
+		{ "id": 8, "name": "Art Deco" }
+	]
+}
+

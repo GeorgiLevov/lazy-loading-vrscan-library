@@ -36,3 +36,4 @@ const StyledInputWrapper = styled.div`
 `;
 
 export default StyledInput;
+

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
+import Filters from './Filters';
 import PageTitle from '../../components/PageTitle';
 import styled from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
@@ -68,6 +69,7 @@ function Catalog() {
 							}}
 						/>
 					</form>
+					<Filters />
 					{/* ExpandingFilters
                     Materials / Colors / Tags */}
 				</FiltersContainer>
@@ -153,3 +155,4 @@ const VRScansContainer = styled.div`
 `;
 
 export default Catalog;
+
