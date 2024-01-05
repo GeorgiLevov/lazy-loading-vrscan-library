@@ -70,6 +70,10 @@ function Card({
 	let iamgeStyles = IAMGESTYLES[variant];
 	let detailStyles = DETAILSTYLES[variant];
 
+	let styles = CARDSTYLES[variant];
+	let iamgeStyles = IAMGESTYLES[variant];
+	let detailStyles = DETAILSTYLES[variant];
+
 	let StyledComponent;
 	if (variant === 'base') {
 		StyledComponent = BaseCard;
