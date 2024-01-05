@@ -97,8 +97,8 @@ const ButtonBase = styled.button`
 	flex-direction: ${(p) => (p.$iconfirst ? 'row' : 'row-reverse')};
 
 	& > svg {
-		margin-right: ${(p) => (p.$iconfirst ? SPACING.xs : '0px')};
-		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.xs)};
+		margin-right: ${(p) => (p.$iconfirst ? SPACING.micro : '0px')};
+		margin-left: ${(p) => (p.$iconfirst ? '0px' : SPACING.micro)};
 		min-width: 24px;
 
 		@media ${QUERIES.tabletAndDown} {

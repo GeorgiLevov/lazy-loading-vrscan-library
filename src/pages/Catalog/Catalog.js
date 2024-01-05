@@ -24,7 +24,7 @@ function Catalog() {
 		event.preventDefault();
 		setStatus('loading');
 		try {
-			const response = await search(scanSearchValue);
+			await search(scanSearchValue);
 		} catch (error) {
 			setStatus('error');
 			setScansErrorMessage(error.message);
@@ -44,9 +44,8 @@ function Catalog() {
 
 	useEffect(() => {
 		// making sure status is appropriate sicne we're rendeding based on the status
-		if (vrScans.length) {
+		if (vrScans) {
 			setStatus('success');
-			setScanSearchValue('');
 		}
 	}, [vrScans]);
 	return (
@@ -71,24 +70,26 @@ function Catalog() {
 							}}
 						/>
 					</form>
+
 					<Filters />
-					{/* ExpandingFilters
-                    Materials / Colors / Tags */}
 				</FiltersContainer>
 				<VRScansContainer>
 					{status === 'success' &&
 						vrScans.map((scan) => {
+							const cardSummary = scan.material
+								? [scan.material, scan.colors, scan.tags].flat()
+								: undefined;
+							console.log(cardSummary);
 							return (
 								<Card
 									key={scan.id}
 									variant="vrscan"
 									name={scan.name}
+									summary={cardSummary}
 									imageSrc={scan.thumb}
 									imageAlt={scan.name}>
-									<CardDetails>
-										<p>{scan.manufacturer_id}</p>
-										<p>{scan.file_name}</p>
-									</CardDetails>
+									{scan.manufacturer && <p>{scan.manufacturer[0].name}</p>}
+									<p>{scan.file_name.replace('.vrscan', '')}</p>
 								</Card>
 							);
 						})}
@@ -162,4 +163,3 @@ const VRScansContainer = styled.div`
 `;
 
 export default Catalog;
-
