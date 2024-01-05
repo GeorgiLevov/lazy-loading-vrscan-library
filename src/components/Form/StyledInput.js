@@ -22,7 +22,7 @@ const StyledInputWrapper = styled.div`
 		width: inherit;
 		background-color: ${COLORS.offwhite};
 		color: ${COLORS.black};
-		padding: ${SPACING.xs} ${SPACING.small};
+		padding: ${SPACING.micro} ${SPACING.small};
 		border-radius: 30px;
 		line-height: 2;
 		font-weight: 300;
@@ -36,4 +36,3 @@ const StyledInputWrapper = styled.div`
 `;
 
 export default StyledInput;
-
