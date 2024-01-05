@@ -138,6 +138,7 @@ const CardSummary = styled.ol`
 
 	& > * {
 		margin-right: ${SPACING.micro};
+		margin-right: ${SPACING.micro};
 	}
 	/* hide any additional that don't fit on screen   */
 `;
@@ -156,9 +157,11 @@ const CardSummaryItem = styled.li`
 const CardDetails = styled.section`
 	/* assuming the details are a flex-child */
 	width: 100%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+	align-items: var(--alignItems);
 	align-items: var(--alignItems);
 `;
 
@@ -223,6 +226,7 @@ const ProfileCard = styled(BaseCard)`
 
 	& > * {
 		margin-bottom: ${SPACING.micro};
+		margin-bottom: ${SPACING.micro};
 	}
 
 	@media ${QUERIES.tabletAndDown} {
@@ -267,6 +271,7 @@ const VRScanCard = styled(ProfileCard)`
 // background color logic not working
 // margin-bottom doesn't need to apply to inverted card
 const ImageWrapper = styled.div`
+	background-color: var(--backgroundColor);
 	background-color: var(--backgroundColor);
 	position: relative;
 	flex-grow: 1;
