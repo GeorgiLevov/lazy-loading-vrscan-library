@@ -52,7 +52,7 @@ export const TextInputWrapper = styled.div`
 		display: block;
 		flex-basis: 100%;
 		font-size: ${FONTS.text.label};
-		padding-bottom: ${SPACING.xs};
+		padding-bottom: ${SPACING.micro};
 		color: ${COLORS.gray.text};
 	}
 
@@ -61,7 +61,7 @@ export const TextInputWrapper = styled.div`
 		flex-grow: 1;
 		max-width: 60%;
 		background: #fff;
-		padding: ${SPACING.xs} ${SPACING.small};
+		padding: ${SPACING.micro} ${SPACING.small};
 		border-radius: 30px;
 		line-height: 2;
 		font-weight: 300;
@@ -78,7 +78,7 @@ export const ProfileSettings = styled.section`
 
 export const EmailEditContainer = styled.div`
 	& > * {
-		margin-bottom: ${SPACING.xs};
+		margin-bottom: ${SPACING.micro};
 	}
 `;
 
@@ -104,7 +104,7 @@ export const InputField = styled.input`
 	color: ${({ $isEditing }) => ($isEditing ? 'black' : `${COLORS.gray.dark}`)};
 	border: 1px solid transparent;
 	outline: none;
-	padding: ${SPACING.xs} ${SPACING.small};
+	padding: ${SPACING.micro} ${SPACING.small};
 	flex-grow: 1;
 	background-color: ${COLORS.white};
 	&:focus {

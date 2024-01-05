@@ -85,7 +85,7 @@ const GlobalStyles = createGlobalStyle`
     height: 100dvh;
   }
 
-  ul{margin:0; padding:0; list-style: none;}
+  ul{font-family: 'Helvetica', sans-serif;margin:0; padding:0; list-style: none;}
 	li{margin:0; padding:0;}
 `;
 

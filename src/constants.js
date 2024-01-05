@@ -33,7 +33,7 @@ export const QUERIES = {
 };
 
 export const SPACING = {
-	xs: `${8 / 16}rem`,
+	micro: `${8 / 16}rem`,
 	small: `${16 / 16}rem`,
 	medium: `${24 / 16}rem`,
 	large: `${32 / 16}rem`,
