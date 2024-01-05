@@ -3,6 +3,7 @@ import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 
 export const ProfileContainer = styled.div`
 	padding-top: ${SPACING.mega};
+	padding-bottom: ${SPACING.mega};
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -152,3 +153,4 @@ export const ErrorMessage = styled.div`
 	font-weight: 300;
 	font-size: 14px;
 `;
+

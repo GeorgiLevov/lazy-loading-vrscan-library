@@ -1,3 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Profile/Profile.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Profile/Profile.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * React component for rendering user profile details and settings.
+ * @module Profile
+ * @component
+ * @requires React
+ * @requires Main
+ * @requires Button
+ * @requires user.context
+ * @requires Breadcrumbs
+ * @requires Header
+ * @requires ProfileStyles
+ * @requires Modal
+ * @requires react-feather
+ * @requires Footer
+ * @requires PageTitle
+ * @requires Subheading
+ * @requires Divider
+ * @requires Card
+ * @requires useToggle
+ * @requires Loader
+ */
+
+/**
+ * @module Profile
+ * @description React component for rendering user profile details and settings.
+ * @returns {JSX.Element} Rendered component.
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import Main from '../../components/Main/Main';
 import Button from '../../components/Button';
@@ -44,7 +100,9 @@ function Profile() {
 	const inputRef = useRef({ firstname: null, lastname: null, email: null });
 	const [isUploading, toggleisUploading] = useToggle(false);
 	const [formErrorMessage, setFormErrorMessage] = useState('');
-
+	/**
+	 * useEffect hook to update component state when user data changes.
+	 */
 	useEffect(() => {
 		if (user) {
 			setFirstname(user?.name.split(' ')[0]);
@@ -53,6 +111,11 @@ function Profile() {
 			setProfileUrl(user?.photo);
 		}
 	}, [user]);
+	/**
+	 * Toggles the edit mode for a specified field.
+	 * @function toggleEdit
+	 * @param {string} field - The field to toggle edit mode for (e.g., 'firstname', 'lastname', 'email').
+	 */
 
 	const toggleEdit = (field) => {
 		setIsEditing((prev) => {
@@ -63,7 +126,11 @@ function Profile() {
 			return { ...prev, [field]: isFieldEditing };
 		});
 	};
-
+	/**
+	 * Cancels the edit mode for a specified field and resets the field value to the original value.
+	 * @function cancelEdit
+	 * @param {string} field - The field to cancel edit mode for (e.g., 'firstname', 'lastname').
+	 */
 	const cancelEdit = (field) => {
 		setIsEditing((prev) => ({ ...prev, [field]: false }));
 
@@ -77,11 +144,19 @@ function Profile() {
 		toggleEmailModal();
 	};
 
+	/**
+	 * Handles the update of the first name.
+	 * @function handleFirstNameUpdate
+	 */
 	const handleFirstNameUpdate = () => {
 		update.name(firstname + ' ' + lastname);
 		toggleEdit('firstname');
 	};
 
+	/**
+	 * Handles the update of the last name.
+	 * @function handleLastNameUpdate
+	 */
 	const handleLastNameUpdate = () => {
 		update.name(firstname + ' ' + lastname);
 		toggleEdit('lastname');
@@ -91,6 +166,11 @@ function Profile() {
 		setIsEditing((prev) => ({ ...prev, email: true }));
 	};
 
+	/**
+	 * Handles the focus-out event for the email input field.
+	 * @function handleEmailFocusOut
+	 */
+
 	const handleEmailFocusOut = () => {
 		if (email !== user?.email) {
 			toggleEmailModal();
@@ -98,6 +178,12 @@ function Profile() {
 		setIsEditing((prev) => ({ ...prev, email: false }));
 	};
 
+	/**
+	 * Handles the email update process.
+	 * @async
+	 * @function handleEmailUpdate
+	 * @param {Event} event - The event object.
+	 */
 	const handleEmailUpdate = async (event) => {
 		if (event) {
 			event.preventDefault();
@@ -113,10 +199,19 @@ function Profile() {
 		}
 	};
 
+	/**
+	 * Handles the profile image update.
+	 * @function handleProfileImageUpdate
+	 */
 	const handleProfileImageUpdate = () => {
 		fileInputRef.current.click();
 	};
 
+	/**
+	 * Handles the change event for the file input, triggering the profile image update.
+	 * @async
+	 * @param {Event} event - The event object.
+	 */
 	const handleFileChange = async (event) => {
 		const file = event.target.files[0];
 		if (file) {
@@ -131,46 +226,51 @@ function Profile() {
 		}
 	};
 
+	/**
+	 * Renders the JSX for the Profile component.
+	 * @returns {JSX.Element} - Rendered component.
+	 */
 	return (
-		<>
-			<Header />
-			<Main>
-				<Breadcrumbs />
-				<PageTitle>Profile</PageTitle>
-				<ProfileContainer>
-					{user && (
-						<>
-							<ProfileSection>
-								<Loader isLoading={isUploading}>
-									<Card
+		&lt;>
+			&lt;Header />
+			&lt;Main>
+				&lt;Breadcrumbs />
+				&lt;PageTitle>Profile&lt;/PageTitle>
+				&lt;ProfileContainer>
+					{user &amp;&amp; (
+						&lt;>
+							&lt;ProfileSection>
+								&lt;Loader isLoading={isUploading}>
+									&lt;Card
 										variant="profile"
 										imageSrc={profileUrl}
 										imageAlt="Profile image">
-										<input
+										&lt;input
 											type="file"
 											style={{ display: 'none' }}
 											ref={fileInputRef}
 											onChange={handleFileChange}
 										/>
-										<Button
+										&lt;Button
 											variant="secondary"
 											iconfirst={true}
 											size="medium"
 											icon={Edit}
 											onClick={handleProfileImageUpdate}>
 											Edit Profile Image
-										</Button>
-										<p style={{ fontWeight: '700' }}>{user.name}</p>
-										<p>{user.email}</p>
-									</Card>
-								</Loader>
-							</ProfileSection>
+										&lt;/Button>
+										&lt;p style={{ fontWeight: '700' }}>{user.name}&lt;/p>
+										&lt;p>{user.email}&lt;/p>
+									&lt;/Card>
+								&lt;/Loader>
+							&lt;/ProfileSection>
 
-							<ProfileSettings>
-								<Subheading>Account settings</Subheading>
-								<TextInputWrapper>
-									<label htmlFor="first-name-update-input">First Name</label>
-									<InputField
+							&lt;ProfileSettings>
+								&lt;Subheading>Account settings&lt;/Subheading>
+								{/* First Name Input */}
+								&lt;TextInputWrapper>
+									&lt;label htmlFor="first-name-update-input">First Name&lt;/label>
+									&lt;InputField
 										id="first-name-update-input"
 										ref={(el) => (inputRef.current.firstname = el)}
 										type="text"
@@ -180,29 +280,29 @@ function Profile() {
 										onChange={(e) => setFirstname(e.target.value)}
 									/>
 									{isEditing.firstname ? (
-										<>
-											<SaveButton onClick={handleFirstNameUpdate}>
+										&lt;>
+											&lt;SaveButton onClick={handleFirstNameUpdate}>
 												Save
-											</SaveButton>
-											<CancelButton onClick={() => cancelEdit('firstname')}>
+											&lt;/SaveButton>
+											&lt;CancelButton onClick={() => cancelEdit('firstname')}>
 												Cancel
-											</CancelButton>
-										</>
+											&lt;/CancelButton>
+										&lt;/>
 									) : (
-										<Button
+										&lt;Button
 											variant="secondary"
 											iconfirst={true}
 											size="medium"
 											icon={Edit}
 											onClick={() => toggleEdit('firstname')}>
 											Edit
-										</Button>
+										&lt;/Button>
 									)}
-								</TextInputWrapper>
-
-								<TextInputWrapper>
-									<label htmlFor="last-name-update-input">Last Name</label>
-									<InputField
+								&lt;/TextInputWrapper>
+								{/* Last Name Input */}
+								&lt;TextInputWrapper>
+									&lt;label htmlFor="last-name-update-input">Last Name&lt;/label>
+									&lt;InputField
 										id="last-name-update-input"
 										ref={(el) => (inputRef.current.lastname = el)}
 										type="text"
@@ -212,29 +312,29 @@ function Profile() {
 										$isEditing={isEditing.lastname}
 									/>
 									{isEditing.lastname ? (
-										<>
-											<SaveButton onClick={handleLastNameUpdate}>
+										&lt;>
+											&lt;SaveButton onClick={handleLastNameUpdate}>
 												Save
-											</SaveButton>
-											<CancelButton onClick={() => cancelEdit('lastname')}>
+											&lt;/SaveButton>
+											&lt;CancelButton onClick={() => cancelEdit('lastname')}>
 												Cancel
-											</CancelButton>
-										</>
+											&lt;/CancelButton>
+										&lt;/>
 									) : (
-										<Button
+										&lt;Button
 											variant="secondary"
 											iconfirst={true}
 											size="medium"
 											icon={Edit}
 											onClick={() => toggleEdit('lastname')}>
 											Edit
-										</Button>
+										&lt;/Button>
 									)}
-								</TextInputWrapper>
-
-								<TextInputWrapper>
-									<label htmlFor="email-update-input">Email</label>
-									<InputField
+								&lt;/TextInputWrapper>
+								{/* Email Input */}
+								&lt;TextInputWrapper>
+									&lt;label htmlFor="email-update-input">Email&lt;/label>
+									&lt;InputField
 										id="email-update-input"
 										ref={(el) => (inputRef.current.email = el)}
 										type="email"
@@ -245,77 +345,101 @@ function Profile() {
 										onBlur={handleEmailFocusOut}
 									/>{' '}
 									{isEditing.email ? (
-										<>
-											<SaveButton onClick={handleEmailEdit}>Save</SaveButton>
-										</>
+										&lt;>
+											&lt;SaveButton onClick={handleEmailEdit}>Save&lt;/SaveButton>
+										&lt;/>
 									) : (
-										<Button
+										&lt;Button
 											variant="secondary"
 											iconfirst={true}
 											size="medium"
 											icon={Edit}
 											onClick={() => toggleEdit('email')}>
 											Edit
-										</Button>
+										&lt;/Button>
 									)}
-								</TextInputWrapper>
-
-								{showEmailModal && (
-									<Modal
+								&lt;/TextInputWrapper>
+								{/* Email Edit Modal */}
+								{showEmailModal &amp;&amp; (
+									&lt;Modal
 										title="Email Edit Modal"
 										closeDialog={handleCancelEmailEdit}>
-										<EmailEditContainer>
-											<EmailEditMessage>
+										&lt;EmailEditContainer>
+											&lt;EmailEditMessage>
 												Are you sure you want to change your email to:{' '}
-												<span>{email}</span>
-												<p>
+												&lt;span>{email}&lt;/span>
+												&lt;p>
 													Please verify this is you by entering your password
 													below:
-												</p>
-											</EmailEditMessage>
-											<EmailEditInputContainer>
-												<InputField
+												&lt;/p>
+											&lt;/EmailEditMessage>
+											&lt;EmailEditInputContainer>
+												&lt;InputField
 													type="password"
 													placeholder="Enter password"
 													onChange={(e) => setPassword(e.target.value)}
 												/>
-												<SaveButton onClick={(e) => handleEmailUpdate(e)}>
+												&lt;SaveButton onClick={(e) => handleEmailUpdate(e)}>
 													Confirm
-												</SaveButton>
-											</EmailEditInputContainer>
-											{formErrorMessage && (
-												<ErrorMessage>{formErrorMessage}</ErrorMessage>
+												&lt;/SaveButton>
+											&lt;/EmailEditInputContainer>
+											{formErrorMessage &amp;&amp; (
+												&lt;ErrorMessage>{formErrorMessage}&lt;/ErrorMessage>
 											)}
-										</EmailEditContainer>
-									</Modal>
+										&lt;/EmailEditContainer>
+									&lt;/Modal>
 								)}
 
-								<Divider />
-								<Subheading>Reviews & Favorites</Subheading>
-								<Button
+								&lt;Divider />
+								&lt;Subheading>Reviews &amp; Favorites&lt;/Subheading>
+								{/* Reviews and Favorites Buttons */}
+								&lt;Button
 									variant="secondary"
 									iconfirst={true}
 									size="medium"
 									icon={ArrowRight}
 									href="/reviews">
 									My Reviews
-								</Button>
-								<Button
+								&lt;/Button>
+								&lt;Button
 									variant="secondary"
 									iconfirst={true}
 									size="medium"
 									icon={ArrowRight}
 									href="/favorites">
-									<span>Favourites</span>
-								</Button>
-							</ProfileSettings>
-						</>
+									&lt;span>Favourites&lt;/span>
+								&lt;/Button>
+							&lt;/ProfileSettings>
+						&lt;/>
 					)}
-				</ProfileContainer>
-			</Main>
-		</>
+				&lt;/ProfileContainer>
+			&lt;/Main>
+		&lt;/>
 	);
 }
 
 export default Profile;
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Home.html">Home</a></li><li><a href="module-Profile.html">Profile</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jan 05 2024 16:35:15 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
