@@ -57,51 +57,6 @@ const DETAILSTYLES = {
 	},
 };
 
-const CARDSTYLES = {
-	base: {
-		'--backgroundColor': `${COLORS.white}`,
-	},
-	inverted: {
-		'--backgroundColor': `${COLORS.gray.dark}`,
-	},
-	profile: {
-		'--backgroundColor': `${COLORS.white}`,
-	},
-	vrscan: {
-		'--backgroundColor': `${COLORS.white}`,
-	},
-};
-
-const IAMGESTYLES = {
-	base: {
-		'--backgroundColor': `${COLORS.white}`,
-	},
-	inverted: {
-		'--backgroundColor': `${COLORS.gray.dark}`,
-	},
-	profile: {
-		'--backgroundColor': `${COLORS.white}`,
-	},
-	vrscan: {
-		'--backgroundColor': `${COLORS.white}`,
-	},
-};
-
-const DETAILSTYLES = {
-	base: {
-		'--alignItems': `center`,
-	},
-	inverted: {
-		'--alignItems': `flex-start`,
-	},
-	profile: {
-		'--alignItems': `center`,
-	},
-	vrscan: {
-		'--alignItems': `flex-start`,
-	},
-};
-
 function Card({
 	summary,
 	name,
@@ -111,10 +66,6 @@ function Card({
 	favorited,
 	children,
 }) {
-	let styles = CARDSTYLES[variant];
-	let iamgeStyles = IAMGESTYLES[variant];
-	let detailStyles = DETAILSTYLES[variant];
-
 	let styles = CARDSTYLES[variant];
 	let iamgeStyles = IAMGESTYLES[variant];
 	let detailStyles = DETAILSTYLES[variant];
@@ -134,7 +85,6 @@ function Card({
 
 	return (
 		<StyledComponent style={styles}>
-		<StyledComponent style={styles}>
 			{variant === 'vrscan' && (
 				<CardSummary>
 					{summary &&
@@ -145,7 +95,6 @@ function Card({
 						})}
 				</CardSummary>
 			)}
-			<ImageWrapper style={iamgeStyles}>
 			<ImageWrapper style={iamgeStyles}>
 				{Array.isArray(imageSrc) ? (
 					<Slider contents={imageSrc} />
@@ -168,7 +117,6 @@ function Card({
 				)}
 			</ImageWrapper>
 			<CardDetails style={detailStyles}>
-			<CardDetails style={detailStyles}>
 				{variant === 'inverted'
 					? name && <CardTitle>{name}</CardTitle>
 					: name && <CardName>{name}</CardName>}
@@ -178,11 +126,6 @@ function Card({
 	);
 }
 
-const CardSummary = styled.ol`
-	list-style-type: none;
-	width: 100%;
-	font-family: 'Helvetica', sans-serif;
-	font-weight: 300;
 const CardSummary = styled.ol`
 	list-style-type: none;
 	width: 100%;
@@ -198,17 +141,6 @@ const CardSummary = styled.ol`
 		margin-right: ${SPACING.micro};
 	}
 	/* hide any additional that don't fit on screen   */
-`;
-
-const CardSummaryItem = styled.li`
-	display: inline;
-	font-size: ${FONTS.text.label};
-	border: 1px solid ${COLORS.transparent};
-	border-radius: 16px;
-	padding: 0 ${SPACING.micro};
-
-	color: ${COLORS.black};
-	background: ${COLORS.gray.tag};
 `;
 
 const CardSummaryItem = styled.li`
