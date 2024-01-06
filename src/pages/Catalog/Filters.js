@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import CollapsibleFilterBox from './CollapsibleFilterBox';
 import filtersData from './filter';
+import { useVRScans } from '../../../api/context/vrscans.context';
+import { QUERIES } from '../../constants';
 
 function Filters() {
 	const OuterFiltersWrapper = styled.div`
@@ -8,7 +10,7 @@ function Filters() {
 		z-index: 500;
 		height: 230px;
 
-		@media (max-width: 1024px) {
+		@media (${QUERIES.laptopAndDown}) {
 			height: auto;
 		}
 	`;
@@ -21,7 +23,7 @@ function Filters() {
 		position: relative;
 		z-index: 500;
 
-		@media (max-width: 1024px) {
+		@media (${QUERIES.laptopAndDown}) {
 			flex-direction: column;
 			align-items: stretch;
 		}
@@ -30,16 +32,13 @@ function Filters() {
 	return (
 		<OuterFiltersWrapper>
 			<FiltersWrapper>
-				<CollapsibleFilterBox
-					title="Materials"
-					filters={filtersData.materials}
-				/>
+				<CollapsibleFilterBox title="Materials" filterType="materials" />
 				<CollapsibleFilterBox
 					title="Colors"
-					filters={filtersData.colors}
+					filterType="colors"
 					isColor={true}
 				/>
-				<CollapsibleFilterBox title="Tags" filters={filtersData.tags} />
+				<CollapsibleFilterBox title="Tags" filterType="tags" />
 			</FiltersWrapper>
 		</OuterFiltersWrapper>
 	);
