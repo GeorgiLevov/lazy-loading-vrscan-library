@@ -15,7 +15,9 @@
 		"hdev": "vite --host --open --port 3000",
 		"build": "vite build",
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"docs": "jsdoc -c jsdoc.json",
+		"generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
 	},
 	"devDependencies": {
 		"@babel/plugin-transform-react-jsx": "^7.23.4",
@@ -38,6 +40,10 @@
 		"eslint-plugin-react": "^7.33.2",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.5",
+		"eslint-plugin-storybook": "^0.6.15",
+		"jsdoc": "^4.0.2",
+		"minami": "^1.2.3",
+		"storybook": "^7.6.7",
 		"vite": "^5.0.10",
 		"vite-plugin-eslint": "^1.8.1"
 	},
@@ -64,3 +70,4 @@
 		"@rollup/rollup-linux-x64-gnu": "4.6.1"
 	}
 }
+

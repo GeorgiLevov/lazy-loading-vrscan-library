@@ -163,3 +163,4 @@ const VRScansContainer = styled.div`
 `;
 
 export default Catalog;
+

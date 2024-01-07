@@ -11,7 +11,7 @@ export const ContainerHeader = styled.div`
 	background-color: ${({ $isScrolled }) =>
 		$isScrolled ? 'rgba(255, 255, 255, 0.4)' : 'transparent'};
 	backdrop-filter: ${({ $isScrolled }) => ($isScrolled ? 'blur(4px)' : 'none')};
-	padding: ${({ $isScrolled }) => ($isScrolled ? `10px 0` : `30px 0`)};
+	padding: ${({ $isScrolled }) => ($isScrolled ? `10px 0` : `25px 0`)};
 
 	transition: ${({ $isScrolled }) =>
 		$isScrolled ? `all 0.2s ease-in` : `none`};

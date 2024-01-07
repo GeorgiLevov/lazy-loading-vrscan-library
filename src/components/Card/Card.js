@@ -193,7 +193,7 @@ const BaseCard = styled.article`
 	/* needs these styles when more than 1 of this component exists on page */
 	/* flex: 1; */
 	/* min-width: 0px; */
-	background-color: var(--backgroundColor);
+	background-color: ${COLORS.white};
 	margin: ${SPACING.micro};
 	border-radius: 20px;
 	overflow: hidden;
@@ -271,10 +271,10 @@ const VRScanCard = styled(ProfileCard)`
 // background color logic not working
 // margin-bottom doesn't need to apply to inverted card
 const ImageWrapper = styled.div`
-	background-color: var(--backgroundColor);
-	background-color: var(--backgroundColor);
+	background-color: ${COLORS.white};
 	position: relative;
 	flex-grow: 1;
 `;
 
 export default Card;
+

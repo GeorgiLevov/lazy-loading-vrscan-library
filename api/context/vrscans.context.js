@@ -20,6 +20,9 @@ export function useVRScans() {
 export function VRScansProvider({ children }) {
 	const [loginVRScans, setLoginVRScans] = useState([]);
 	const [vrScans, setVRScans] = useState([]);
+	const [colors, setColors] = useState([]);
+	const [tags, setTags] = useState([]);
+	const [materials, setMaterials] = useState([]);
 
 	async function get10VRScans() {
 		const response = await databases.listDocuments(
@@ -129,6 +132,29 @@ export function VRScansProvider({ children }) {
 		);
 		setVRScans(response.documents);
 	}
+	async function fetchFilters() {
+		const colorsResponse = await databases.listDocuments(
+			DATABASE_ID,
+			COLORS_COLLECTION_ID
+		);
+		setColors(colorsResponse.documents);
+
+		const tagsResponse = await databases.listDocuments(
+			DATABASE_ID,
+			TAGS_COLLECTION_ID
+		);
+		setTags(tagsResponse.documents);
+
+		const materialsResponse = await databases.listDocuments(
+			DATABASE_ID,
+			MATERIALS_COLLECTION_ID
+		);
+		setMaterials(materialsResponse.documents);
+	}
+
+	useEffect(() => {
+		fetchFilters();
+	}, []);
 
 	useEffect(() => {
 		get10VRScans();
@@ -136,8 +162,18 @@ export function VRScansProvider({ children }) {
 
 	return (
 		<vrScansContext.Provider
-			value={{ vrScans, search, init, loginVRScans, get10VRScans }}>
+			value={{
+				vrScans,
+				search,
+				init,
+				loginVRScans,
+				get10VRScans,
+				colors,
+				tags,
+				materials,
+			}}>
 			{children}
 		</vrScansContext.Provider>
 	);
 }
+

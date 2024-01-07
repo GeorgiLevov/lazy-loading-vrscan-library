@@ -1,14 +1,42 @@
-import React, { useEffect } from 'react';
+/**
+ * Home component representing the main page of the application.
+ * @module Home
+ * @component
+ * @requires React
+ * @requires Header
+ * @requires HomeStyles
+ * @requires HeroText
+ * @requires react-feather
+ * @requires Footer
+ * @requires user.context
+ * @requires Button
+ */
+
+import React from 'react';
 import Header from '../../components/Header/Header';
 import { HomeBackground, HeroContainer, FlexCenterWrapper } from './HomeStyles';
 import HeroText from './HeroText';
 import { Compass, ArrowRight } from 'react-feather';
 import Footer from '../../components/Footer/Footer';
-import Main from '../../components/Main';
 import { useUser } from '../../../api/context/user.context';
 import Button from '../../components/Button/Button';
 
+/**
+ * @module Home
+ * @description The main page component of the application, showcasing the hero section,
+ * user interaction, and navigation options.
+ * @returns {React.Component} The Home component rendered as the main page of the application.
+ */
+
 function Home() {
+	/**
+	 * User context hook for accessing user information and logout function.
+	 * @name useUser
+	 * @type {Object}
+	 * @property {Object} user - User information.
+	 * @property {Function} logout - Logout function.
+	 */
+
 	const { user, logout } = useUser();
 	return (
 		<>
@@ -24,18 +52,25 @@ function Home() {
 				/>
 			</HomeBackground>
 
+			{/* Flex container for centering */}
 			<FlexCenterWrapper>
+				{/* Container for hero section */}
 				<HeroContainer>
+					{/* HeroText component */}
 					<HeroText />
+					{/* Description */}
 					<p>
 						React-based load-on-demand library showing VRScans materials from a
 						pre-defined REST API
 					</p>
+					{/* Conditional rendering based on user authentication */}
 					{user ? (
 						<>
+							{/* Logout button for testing */}
 							<Button variant="primary" size="large" onClick={() => logout()}>
 								Log out (Testing only)
 							</Button>
+							{/* Explore Library button */}
 							<Button
 								href="/catalog"
 								variant="primary"
@@ -62,3 +97,4 @@ function Home() {
 }
 
 export default Home;
+

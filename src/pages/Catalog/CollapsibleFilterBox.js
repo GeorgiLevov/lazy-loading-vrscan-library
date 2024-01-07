@@ -1,17 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, SPACING } from '../../constants';
+import { COLORS, QUERIES, SPACING } from '../../constants';
 import Button from '../../components/Button/Button';
 import { ArrowDownRight } from 'react-feather';
 import { ArrowUpRight } from 'react-feather';
+import { useVRScans } from '../../../api/context/vrscans.context';
 
 const FilterBox = styled.div`
 	flex-basis: 32%;
 	margin-bottom: 15px;
 	padding: ${SPACING.small};
 	border-radius: 15px;
-	min-height: 180px;
+
 	background: ${COLORS.gray.light};
 `;
 
@@ -34,19 +35,16 @@ const FiltersContainer = styled.div`
 	transition: all 0.5s ease-in-out;
 
 	${({ $isExpanded }) =>
-		$isExpanded ? 'max-height: 1000px;' : 'max-height: 160px;'}
+		$isExpanded ? 'max-height: 1000px;' : 'max-height:140px;'}
 
 	> button {
-		flex: 1 0 30%;
-		margin: 5px;
-		max-width: calc(33.33% - 10px);
+		margin: 4px;
 	}
 `;
 
 const FilterButton = styled.button`
 	font-family: 'Helvetica', sans-serif !important;
 	font-weight: 300;
-
 	min-height: 40px;
 	border: ${(props) =>
 		props.selected ? `2px solid ${COLORS.black}` : `1px solid ${COLORS.gray}`};
@@ -64,6 +62,12 @@ const FilterButton = styled.button`
 	overflow: hidden;
 	font-size: 15px;
 	height: auto;
+	white-space: nowrap;
+	min-width: calc(33.33% - 10px);
+
+	@media (${QUERIES.phoneAndDown}) {
+		max-width: auto;
+	}
 
 	&:hover {
 		opacity: 0.8;
@@ -82,12 +86,36 @@ const ColorButton = styled(FilterButton)`
 	background-color: ${(props) => props.color};
 	border: ${(props) =>
 		props.selected ? `2px solid ${COLORS.black}` : `px solid ${COLORS.gray}`};
+
+	flex: 1 0 30%;
+	margin: 5px;
+	max-width: calc(33.33% - 10px);
+
+	@media (${QUERIES.laptopAndDown}) {
+		max-width: calc(20% - 10px);
+	}
 `;
 
-const CollapsibleFilterBox = ({ title, filters, isColor }) => {
+const CollapsibleFilterBox = ({ title, filterType }) => {
+	const { colors, tags, materials } = useVRScans();
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [selectedFilters, setSelectedFilters] = useState(new Set());
 	const filterBoxRef = useRef(null);
+
+	let filters = [];
+	switch (filterType) {
+		case 'colors':
+			filters = colors;
+			break;
+		case 'tags':
+			filters = tags;
+			break;
+		case 'materials':
+			filters = materials;
+			break;
+		default:
+			filters = [];
+	}
 
 	const toggleFilter = (filterId) => {
 		setSelectedFilters((prevSelected) => {
@@ -112,7 +140,7 @@ const CollapsibleFilterBox = ({ title, filters, isColor }) => {
 		return () => document.removeEventListener('mousedown', handleClickOutside);
 	}, []);
 
-	const displayedFilters = isExpanded ? filters : filters.slice(0, 6);
+	const displayedFilters = isExpanded ? filters : filters;
 
 	return (
 		<FilterBox ref={filterBoxRef}>
@@ -123,13 +151,13 @@ const CollapsibleFilterBox = ({ title, filters, isColor }) => {
 					icon={isExpanded ? ArrowUpRight : ArrowDownRight}
 					iconfirst={false}
 					onClick={() => setIsExpanded(!isExpanded)}>
-					{isExpanded ? `Show Less ` : 'View All'}
+					{isExpanded ? `Show Less` : 'View All'}
 				</Button>
 			</Header>
 			<FiltersContainer $isExpanded={isExpanded}>
 				{displayedFilters.map((filter) => {
 					const isSelected = selectedFilters.has(filter.id);
-					return isColor ? (
+					return filterType === 'colors' ? (
 						<ColorButton
 							key={filter.id}
 							color={filter.name}

@@ -8,6 +8,7 @@ module.exports = {
 		'plugin:react-hooks/recommended',
 		'plugin:@tanstack/eslint-plugin-query/recommended',
 		'prettier',
+		'plugin:storybook/recommended',
 	],
 	ignorePatterns: ['dist', '.eslintrc.cjs'],
 	parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
@@ -24,3 +25,4 @@ module.exports = {
 		'react/prop-types': ['warn'],
 	},
 };
+

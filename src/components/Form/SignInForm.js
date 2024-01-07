@@ -10,7 +10,22 @@ import useToggle from '../../hooks/useToggle.hook';
 import { useUser } from '../../../api/context/user.context';
 import { Navigate } from 'react-router';
 
+/**
+ * @module SignInForm
+ * @description Manages the user authentication process, providing forms for both login and sign-up.
+ * Handles user input, form submission, and navigation based on authentication state.
+ * @returns {React.Component} Component with form elements for user authentication.
+ */
+
 function SignInForm() {
+	/**
+	 * Manages the form state, toggling between login and sign-up views.
+	 * @function
+	 * @name useToggle
+	 * @memberof module:SignInForm
+	 * @returns {Array} An array containing a boolean state and a function to toggle it.
+	 */
+
 	const { user, login, signup } = useUser();
 
 	const [isSignupShown, toggleIsSignupShown] = useToggle(false);
@@ -35,6 +50,15 @@ function SignInForm() {
 
 	const userActionText = isSignupShown ? 'Sign Up' : 'Login';
 	const userOppositeActionText = isSignupShown ? 'Login' : 'Sign Up';
+
+	/**
+	 * Handles the form submission process for both login and sign-up.
+	 * Performs validation checks and initiates the appropriate user action.
+	 * @function
+	 * @name handleSubmit
+	 * @param {Event} event - The form submission event.
+	 * @memberof module:SignInForm
+	 */
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -171,3 +195,4 @@ const StyledForm = styled.form`
 `;
 
 export default SignInForm;
+
