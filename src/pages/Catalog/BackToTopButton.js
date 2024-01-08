@@ -15,7 +15,7 @@ const ScrollButton = styled.button`
 	cursor: pointer;
 	font-size: 16px;
 	z-index: 1000;
-	display: ${({ show }) => (show ? 'block' : 'none')};
+	display: ${(props) => (props.$show ? 'block' : 'none')};
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 `;
 
@@ -42,11 +42,10 @@ const BackToTopButton = () => {
 	};
 
 	return (
-		<ScrollButton show={showTopBtn} onClick={scrollToTop}>
+		<ScrollButton $show={showTopBtn} onClick={scrollToTop}>
 			<ArrowUp />
 		</ScrollButton>
 	);
 };
 
 export default BackToTopButton;
-

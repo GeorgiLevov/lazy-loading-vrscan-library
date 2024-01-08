@@ -7,24 +7,50 @@ import styled from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
-import CardImage from '../../components/Card/CardImage';
-import CardDetails from '../../components/Card/CardDetails';
 import BackToTopButton from './BackToTopButton';
+import { Objectify } from '../../utils';
+import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
+import { useInView } from 'react-intersection-observer';
 
 function Catalog() {
 	const { vrScans, search } = useVRScans();
 
+	const { ref: scrollRef, inView } = useInView({
+		threshold: 1,
+		triggerOnce: true,
+		onChange: (inView) => {
+			if (inView) {
+				// Fire a tracking event to your tracking service of choice.
+				getMoreScans();
+			}
+		},
+	});
+
 	const searchFilterForm = useRef();
 	const [scanSearchValue, setScanSearchValue] = useState('');
+	const [resultsPage, setResultsPage] = useState(1);
 	const [scansErrorMessage, setScansErrorMessage] = useState('');
+
 	// idle / loading / success / error
 	const [status, setStatus] = useState('idle');
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 		setStatus('loading');
+		setResultsPage(1);
 		try {
 			await search(scanSearchValue);
+		} catch (error) {
+			setStatus('error');
+			setScansErrorMessage(error.message);
+			console.error(error);	
+		}
+	}
+
+	async function getMoreScans() {
+		setResultsPage((prevCount) => prevCount + 1);
+		try {
+			await search(scanSearchValue, resultsPage);
 		} catch (error) {
 			setStatus('error');
 			setScansErrorMessage(error.message);
@@ -32,22 +58,26 @@ function Catalog() {
 		}
 	}
 
+	// Only submit search request if it meets search conditions, wait 1500ms
 	useEffect(() => {
+		const searchDelayFromLastInput = 1500;
+		// preventing meaningless requests from happening
 		let timer = setTimeout(() => {
-			// // preventing meaningless requests from happening
 			const searchConditionMet = scanSearchValue && scanSearchValue.length > 2;
 			if (searchConditionMet) searchFilterForm.current.requestSubmit();
-		}, 1500);
+		}, searchDelayFromLastInput);
 
 		return () => clearTimeout(timer);
 	}, [scanSearchValue]);
 
+	// Set fetch status to Success once we have the Scans loaded
 	useEffect(() => {
 		// making sure status is appropriate sicne we're rendeding based on the status
 		if (vrScans) {
 			setStatus('success');
 		}
 	}, [vrScans]);
+
 	return (
 		<>
 			<Header />
@@ -70,30 +100,36 @@ function Catalog() {
 							}}
 						/>
 					</form>
-
 					<Filters />
 				</FiltersContainer>
 				<VRScansContainer>
 					{status === 'success' &&
-						vrScans.map((scan) => {
-							const cardSummary = scan.material
-								? [scan.material, scan.colors, scan.tags].flat()
-								: undefined;
-							console.log(cardSummary);
+						vrScans &&
+						vrScans.map((scan, index) => {
+							const isElementinMiddle = index === vrScans.length - 9;
+
 							return (
 								<Card
-									key={scan.id}
+									key={`${scan.id}`}
 									variant="vrscan"
 									name={scan.name}
-									summary={cardSummary}
+									summary={[scan.material, scan.colors, scan.tags]}
 									imageSrc={scan.thumb}
 									imageAlt={scan.name}>
-									{scan.manufacturer && <p>{scan.manufacturer[0].name}</p>}
-									<p>{scan.file_name.replace('.vrscan', '')}</p>
+									{scan.manufacturer && (
+										<p>{Objectify(scan.manufacturer).name}</p>
+									)}
+									<p> {scan.file_name.replace('.vrscan', '')}</p>
+									{isElementinMiddle && (
+										<span style={visuallyHiddenStyles} ref={scrollRef}>
+											Will start fetching next elements once this is reached!
+										</span>
+									)}
 								</Card>
 							);
 						})}
-					{status === 'loading' && <div>Looking for the scans</div>}
+					{status === 'loading' && <div>looking for Scans mofo!</div>}
+
 					{status === 'error' && <div>{scansErrorMessage}</div>}
 				</VRScansContainer>
 			</Main>
