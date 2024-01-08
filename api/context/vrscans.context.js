@@ -4,12 +4,18 @@ import { ID, Query } from 'appwrite';
 
 export const DATABASE_ID = import.meta.env.VITE_DB_KEY;
 export const VRSCANS_COLLECTION_ID = import.meta.env.VITE_CL_VRSCANS_KEY;
+export const VRSCANPREVIEWS_COLLECTION_ID = import.meta.env
+	.VITE_CL_VRSCANPREVIEWS_KEY;
 export const MATERIALS_COLLECTION_ID = import.meta.env.VITE_CL_MATERIALS_KEY;
 export const MANUFACTURERS_COLLECTION_ID = import.meta.env
 	.VITE_CL_MANUFACTURERS_KEY;
 export const INDUSTRIES_COLLECTION_ID = import.meta.env.VITE_CL_INDUSTRIES_KEY;
 export const COLORS_COLLECTION_ID = import.meta.env.VITE_CL_COLORS_KEY;
 export const TAGS_COLLECTION_ID = import.meta.env.VITE_CL_TAGS_KEY;
+
+/* React-specific entry point that automatically generates
+   hooks corresponding to the defined endpoints */
+// import { createApi } from '@reduxjs/toolkit/query/react'
 
 const vrScansContext = createContext();
 
@@ -20,6 +26,7 @@ export function useVRScans() {
 export function VRScansProvider({ children }) {
 	const [loginVRScans, setLoginVRScans] = useState([]);
 	const [vrScans, setVRScans] = useState([]);
+	const [offsetCount, setOffsetCount] = useState(24);
 
 	async function get10VRScans() {
 		const response = await databases.listDocuments(
@@ -75,21 +82,23 @@ export function VRScansProvider({ children }) {
 		return response.documents;
 	}
 
-	async function search(searchQuery) {
+	async function search(searchQuery, timesOffset = 0) {
+		const offset = offsetCount * timesOffset;
+
 		const response = await databases.listDocuments(
 			DATABASE_ID,
-			VRSCANS_COLLECTION_ID,
+			VRSCANPREVIEWS_COLLECTION_ID,
 			[
 				Query.search('name', searchQuery),
+				Query.limit(offsetCount),
+				Query.offset(offset),
 				Query.orderAsc('id'),
-				Query.limit(250),
 			]
 		);
 
-		setVRScans(response.documents);
-
-		const result = await getFinalizedVRscans(response.documents);
-		setVRScans(result);
+		setVRScans(
+			timesOffset ? [...vrScans, ...response.documents] : response.documents
+		);
 	}
 
 	async function getFinalizedVRscans(documents) {
@@ -136,7 +145,14 @@ export function VRScansProvider({ children }) {
 
 	return (
 		<vrScansContext.Provider
-			value={{ vrScans, search, init, loginVRScans, get10VRScans }}>
+			value={{
+				vrScans,
+				offsetCount,
+				search,
+				init,
+				loginVRScans,
+				get10VRScans,
+			}}>
 			{children}
 		</vrScansContext.Provider>
 	);
