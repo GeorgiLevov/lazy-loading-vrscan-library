@@ -11,6 +11,7 @@ import {
 import CardImage from './CardImage';
 import { Heart } from 'react-feather';
 import Slider from '../Slider';
+import CardSummary from './CardSummary';
 
 const CARDSTYLES = {
 	base: {
@@ -30,15 +31,19 @@ const CARDSTYLES = {
 const IAMGESTYLES = {
 	base: {
 		'--backgroundColor': `${COLORS.white}`,
+		'--marginBottom': `0px`,
 	},
 	inverted: {
 		'--backgroundColor': `${COLORS.gray.dark}`,
+		'--marginBottom': `0px`,
 	},
 	profile: {
 		'--backgroundColor': `${COLORS.white}`,
+		'--marginBottom': `${SPACING.micro}`,
 	},
 	vrscan: {
 		'--backgroundColor': `${COLORS.white}`,
+		'--marginBottom': `${SPACING.mega}`,
 	},
 };
 
@@ -83,18 +88,17 @@ function Card({
 		throw new Error(`Unrecognized Button variant: ${variant}`);
 	}
 
+	const handleSummary = (summaryArray) => {
+		return {
+			material: summaryArray[0],
+			colors: summaryArray[1],
+			tags: summaryArray[2],
+		};
+	};
+
 	return (
 		<StyledComponent style={styles}>
-			{variant === 'vrscan' && (
-				<CardSummary>
-					{summary &&
-						summary.map((item) => {
-							return (
-								<CardSummaryItem key={item.$id}>{item.name}</CardSummaryItem>
-							);
-						})}
-				</CardSummary>
-			)}
+			{summary?.length && <CardSummary {...handleSummary(summary)} />}
 			<ImageWrapper style={iamgeStyles}>
 				{Array.isArray(imageSrc) ? (
 					<Slider contents={imageSrc} />
@@ -125,66 +129,6 @@ function Card({
 		</StyledComponent>
 	);
 }
-
-const CardSummary = styled.ol`
-	list-style-type: none;
-	width: 100%;
-	font-family: 'Helvetica', sans-serif;
-	font-weight: 300;
-	display: flex;
-	min-height: ${FONTS.heading.normal};
-	margin: 0;
-	margin-bottom: ${SPACING.small};
-
-	& > * {
-		margin-right: ${SPACING.micro};
-		margin-right: ${SPACING.micro};
-	}
-	/* hide any additional that don't fit on screen   */
-`;
-
-const CardSummaryItem = styled.li`
-	display: inline;
-	font-size: ${FONTS.text.label};
-	border: 1px solid ${COLORS.transparent};
-	border-radius: 16px;
-	padding: 0 ${SPACING.micro};
-
-	color: ${COLORS.black};
-	background: ${COLORS.gray.tag};
-`;
-
-const CardDetails = styled.section`
-	/* assuming the details are a flex-child */
-	width: 100%;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	align-items: var(--alignItems);
-	align-items: var(--alignItems);
-`;
-
-const Label = styled.div`
-	position: absolute;
-	bottom: ${`-${SPACING.mega}`};
-	right: ${`-${SPACING.mega}`};
-	background: transparent;
-	height: ${SPACING.large};
-	line-height: ${SPACING.large};
-	padding: 0 ${SPACING.small};
-`;
-
-const CardTitle = styled.h2`
-	font-weight: ${WEIGHTS.bold};
-	text-align: left;
-	margin-right: auto;
-`;
-const CardName = styled.p`
-	font-size: ${FONTS.text.normal};
-	font-weight: ${WEIGHTS.bold};
-	margin-bottom: ${SPACING.micro};
-`;
 
 // expects parent to be display:flex
 const BaseCard = styled.article`
@@ -226,7 +170,10 @@ const ProfileCard = styled(BaseCard)`
 
 	& > * {
 		margin-bottom: ${SPACING.micro};
-		margin-bottom: ${SPACING.micro};
+
+		&:last-child {
+			margin-bottom: 0px;
+		}
 	}
 
 	@media ${QUERIES.tabletAndDown} {
@@ -242,39 +189,51 @@ const VRScanCard = styled(ProfileCard)`
 	justify-content: space-between;
 	background-color: ${COLORS.white};
 	border-radius: 10px;
+	padding: ${SPACING.small};
 
 	overflow: hidden;
 	position: relative;
-
-	.card-image {
-		width: 100%;
-		height: auto;
-		object-fit: cover;
-	}
-
-	.card-details {
-		padding: ${SPACING.small};
-	}
-
-	.heart-icon {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		z-index: 10;
-	}
 
 	@media ${QUERIES.phoneAndDown} {
 		margin: 0 auto;
 	}
 `;
 
-// background color logic not working
-// margin-bottom doesn't need to apply to inverted card
+const CardDetails = styled.section`
+	/* assuming the details are a flex-child */
+	width: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	align-items: var(--alignItems);
+	min-height: 92px;
+`;
+
+const Label = styled.div`
+	position: absolute;
+	bottom: ${`-${SPACING.large}`};
+	right: ${`-${SPACING.giga}`};
+	background: transparent;
+	padding: 0 ${SPACING.small};
+`;
+
+const CardTitle = styled.h2`
+	font-weight: ${WEIGHTS.bold};
+	text-align: left;
+	margin-right: auto;
+`;
+const CardName = styled.p`
+	font-size: ${FONTS.text.normal};
+	font-weight: ${WEIGHTS.bold};
+	margin-bottom: ${SPACING.micro};
+`;
+
 const ImageWrapper = styled.div`
-	background-color: ${COLORS.white};
+	background-color: var(--backgroundColor);
+	margin-bottom: var(--marginBottom);
 	position: relative;
 	flex-grow: 1;
 `;
 
 export default Card;
-

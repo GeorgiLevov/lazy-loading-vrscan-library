@@ -1,11 +1,18 @@
 import { User, Heart } from 'react-feather';
 import Button from '../Button/Button';
 import { getFirstName } from './Header.utils';
+import { useState } from 'react';
 
 function UserNav({ name }) {
+	const [username, setUsername] = useState(name);
+
+	if (name !== username) {
+		setUsername(name);
+	}
+
 	return (
 		<>
-			{name && (
+			{username && (
 				<div className="userNav-container">
 					<ul>
 						<li>
@@ -15,7 +22,7 @@ function UserNav({ name }) {
 								size="medium"
 								icon={User}
 								href="/profile">
-								<span>Hi, {getFirstName(name)}</span>
+								<span>Hi, {getFirstName(username)}</span>
 							</Button>
 						</li>
 						<li>
