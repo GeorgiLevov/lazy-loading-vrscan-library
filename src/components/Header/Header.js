@@ -25,11 +25,10 @@ function Header() {
 		<ContainerHeader className="header" $isScrolled={isScrolled}>
 			<HeaderWrap style={{ padding: `0 ${padding}` }}>
 				<Logo />
-				{user && <UserNav name={user.name} />}
+				{user && <UserNav key={user.id} name={user.name} />}
 			</HeaderWrap>
 		</ContainerHeader>
 	);
 }
 
 export default Header;
-

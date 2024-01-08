@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { BREAKPOINTS } from '/src/constants.js';
 
 const useResponsivePadding = () => {
-	const [padding, setPadding] = useState('80px');
+	const [padding, setPadding] = React.useState('80px');
 
 	const updatePadding = () => {
 		const viewportWidth = window.innerWidth;
@@ -15,7 +15,7 @@ const useResponsivePadding = () => {
 		}
 	};
 
-	useEffect(() => {
+	React.useEffect(() => {
 		window.addEventListener('resize', updatePadding);
 		updatePadding();
 		return () => window.removeEventListener('resize', updatePadding);
