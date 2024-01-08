@@ -43,6 +43,7 @@
 		"eslint-plugin-storybook": "^0.6.15",
 		"jsdoc": "^4.0.2",
 		"minami": "^1.2.3",
+		"react-intersection-observer": "^9.5.3",
 		"storybook": "^7.6.7",
 		"vite": "^5.0.10",
 		"vite-plugin-eslint": "^1.8.1"
@@ -70,4 +71,3 @@
 		"@rollup/rollup-linux-x64-gnu": "4.6.1"
 	}
 }
-
