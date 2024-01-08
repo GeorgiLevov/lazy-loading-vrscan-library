@@ -6,18 +6,12 @@ export const DATABASE_ID = import.meta.env.VITE_DB_KEY;
 export const VRSCANS_COLLECTION_ID = import.meta.env.VITE_CL_VRSCANS_KEY;
 export const VRSCANPREVIEWS_COLLECTION_ID = import.meta.env
 	.VITE_CL_VRSCANPREVIEWS_KEY;
-export const VRSCANPREVIEWS_COLLECTION_ID = import.meta.env
-	.VITE_CL_VRSCANPREVIEWS_KEY;
 export const MATERIALS_COLLECTION_ID = import.meta.env.VITE_CL_MATERIALS_KEY;
 export const MANUFACTURERS_COLLECTION_ID = import.meta.env
 	.VITE_CL_MANUFACTURERS_KEY;
 export const INDUSTRIES_COLLECTION_ID = import.meta.env.VITE_CL_INDUSTRIES_KEY;
 export const COLORS_COLLECTION_ID = import.meta.env.VITE_CL_COLORS_KEY;
 export const TAGS_COLLECTION_ID = import.meta.env.VITE_CL_TAGS_KEY;
-
-/* React-specific entry point that automatically generates
-   hooks corresponding to the defined endpoints */
-// import { createApi } from '@reduxjs/toolkit/query/react'
 
 /* React-specific entry point that automatically generates
    hooks corresponding to the defined endpoints */
@@ -94,26 +88,17 @@ export function VRScansProvider({ children }) {
 	async function search(searchQuery, timesOffset = 0) {
 		const offset = offsetCount * timesOffset;
 
-	async function search(searchQuery, timesOffset = 0) {
-		const offset = offsetCount * timesOffset;
-
 		const response = await databases.listDocuments(
 			DATABASE_ID,
 			VRSCANPREVIEWS_COLLECTION_ID,
-			VRSCANPREVIEWS_COLLECTION_ID,
 			[
 				Query.search('name', searchQuery),
-				Query.limit(offsetCount),
-				Query.offset(offset),
 				Query.limit(offsetCount),
 				Query.offset(offset),
 				Query.orderAsc('id'),
 			]
 		);
 
-		setVRScans(
-			timesOffset ? [...vrScans, ...response.documents] : response.documents
-		);
 		setVRScans(
 			timesOffset ? [...vrScans, ...response.documents] : response.documents
 		);
