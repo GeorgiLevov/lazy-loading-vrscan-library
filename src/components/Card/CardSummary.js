@@ -1,7 +1,7 @@
 import React from 'react';
 import { FONTS, SPACING, COLORS } from '../../constants';
 import styled from 'styled-components';
-import { Objectify } from '../../utils';
+import { Objectify } from '../../helpers';
 
 const CardSummary = ({ material, colors, tags }) => {
 	const materialObject = Objectify(material);
@@ -29,6 +29,9 @@ const CardSummary = ({ material, colors, tags }) => {
 		: [];
 
 	const allItems = [materialItem, ...colorItems, ...tagItems];
+
+	// We can try adding this animation for the summary items
+	// https://codesandbox.io/p/sandbox/framer-motion-scroll-velocity-forked-kwnqys?file=%2Fsrc%2FApp.tsx%3A71%2C33
 
 	return (
 		<StyledSummary>
@@ -63,6 +66,13 @@ const StyledSummaryItem = styled.li`
 
 	color: ${COLORS.black};
 	background: ${COLORS.gray.tag};
+
+	white-space: nowrap;
+
+	&:last-of-type {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 `;
 
 export default CardSummary;

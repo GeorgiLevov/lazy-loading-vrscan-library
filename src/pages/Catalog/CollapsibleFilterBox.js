@@ -6,6 +6,8 @@ import Button from '../../components/Button/Button';
 import { ArrowDownRight } from 'react-feather';
 import { ArrowUpRight } from 'react-feather';
 import { useVRScans } from '../../../api/context/vrscans.context';
+import Loader from '../../components/Loader';
+import { capitalize } from '../../utils';
 
 const FilterBox = styled.div`
 	flex-basis: 32%;
@@ -96,26 +98,20 @@ const ColorButton = styled(FilterButton)`
 	}
 `;
 
-const CollapsibleFilterBox = ({ title, filterType }) => {
-	const { colors, tags, materials } = useVRScans();
-	const [isExpanded, setIsExpanded] = useState(false);
-	const [selectedFilters, setSelectedFilters] = useState(new Set());
-	const filterBoxRef = useRef(null);
-
-	let filters = [];
-	switch (filterType) {
-		case 'colors':
-			filters = colors;
-			break;
-		case 'tags':
-			filters = tags;
-			break;
-		case 'materials':
-			filters = materials;
-			break;
-		default:
-			filters = [];
+const CollapsibleFilterBox = ({
+	filterType,
+	selectedFilters,
+	setSelectedFilters,
+}) => {
+	if (!['materials', 'colors', 'tags'].includes(filterType)) {
+		throw new Error(`Unrecognized Filter '${filterType}'!
+        Please use a proper VRScan Filter Type: colors, materials, tags!`);
 	}
+
+	const { [filterType]: filters } = useVRScans();
+	const [isExpanded, setIsExpanded] = useState(false);
+
+	const filterBoxRef = useRef(null);
 
 	const toggleFilter = (filterId) => {
 		setSelectedFilters((prevSelected) => {
@@ -140,12 +136,10 @@ const CollapsibleFilterBox = ({ title, filterType }) => {
 		return () => document.removeEventListener('mousedown', handleClickOutside);
 	}, []);
 
-	const displayedFilters = isExpanded ? filters : filters;
-
 	return (
 		<FilterBox ref={filterBoxRef}>
 			<Header>
-				<Title>{title}</Title>
+				<Title>{capitalize(filterType)}</Title>
 				<Button
 					variant="base"
 					icon={isExpanded ? ArrowUpRight : ArrowDownRight}
@@ -154,29 +148,30 @@ const CollapsibleFilterBox = ({ title, filterType }) => {
 					{isExpanded ? `Show Less` : 'View All'}
 				</Button>
 			</Header>
-			<FiltersContainer $isExpanded={isExpanded}>
-				{displayedFilters.map((filter) => {
-					const isSelected = selectedFilters.has(filter.id);
-					return filterType === 'colors' ? (
-						<ColorButton
-							key={filter.id}
-							color={filter.name}
-							selected={isSelected}
-							onClick={() => toggleFilter(filter.id)}
-						/>
-					) : (
-						<FilterButton
-							key={filter.id}
-							selected={isSelected}
-							onClick={() => toggleFilter(filter.id)}>
-							{filter.name}
-						</FilterButton>
-					);
-				})}
-			</FiltersContainer>
+			<Loader isLoading={!filters.length}>
+				<FiltersContainer $isExpanded={isExpanded}>
+					{filters.map((filter) => {
+						const isSelected = selectedFilters.has(filter);
+						return filterType === 'colors' ? (
+							<ColorButton
+								key={`${filterType}-${filter.id}`}
+								color={filter.hex}
+								selected={isSelected}
+								onClick={() => toggleFilter(filter)}
+							/>
+						) : (
+							<FilterButton
+								key={`${filterType}-${filter.id}`}
+								selected={isSelected}
+								onClick={() => toggleFilter(filter)}>
+								{filter.name}
+							</FilterButton>
+						);
+					})}
+				</FiltersContainer>
+			</Loader>
 		</FilterBox>
 	);
 };
 
 export default CollapsibleFilterBox;
-
