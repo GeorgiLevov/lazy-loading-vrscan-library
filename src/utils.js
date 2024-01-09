@@ -18,11 +18,3 @@ export const capitalize = (word = '') =>
 	word.length 
     ? word[0].toUpperCase() + word.substring(1) 
     : word;
-
-export const Objectify = (string) => {
-	// DB import has single quotes instead of double quotes on attributes
-	// so they need to be updated before we can parse the attribute into an object
-
-	const updatedQuotes = string.replace(/'/g, '"');
-	return JSON.parse(updatedQuotes);
-};
