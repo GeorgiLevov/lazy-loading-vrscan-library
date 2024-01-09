@@ -15,7 +15,6 @@ import Loader from '../../components/Loader';
 import Footer from '../../components/Footer/Footer';
 import ViewScanDetails from './ViewScanDetails';
 
-
 function Catalog() {
 	const { vrScans, search } = useVRScans();
 
@@ -46,7 +45,7 @@ function Catalog() {
 		} catch (error) {
 			setStatus('error');
 			setScansErrorMessage(error.message);
-			console.error(error);	
+			console.error(error);
 		}
 	}
 
@@ -126,17 +125,21 @@ function Catalog() {
 									imageSrc={scan.thumb}
 									imageAlt={scan.name}>
 									{scan.manufacturer && (
-										<p className='manufacturer'>{Objectify(scan.manufacturer).name}</p>
+										<p className="manufacturer">
+											{Objectify(scan.manufacturer).name}
+										</p>
 									)}
-									
-									<p className='filename'> {scan.file_name.replace('.vrscan', '')}</p>
+
+									<p className="filename">
+										{' '}
+										{scan.file_name.replace('.vrscan', '')}
+									</p>
 									<ViewScanDetails scan={scan} />
 									{isElementinMiddle && (
 										<span style={visuallyHiddenStyles} ref={scrollRef}>
 											Will start fetching next elements once this is reached!
 										</span>
 									)}
-									
 								</Card>
 							);
 						})}
@@ -145,7 +148,7 @@ function Catalog() {
 					</VRScansContainer>
 				</Loader>
 			</Main>
-			<Footer/> 
+			<Footer />
 		</>
 	);
 }
@@ -213,10 +216,9 @@ const VRScansContainer = styled.div`
 		margin-bottom: 10px;
 	}
 
-	img {background-color: transparent!important}
-	
+	img {
+		background-color: transparent !important;
+	}
 `;
-
-
 
 export default Catalog;
