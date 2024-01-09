@@ -8,9 +8,10 @@ import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
 import BackToTopButton from './BackToTopButton';
-import { Objectify } from '../../utils';
+import { Objectify } from '../../helpers';
 import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
 import { useInView } from 'react-intersection-observer';
+import Loader from '../../components/Loader';
 
 function Catalog() {
 	const { vrScans, search } = useVRScans();
@@ -26,20 +27,19 @@ function Catalog() {
 		},
 	});
 
-	const searchFilterForm = useRef();
-	const [scanSearchValue, setScanSearchValue] = useState('');
+	const textSearchFilter = useRef();
+	const [textSearchValue, setTextSearchValue] = useState('');
+	const [filterSearchValues, setFilterSearchValues] = useState(new Set());
 	const [resultsPage, setResultsPage] = useState(1);
 	const [scansErrorMessage, setScansErrorMessage] = useState('');
 
 	// idle / loading / success / error
 	const [status, setStatus] = useState('idle');
 
-	async function handleSubmit(event) {
-		event.preventDefault();
-		setStatus('loading');
+	async function handleSubmit() {
 		setResultsPage(1);
 		try {
-			await search(scanSearchValue);
+			await search(textSearchValue, filterSearchValues);
 		} catch (error) {
 			setStatus('error');
 			setScansErrorMessage(error.message);
@@ -50,7 +50,7 @@ function Catalog() {
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
 		try {
-			await search(scanSearchValue, resultsPage);
+			await search(textSearchValue, filterSearchValues, resultsPage);
 		} catch (error) {
 			setStatus('error');
 			setScansErrorMessage(error.message);
@@ -60,15 +60,15 @@ function Catalog() {
 
 	// Only submit search request if it meets search conditions, wait 1500ms
 	useEffect(() => {
-		const searchDelayFromLastInput = 1500;
+		setStatus('loading');
+		const searchDelayFromLatestnput = 1500;
 		// preventing meaningless requests from happening
 		let timer = setTimeout(() => {
-			const searchConditionMet = scanSearchValue && scanSearchValue.length > 2;
-			if (searchConditionMet) searchFilterForm.current.requestSubmit();
-		}, searchDelayFromLastInput);
+			handleSubmit();
+		}, searchDelayFromLatestnput);
 
 		return () => clearTimeout(timer);
-	}, [scanSearchValue]);
+	}, [textSearchValue, filterSearchValues]);
 
 	// Set fetch status to Success once we have the Scans loaded
 	useEffect(() => {
@@ -87,25 +87,31 @@ function Catalog() {
 				<FiltersContainer>
 					{/* <SearchFilter></SearchFilter> */}
 					<form
-						ref={searchFilterForm}
-						onSubmit={(event) => handleSubmit(event)}>
+						onSubmit={(event) => {
+							event.preventDefault;
+							return false;
+						}}>
 						<SearchInput
 							id="search-form"
+							ref={textSearchFilter}
 							required={true}
 							label="search"
 							placeholder="What type of scan are you looking for..."
-							value={scanSearchValue}
+							value={textSearchValue}
 							onChange={(e) => {
-								setScanSearchValue(e.target.value);
+								setTextSearchValue(e.target.value);
 							}}
 						/>
 					</form>
-					<Filters />
+					<Filters
+						id="filter-buttons"
+						filterSearchValues={filterSearchValues}
+						setFilterSearchValues={setFilterSearchValues}
+					/>
 				</FiltersContainer>
-				<VRScansContainer>
-					{status === 'success' &&
-						vrScans &&
-						vrScans.map((scan, index) => {
+				<Loader isLoading={status === 'loading'}>
+					<VRScansContainer>
+						{vrScans.map((scan, index) => {
 							const isElementinMiddle = index === vrScans.length - 9;
 
 							return (
@@ -128,10 +134,10 @@ function Catalog() {
 								</Card>
 							);
 						})}
-					{status === 'loading' && <div>looking for Scans mofo!</div>}
 
-					{status === 'error' && <div>{scansErrorMessage}</div>}
-				</VRScansContainer>
+						{status === 'error' && <div>{scansErrorMessage}</div>}
+					</VRScansContainer>
+				</Loader>
 			</Main>
 			{/* <Footer></Footer> */}
 		</>
@@ -199,4 +205,3 @@ const VRScansContainer = styled.div`
 `;
 
 export default Catalog;
-
