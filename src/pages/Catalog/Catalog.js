@@ -9,6 +9,7 @@ import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
 import BackToTopButton from './BackToTopButton';
 import { Objectify } from '../../helpers';
+import { Objectify } from '../../helpers';
 import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
 import { useInView } from 'react-intersection-observer';
 import Loader from '../../components/Loader';
@@ -39,11 +40,13 @@ function Catalog() {
 	const [status, setStatus] = useState('idle');
 
 	async function handleSubmit() {
+	async function handleSubmit() {
 		setResultsPage(1);
 		// this will set the textFilter value in our ActiveFiltersList
 		setTextSetValue(textSearchValue);
 
 		try {
+			await search(textSearchValue, filterSearchValues);
 			await search(textSearchValue, filterSearchValues);
 		} catch (error) {
 			setStatus('error');
@@ -57,6 +60,7 @@ function Catalog() {
 
 		try {
 			await search(textSearchValue, filterSearchValues, resultsPage);
+			await search(textSearchValue, filterSearchValues, resultsPage);
 		} catch (error) {
 			setStatus('error');
 			setScansErrorMessage(error.message);
@@ -68,12 +72,17 @@ function Catalog() {
 	useEffect(() => {
 		setStatus('loading');
 		const searchDelayFromLatestnput = 1500;
+		setStatus('loading');
+		const searchDelayFromLatestnput = 1500;
 		// preventing meaningless requests from happening
 		let timer = setTimeout(() => {
 			handleSubmit();
 		}, searchDelayFromLatestnput);
+			handleSubmit();
+		}, searchDelayFromLatestnput);
 
 		return () => clearTimeout(timer);
+	}, [textSearchValue, filterSearchValues]);
 	}, [textSearchValue, filterSearchValues]);
 
 	// Set fetch status to Success once we have the Scans loaded
@@ -97,14 +106,21 @@ function Catalog() {
 							event.preventDefault;
 							return false;
 						}}>
+						onSubmit={(event) => {
+							event.preventDefault;
+							return false;
+						}}>
 						<SearchInput
 							id="search-form"
+							ref={textSearchFilter}
 							ref={textSearchFilter}
 							required={true}
 							label="search"
 							placeholder="What type of scan are you looking for..."
 							value={textSearchValue}
+							value={textSearchValue}
 							onChange={(e) => {
+								setTextSearchValue(e.target.value);
 								setTextSearchValue(e.target.value);
 							}}
 						/>
@@ -148,6 +164,9 @@ function Catalog() {
 							);
 						})}
 
+						{status === 'error' && <div>{scansErrorMessage}</div>}
+					</VRScansContainer>
+				</Loader>
 						{status === 'error' && <div>{scansErrorMessage}</div>}
 					</VRScansContainer>
 				</Loader>
