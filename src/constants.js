@@ -16,6 +16,7 @@ export const COLORS = {
 		tag: '#DDDDDD',
 		breadcrumb: '#A5A5A5',
 		dark: '#3B3B3B',
+		vrscan: '#F8F8F8'
 	},
 	shadow: '0deg 0% 0%',
 };

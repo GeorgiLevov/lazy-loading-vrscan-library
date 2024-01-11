@@ -28,7 +28,7 @@ const CARDSTYLES = {
 	},
 };
 
-const IAMGESTYLES = {
+const IMAGESTYLES = {
 	base: {
 		'--backgroundColor': `${COLORS.white}`,
 		'--marginBottom': `0px`,
@@ -42,8 +42,8 @@ const IAMGESTYLES = {
 		'--marginBottom': `${SPACING.micro}`,
 	},
 	vrscan: {
-		'--backgroundColor': `${COLORS.white}`,
-		'--marginBottom': `${SPACING.mega}`,
+		'--backgroundColor': `${COLORS.gray.vrscan}`,
+		'--marginBottom': `0px`,
 	},
 };
 
@@ -72,7 +72,7 @@ function Card({
 	children,
 }) {
 	let styles = CARDSTYLES[variant];
-	let iamgeStyles = IAMGESTYLES[variant];
+	let imageStyles = IMAGESTYLES[variant];
 	let detailStyles = DETAILSTYLES[variant];
 
 	let StyledComponent;
@@ -99,7 +99,7 @@ function Card({
 	return (
 		<StyledComponent style={styles}>
 			{summary?.length && <CardSummary {...handleSummary(summary)} />}
-			<ImageWrapper style={iamgeStyles}>
+			<ImageWrapper style={imageStyles}>
 				{Array.isArray(imageSrc) ? (
 					<Slider contents={imageSrc} />
 				) : (
@@ -169,7 +169,7 @@ const ProfileCard = styled(BaseCard)`
 	align-items: center;
 
 	& > * {
-		margin-bottom: ${SPACING.micro};
+		
 
 		&:last-child {
 			margin-bottom: 0px;
@@ -187,12 +187,15 @@ const VRScanCard = styled(ProfileCard)`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	background-color: ${COLORS.white};
-	border-radius: 10px;
-	padding: ${SPACING.small};
-
+	border-radius: 20px;
+	padding: 0;
+	border: 1px solid ${COLORS.gray.light};	
 	overflow: hidden;
 	position: relative;
+
+	& > * {
+		padding: 20px;
+	}
 
 	@media ${QUERIES.phoneAndDown} {
 		margin: 0 auto;
@@ -211,11 +214,11 @@ const CardDetails = styled.section`
 `;
 
 const Label = styled.div`
-	position: absolute;
-	bottom: ${`-${SPACING.large}`};
-	right: ${`-${SPACING.giga}`};
+	
 	background: transparent;
 	padding: 0 ${SPACING.small};
+	display: flex;
+  justify-content: end;
 `;
 
 const CardTitle = styled.h2`
@@ -230,10 +233,14 @@ const CardName = styled.p`
 `;
 
 const ImageWrapper = styled.div`
-	background-color: var(--backgroundColor);
 	margin-bottom: var(--marginBottom);
 	position: relative;
 	flex-grow: 1;
+	width: 100%;
+	text-align: center;
+	background: var(--backgroundColor);
+	
 `;
+
 
 export default Card;
