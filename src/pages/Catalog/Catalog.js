@@ -114,12 +114,12 @@ function Catalog() {
 						filterSearchValues={filterSearchValues}
 						setFilterSearchValues={setFilterSearchValues}
 					/>
-					<ActiveFiltersList
+					{/* <ActiveFiltersList
 						textSetValue={textSetValue}
 						setTextSetValue={setTextSetValue}
 						filterSearchValues={filterSearchValues}
 						setFilterSearchValues={setFilterSearchValues}
-					/>
+					/> */}
 				</FiltersContainer>
 				{/*  */}
 				<Loader isLoading={status === 'loading'}>
@@ -147,7 +147,6 @@ function Catalog() {
 								</Card>
 							);
 						})}
-
 						{status === 'error' && <div>{scansErrorMessage}</div>}
 					</VRScansContainer>
 				</Loader>
