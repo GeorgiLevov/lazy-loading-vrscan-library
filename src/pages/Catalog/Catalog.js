@@ -12,6 +12,7 @@ import { Objectify } from '../../helpers';
 import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
 import { useInView } from 'react-intersection-observer';
 import Loader from '../../components/Loader';
+import ActiveFiltersList from '../../components/ActiveFiltersList';
 import Footer from '../../components/Footer/Footer';
 import ViewScanDetails from './ViewScanDetails';
 
@@ -31,6 +32,7 @@ function Catalog() {
 
 	const textSearchFilter = useRef();
 	const [textSearchValue, setTextSearchValue] = useState('');
+	const [textSetValue, setTextSetValue] = useState('');
 	const [filterSearchValues, setFilterSearchValues] = useState(new Set());
 	const [resultsPage, setResultsPage] = useState(1);
 	const [scansErrorMessage, setScansErrorMessage] = useState('');
@@ -40,6 +42,9 @@ function Catalog() {
 
 	async function handleSubmit() {
 		setResultsPage(1);
+		// this will set the textFilter value in our ActiveFiltersList
+		setTextSetValue(textSearchValue);
+
 		try {
 			await search(textSearchValue, filterSearchValues);
 		} catch (error) {
@@ -51,6 +56,7 @@ function Catalog() {
 
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
+
 		try {
 			await search(textSearchValue, filterSearchValues, resultsPage);
 		} catch (error) {
@@ -110,7 +116,14 @@ function Catalog() {
 						filterSearchValues={filterSearchValues}
 						setFilterSearchValues={setFilterSearchValues}
 					/>
+					<ActiveFiltersList
+						textSetValue={textSetValue}
+						setTextSetValue={setTextSetValue}
+						filterSearchValues={filterSearchValues}
+						setFilterSearchValues={setFilterSearchValues}
+					/>
 				</FiltersContainer>
+				{/*  */}
 				<Loader isLoading={status === 'loading'}>
 					<VRScansContainer>
 						{vrScans.map((scan, index) => {
