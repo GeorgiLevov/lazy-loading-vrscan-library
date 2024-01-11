@@ -50,10 +50,13 @@ const StyledSummary = styled.ol`
 	display: flex;
 	min-height: ${FONTS.heading.normal};
 	margin: 0;
-	margin-bottom: ${SPACING.small} !important;
+	background: ${COLORS.gray.vrscan};
+	
+	
 
 	& > * {
 		margin-right: ${SPACING.micro};
+		
 	}
 `;
 
