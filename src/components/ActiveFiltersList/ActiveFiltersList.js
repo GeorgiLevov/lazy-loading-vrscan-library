@@ -126,7 +126,7 @@ const StyledFiltersList = styled.div`
 	font-weight: 300;
 
 	width: 100%;
-	/* min-height: 90px; */
+	min-height: 50px;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;

@@ -4,7 +4,6 @@ import Main from '../../components/Main';
 import Filters from './Filters';
 import PageTitle from '../../components/PageTitle';
 import styled, { keyframes } from 'styled-components';
-import styled, { keyframes } from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
@@ -34,7 +33,6 @@ function Catalog() {
 	const textSearchFilter = useRef();
 	const [textSearchValue, setTextSearchValue] = useState('');
 	const [textSetValue, setTextSetValue] = useState('');
-	const [textSetValue, setTextSetValue] = useState('');
 	const [filterSearchValues, setFilterSearchValues] = useState(new Set());
 	const [resultsPage, setResultsPage] = useState(1);
 	const [scansErrorMessage, setScansErrorMessage] = useState('');
@@ -61,7 +59,6 @@ function Catalog() {
 
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
-
 
 		try {
 			await search(textSearchValue, filterSearchValues, resultsPage);
@@ -128,20 +125,9 @@ function Catalog() {
 						filterSearchValues={filterSearchValues}
 						setFilterSearchValues={setFilterSearchValues}
 					/>
-					<ActiveFiltersList
-						textSetValue={textSetValue}
-						setTextSetValue={setTextSearchValue}
-						filterSearchValues={filterSearchValues}
-						setFilterSearchValues={setFilterSearchValues}
-					/>
 				</FiltersContainer>
-				{/*  */}
-				{/*  */}
 				<Loader isLoading={status === 'loading'}>
 					<VRScansContainer>
-						{vrScans.length > 0
-							? vrScans.map((scan, index) => {
-									const isElementinMiddle = index === vrScans.length - 9;
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {
 									const isElementinMiddle = index === vrScans.length - 9;
@@ -184,36 +170,9 @@ function Catalog() {
 				</Loader>
 			</Main>
 			<Footer />
-			<Footer />
 		</>
 	);
 }
-
-const fadeInAnimation = keyframes`
- 0% { transform: translateZ(-80px); opacity: 0; }
-    100% { transform: translateZ(0); opacity: 1; }
-`;
-
-const ZeroFilteredRezultsHeader = styled.div`
-	width: max-content;
-	font-size: ${FONTS.heading.large};
-	text-align: center;
-	margin: 0 auto;
-	margin-bottom: ${SPACING.mega};
-	grid-column-start: 1;
-	grid-column-end: 5;
-
-	animation-name: ${fadeInAnimation};
-	animation-duration: 1s;
-	animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-	animation-delay: 1s;
-	animation-fill-mode: both;
-	animation-iteration-count: 1;
-
-	@media ${QUERIES.phoneAndDown} {
-		width: inherit;
-	}
-`;
 
 const fadeInAnimation = keyframes`
  0% { transform: translateZ(-80px); opacity: 0; }
