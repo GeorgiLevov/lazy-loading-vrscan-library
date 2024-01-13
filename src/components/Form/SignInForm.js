@@ -195,4 +195,3 @@ const StyledForm = styled.form`
 `;
 
 export default SignInForm;
-

@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
 import Filters from './Filters';
 import PageTitle from '../../components/PageTitle';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
@@ -13,6 +13,7 @@ import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHi
 import { useInView } from 'react-intersection-observer';
 import Loader from '../../components/Loader';
 import ActiveFiltersList from '../../components/ActiveFiltersList';
+import Footer from '../../components/Footer/Footer';
 
 function Catalog() {
 	const { vrScans, search } = useVRScans();
@@ -114,47 +115,80 @@ function Catalog() {
 						filterSearchValues={filterSearchValues}
 						setFilterSearchValues={setFilterSearchValues}
 					/>
-					{/* <ActiveFiltersList
+					<ActiveFiltersList
 						textSetValue={textSetValue}
-						setTextSetValue={setTextSetValue}
+						setTextSetValue={setTextSearchValue}
 						filterSearchValues={filterSearchValues}
 						setFilterSearchValues={setFilterSearchValues}
-					/> */}
+					/>
 				</FiltersContainer>
 				{/*  */}
 				<Loader isLoading={status === 'loading'}>
 					<VRScansContainer>
-						{vrScans.map((scan, index) => {
-							const isElementinMiddle = index === vrScans.length - 9;
+						{vrScans.length > 0
+							? vrScans.map((scan, index) => {
+									const isElementinMiddle = index === vrScans.length - 9;
 
-							return (
-								<Card
-									key={`${scan.id}`}
-									variant="vrscan"
-									name={scan.name}
-									summary={[scan.material, scan.colors, scan.tags]}
-									imageSrc={scan.thumb}
-									imageAlt={scan.name}>
-									{scan.manufacturer && (
-										<p>{Objectify(scan.manufacturer).name}</p>
-									)}
-									<p> {scan.file_name.replace('.vrscan', '')}</p>
-									{isElementinMiddle && (
-										<span style={visuallyHiddenStyles} ref={scrollRef}>
-											Will start fetching next elements once this is reached!
-										</span>
-									)}
-								</Card>
-							);
-						})}
+									return (
+										<Card
+											key={`${scan.id}`}
+											variant="vrscan"
+											name={scan.name}
+											summary={[scan.material, scan.colors, scan.tags]}
+											imageSrc={scan.thumb}
+											imageAlt={scan.name}>
+											{scan.manufacturer && (
+												<p>{Objectify(scan.manufacturer).name}</p>
+											)}
+											<p> {scan.file_name.replace('.vrscan', '')}</p>
+											{isElementinMiddle && (
+												<span style={visuallyHiddenStyles} ref={scrollRef}>
+													Will start fetching next elements once this is
+													reached!
+												</span>
+											)}
+										</Card>
+									);
+								})
+							: status === 'success' && (
+									<ZeroFilteredRezultsHeader>
+										Your search yielded 0 results.
+									</ZeroFilteredRezultsHeader>
+								)}
 						{status === 'error' && <div>{scansErrorMessage}</div>}
 					</VRScansContainer>
 				</Loader>
 			</Main>
-			{/* <Footer></Footer> */}
+			<Footer />
 		</>
 	);
 }
+
+const fadeInAnimation = keyframes`
+ 0% { transform: translateZ(-80px); opacity: 0; }
+    100% { transform: translateZ(0); opacity: 1; }
+`;
+
+const ZeroFilteredRezultsHeader = styled.div`
+	width: max-content;
+	font-size: ${FONTS.heading.large};
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: ${SPACING.mega};
+	grid-column-start: 1;
+	grid-column-end: 5;
+
+	animation-name: ${fadeInAnimation};
+	animation-duration: 1s;
+	animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+	animation-delay: 1s;
+	animation-fill-mode: both;
+	animation-iteration-count: 1;
+
+	@media ${QUERIES.phoneAndDown} {
+		width: inherit;
+	}
+`;
 
 const FiltersContainer = styled.div`
 	display: flex;

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, QUERIES, SPACING } from '../../constants';
+import { COLORS, SPACING } from '../../constants';
 import Button from '../../components/Button/Button';
 import { ArrowDownRight } from 'react-feather';
 import { ArrowUpRight } from 'react-feather';
@@ -41,60 +41,6 @@ const FiltersContainer = styled.div`
 
 	> button {
 		margin: 4px;
-	}
-`;
-
-const FilterButton = styled.button`
-	font-family: 'Helvetica', sans-serif !important;
-	font-weight: 300;
-	min-height: 40px;
-	border: ${(props) =>
-		props.selected ? `2px solid ${COLORS.black}` : `1px solid ${COLORS.gray}`};
-	box-sizing: border-box;
-	cursor: pointer;
-	background-color: ${COLORS.white};
-	color: black;
-	transition: background-color 0.3s ease;
-	box-shadow: ${(props) =>
-		props.selected
-			? `0 0 0 2px ${COLORS.gray.light} inset;`
-			: `1px solid ${COLORS.gray}`};
-
-	box-sizing: border-box;
-	overflow: hidden;
-	font-size: 15px;
-	height: auto;
-	white-space: nowrap;
-	min-width: calc(33.33% - 10px);
-
-	@media (${QUERIES.phoneAndDown}) {
-		max-width: auto;
-	}
-
-	&:hover {
-		opacity: 0.8;
-	}
-
-	&:focus {
-		outline: none;
-		border: ${(props) =>
-			props.selected
-				? `2px solid ${COLORS.black}`
-				: `1px solid ${COLORS.gray}`};
-	}
-`;
-
-const ColorButton = styled(FilterButton)`
-	background-color: ${(props) => props.color};
-	border: ${(props) =>
-		props.selected ? `2px solid ${COLORS.black}` : `px solid ${COLORS.gray}`};
-
-	flex: 1 0 30%;
-	margin: 5px;
-	max-width: calc(33.33% - 10px);
-
-	@media (${QUERIES.laptopAndDown}) {
-		max-width: calc(20% - 10px);
 	}
 `;
 
@@ -153,19 +99,23 @@ const CollapsibleFilterBox = ({
 					{filters.map((filter) => {
 						const isSelected = selectedFilters.has(filter);
 						return filterType === 'colors' ? (
-							<ColorButton
+							<Button
+								variant="filter"
+								size="medium"
 								key={`${filterType}-${filter.id}`}
-								color={filter.hex}
+								style={{ backgroundColor: filter.hex, padding: `16px 0px` }}
 								selected={isSelected}
 								onClick={() => toggleFilter(filter)}
 							/>
 						) : (
-							<FilterButton
+							<Button
+								variant="filter"
+								size="medium"
 								key={`${filterType}-${filter.id}`}
 								selected={isSelected}
 								onClick={() => toggleFilter(filter)}>
 								{filter.name}
-							</FilterButton>
+							</Button>
 						);
 					})}
 				</FiltersContainer>
