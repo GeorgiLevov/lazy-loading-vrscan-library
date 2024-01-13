@@ -29,7 +29,6 @@ const CARDSTYLES = {
 };
 
 const IMAGESTYLES = {
-const IMAGESTYLES = {
 	base: {
 		'--backgroundColor': `${COLORS.white}`,
 		'--marginBottom': `0px`,
@@ -101,7 +100,6 @@ function Card({
 		<StyledComponent style={cardStyles}>
 			{summary?.length && <CardSummary {...handleSummary(summary)} />}
 			<ImageWrapper style={imageStyles}>
-			<ImageWrapper style={imageStyles}>
 				{Array.isArray(imageSrc) ? (
 					<Slider contents={imageSrc} />
 				) : (
@@ -171,8 +169,6 @@ const ProfileCard = styled(BaseCard)`
 	align-items: center;
 
 	& > * {
-		
-
 		&:last-child {
 			margin-bottom: 0px;
 		}
@@ -191,7 +187,7 @@ const VRScanCard = styled(ProfileCard)`
 	justify-content: space-between;
 	border-radius: 20px;
 	padding: 0;
-	border: 1px solid ${COLORS.gray.light};	
+	border: 1px solid ${COLORS.gray.light};
 	overflow: hidden;
 	position: relative;
 
@@ -216,11 +212,10 @@ const CardDetails = styled.section`
 `;
 
 const Label = styled.div`
-	
 	background: transparent;
 	padding: 0 ${SPACING.small};
 	display: flex;
-  justify-content: end;
+	justify-content: end;
 `;
 
 const CardTitle = styled.h2`
@@ -241,8 +236,6 @@ const ImageWrapper = styled.div`
 	width: 100%;
 	text-align: center;
 	background: var(--backgroundColor);
-	
 `;
-
 
 export default Card;
