@@ -107,6 +107,7 @@ export const InputField = styled.input`
 	padding: ${SPACING.micro} ${SPACING.small};
 	flex-grow: 1;
 	background-color: ${COLORS.white};
+	font-weight: 300;
 	&:focus {
 		outline: none;
 		border: 1px solid

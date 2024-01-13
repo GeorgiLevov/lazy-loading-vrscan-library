@@ -5,6 +5,9 @@ import { Edit } from 'react-feather';
 import Card from '../../components/Card';
 import useToggle from '../../hooks/useToggle.hook';
 import Loader from '../../components/Loader/Loader';
+import { SPACING } from '../../constants';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * @module EditImageHandler
@@ -14,10 +17,11 @@ import Loader from '../../components/Loader/Loader';
  */
 
 function EditImageHandler() {
-	const { user, update } = useUser();
+	const { user, update, logout } = useUser();
 	const [profileUrl, setProfileUrl] = useState('');
 	const fileInputRef = useRef(null);
 	const [isUploading, toggleisUploading] = useToggle(false);
+	const navigate = useNavigate();
 
 	/**
 	 * Updates the profile URL state when the user data changes.
@@ -63,9 +67,14 @@ function EditImageHandler() {
 		}
 	};
 
+	const handleLogout = () => {
+		logout();
+		navigate('/');
+	};
+
 	return (
 		<>
-			<Loader isLoading={isUploading}>
+			<Loader isLoading={isUploading} variant="profile">
 				<Card variant="profile" imageSrc={profileUrl} imageAlt="Profile image">
 					<input
 						type="file"
@@ -81,12 +90,21 @@ function EditImageHandler() {
 						onClick={handleProfileImageUpdate}>
 						Edit Profile Image
 					</Button>
-					<p style={{ fontWeight: '700' }}>{user.name}</p>
-					<p>{user.email}</p>
+					<UserInfoWrap>
+						<p style={{ fontWeight: '700' }}>{user.name}</p>
+						<p>{user.email}</p>
+					</UserInfoWrap>
+					<Button variant="primary" size="medium" onClick={handleLogout}>
+						Log out
+					</Button>
 				</Card>
 			</Loader>
 		</>
 	);
 }
+
+const UserInfoWrap = styled.div`
+	padding-bottom: ${SPACING.medium};
+`;
 export default EditImageHandler;
 

@@ -281,14 +281,14 @@ function ProfileSettingsHandler() {
 			)}
 
 			<Divider />
-			<Subheading>Reviews & Favorites</Subheading>
+			<Subheading>More links</Subheading>
 			<Button
 				variant="secondary"
 				iconfirst={true}
 				size="medium"
 				icon={ArrowRight}
-				href="/reviews">
-				My Reviews
+				href="/catalog">
+				<span>Explore Library</span>
 			</Button>
 			<Button
 				variant="secondary"

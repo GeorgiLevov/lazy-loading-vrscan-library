@@ -16,17 +16,15 @@ import Footer from '../../components/Footer/Footer';
 import ViewScanDetails from '../../components/Modal/ViewScanDetails';
 import { useUser } from '../../../api/context/user.context';
 
-
 function Catalog() {
 	const { vrScans, search } = useVRScans();
-	const { toggleFavorite, favorites = [] } = useUser(); 
-	
+	const { toggleFavorite, favorites = [] } = useUser();
+
 	const isFavorited = (vrScanId) => {
-		console.log('Favorites:', favorites); 
-		console.log('vrScanId:', vrScanId); 
+		console.log('Favorites:', favorites);
+		console.log('vrScanId:', vrScanId);
 		return favorites.includes(vrScanId);
-	  };
-	
+	};
 
 	const { ref: scrollRef, inView } = useInView({
 		threshold: 1,
@@ -49,15 +47,15 @@ function Catalog() {
 	const [status, setStatus] = useState('idle');
 
 	async function handleSubmit() {
-        setResultsPage(1);
-        try {
-            await search(textSearchValue, filterSearchValues);
-        } catch (error) {
-            setStatus('error');
-            setScansErrorMessage(error.message);
-            console.error(error); 
-        }
-    }
+		setResultsPage(1);
+		try {
+			await search(textSearchValue, filterSearchValues);
+		} catch (error) {
+			setStatus('error');
+			setScansErrorMessage(error.message);
+			console.error(error);
+		}
+	}
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
 		try {
@@ -71,14 +69,14 @@ function Catalog() {
 
 	// Only submit search request if it meets search conditions, wait 1500ms
 	useEffect(() => {
-        setStatus('loading');
-        const searchDelayFromLatestInput = 1500;
-        let timer = setTimeout(() => {
-            handleSubmit();
-        }, searchDelayFromLatestInput);
+		setStatus('loading');
+		const searchDelayFromLatestInput = 1500;
+		let timer = setTimeout(() => {
+			handleSubmit();
+		}, searchDelayFromLatestInput);
 
-        return () => clearTimeout(timer);
-    }, [textSearchValue, filterSearchValues]);
+		return () => clearTimeout(timer);
+	}, [textSearchValue, filterSearchValues]);
 
 	// Set fetch status to Success once we have the Scans loaded
 	useEffect(() => {
@@ -87,8 +85,6 @@ function Catalog() {
 			setStatus('success');
 		}
 	}, [vrScans]);
-
-	
 
 	return (
 		<>
@@ -121,33 +117,37 @@ function Catalog() {
 						setFilterSearchValues={setFilterSearchValues}
 					/>
 				</FiltersContainer>
-				<Loader isLoading={status === 'loading'}>
+				<Loader isLoading={status === 'loading'} variant="vrscan">
 					<VRScansContainer>
 						{vrScans.map((scan, index) => {
 							const isElementinMiddle = index === vrScans.length - 9;
 							return (
 								<Card
-								key={scan.id}
-								variant="vrscan"
-								name={scan.name}
-								summary={[scan.material, scan.colors, scan.tags]}
-								imageSrc={scan.thumb}
-								imageAlt={scan.name}
-								favorited={isFavorited(scan.id)}
-								vrScanId={scan.id}
-								onFavoriteToggle={toggleFavorite}>
+									key={scan.id}
+									variant="vrscan"
+									name={scan.name}
+									summary={[scan.material, scan.colors, scan.tags]}
+									imageSrc={scan.thumb}
+									imageAlt={scan.name}
+									favorited={isFavorited(scan.id)}
+									vrScanId={scan.id}
+									onFavoriteToggle={toggleFavorite}>
 									{scan.manufacturer && (
-										<p className='manufacturer'>{Objectify(scan.manufacturer).name}</p>
+										<p className="manufacturer">
+											{Objectify(scan.manufacturer).name}
+										</p>
 									)}
-									
-									<p className='filename'> {scan.file_name.replace('.vrscan', '')}</p>
+
+									<p className="filename">
+										{' '}
+										{scan.file_name.replace('.vrscan', '')}
+									</p>
 									<ViewScanDetails scan={scan} />
 									{isElementinMiddle && (
 										<span style={visuallyHiddenStyles} ref={scrollRef}>
 											Will start fetching next elements once this is reached!
 										</span>
 									)}
-									
 								</Card>
 							);
 						})}
@@ -156,7 +156,7 @@ function Catalog() {
 					</VRScansContainer>
 				</Loader>
 			</Main>
-			<Footer/> 
+			<Footer />
 		</>
 	);
 }
@@ -224,10 +224,10 @@ const VRScansContainer = styled.div`
 		margin-bottom: 10px;
 	}
 
-	img {background-color: transparent}
-	
+	img {
+		background-color: transparent;
+	}
 `;
 
-
-
 export default Catalog;
+
