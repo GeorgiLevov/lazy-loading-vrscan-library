@@ -18,3 +18,13 @@ export const capitalize = (word = '') =>
 	word.length 
     ? word[0].toUpperCase() + word.substring(1) 
     : word;
+
+export const insertItemAtIndex = (array, index, item) => {
+	if (index < 0 || index > array.length) {
+		console.error('Index out of bounds for array');
+		return array;
+	}
+
+	// ignore-prettier
+	return array.slice(0, index).concat(item, array.slice(index));
+};

@@ -29,12 +29,13 @@ const CARDSTYLES = {
 };
 
 const IMAGESTYLES = {
+const IMAGESTYLES = {
 	base: {
 		'--backgroundColor': `${COLORS.white}`,
 		'--marginBottom': `0px`,
 	},
 	inverted: {
-		'--backgroundColor': `${COLORS.gray.dark}`,
+		'--backgroundColor': `${COLORS.gray.white}`,
 		'--marginBottom': `0px`,
 	},
 	profile: {
@@ -71,7 +72,7 @@ function Card({
 	favorited,
 	children,
 }) {
-	let styles = CARDSTYLES[variant];
+	let cardStyles = CARDSTYLES[variant];
 	let imageStyles = IMAGESTYLES[variant];
 	let detailStyles = DETAILSTYLES[variant];
 
@@ -97,8 +98,9 @@ function Card({
 	};
 
 	return (
-		<StyledComponent style={styles}>
+		<StyledComponent style={cardStyles}>
 			{summary?.length && <CardSummary {...handleSummary(summary)} />}
+			<ImageWrapper style={imageStyles}>
 			<ImageWrapper style={imageStyles}>
 				{Array.isArray(imageSrc) ? (
 					<Slider contents={imageSrc} />

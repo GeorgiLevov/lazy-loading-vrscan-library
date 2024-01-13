@@ -28,7 +28,7 @@ const StyledCardImage = styled(Picture)`
 	// expected to be flex child
 	/* flex-grow: 1; */
 	/* max-width: 320px; */
-	width: 50%;
+	/* width: 50%; */
 	max-height: 100%;
 	padding: ${SPACING.medium};
 `;

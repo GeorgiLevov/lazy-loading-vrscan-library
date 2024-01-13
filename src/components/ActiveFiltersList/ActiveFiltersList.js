@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import Divider from '../Divider';
+import { insertItemAtIndex } from '../../utils';
+import styled from 'styled-components';
+import { COLORS, QUERIES, SPACING } from '../../constants';
+import Button from '../Button/Button';
+import { X } from 'react-feather';
 
 const ActiveFiltersList = ({
 	textSetValue,
@@ -12,11 +17,15 @@ const ActiveFiltersList = ({
 
 	const updateFilterState = (selection) => {
 		if (selection.id === 'text-filter') {
+			const newFilters = activeFilters.filter(
+				(selectedFilter) => selectedFilter.id !== 'text-filter'
+			);
+			setActiveFilters(newFilters);
 			setTextSetValue('');
 		} else {
 			const newButtonFilters = activeFilters.filter(
 				(selectedFilter) =>
-					selectedFilter.id !== selectedFilter.id &&
+					selectedFilter.$id !== selection.$id &&
 					selectedFilter.id !== 'text-filter'
 			);
 			setFilterSearchValues(new Set(newButtonFilters));
@@ -42,10 +51,6 @@ const ActiveFiltersList = ({
 				const allOtherFilters = prevFilters.filter(
 					(selectedFilter) => selectedFilter.id !== textFilter.id
 				);
-				console.log('allOtherFilters:', allOtherFilters);
-				console.log('textFilter:', textFilter);
-				console.log('activeFilters:', [...allOtherFilters, textFilter]);
-
 				return [...allOtherFilters, textFilter];
 			});
 		}
@@ -54,6 +59,7 @@ const ActiveFiltersList = ({
 	// When the Button Filters change outside of this component - need to handle adding, updating and removing filter
 	useEffect(() => {
 		let textFilterPosition;
+		// get the filter object from here, not the array with 1 element, also get the index position of the element
 		const textFilter = activeFilters.filter((filter, index) => {
 			if (filter.id === 'text-filter') {
 				textFilterPosition = index;
@@ -64,14 +70,23 @@ const ActiveFiltersList = ({
 		const newFilters = Array.from(filterSearchValues);
 
 		if (typeof textFilterPosition !== 'undefined') {
-			console.log(textFilterPosition);
-			console.log('textFilter:', textFilter);
-			console.log('newFilters:', newFilters);
-			console.log(
-				'activeFilters:',
-				newFilters.splice(textFilterPosition, 0, textFilter)
+			// when we remove a filter that is smaller than the textFilter - we want to move the text filter 1 position back as well
+			let removedFilterPosition;
+			const removedFilter = activeFilters.filter((element, index) => {
+				if (!filterSearchValues.has(element) && element.id !== 'text-filter') {
+					removedFilterPosition = index;
+				}
+			});
+			if (removedFilterPosition < textFilterPosition) {
+				textFilterPosition = textFilterPosition - 1;
+			}
+
+			const combinedArray = insertItemAtIndex(
+				newFilters,
+				textFilterPosition,
+				textFilter
 			);
-			setActiveFilters(newFilters.splice(textFilterPosition, 0, textFilter));
+			setActiveFilters(combinedArray);
 		} else {
 			setActiveFilters(newFilters);
 		}
@@ -79,16 +94,61 @@ const ActiveFiltersList = ({
 
 	return (
 		<>
-			{activeFilters.length > 0 && (
-				<div>
-					{activeFilters.map((filter) => {
-						return <div key={filter.id}>{filter.name}</div>;
+			<StyledFiltersList>
+				<StyledFilterName>
+					{activeFilters.length > 0
+						? 'Applied Filters:'
+						: 'You have no applied filters.'}
+				</StyledFilterName>
+				{activeFilters.length > 0 &&
+					activeFilters.map((filter) => {
+						return (
+							<Button
+								key={`${filter.id}-${filter.name.charAt(0)}${filter.name.charAt(
+									1
+								)}`}
+								variant="filter"
+								size="medium"
+								icon={X}
+								onClick={() => updateFilterState(filter)}>
+								<StyledFilterName>{filter.name}</StyledFilterName>
+							</Button>
+						);
 					})}
-				</div>
-			)}
+			</StyledFiltersList>
 			<Divider />
 		</>
 	);
 };
+
+const StyledFiltersList = styled.div`
+	font-family: 'Helvetica', sans-serif;
+	font-weight: 300;
+
+	width: 100%;
+	/* min-height: 90px; */
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	padding-top: ${SPACING.mega};
+
+	& > * {
+		min-width: ${SPACING.mega};
+		margin-bottom: ${SPACING.micro};
+		margin-right: ${SPACING.micro};
+	}
+
+	& > * > svg {
+		color: ${COLORS.red};
+	}
+
+	@media (${QUERIES.laptopAndDown}) {
+		padding-top: revert;
+	}
+`;
+
+const StyledFilterName = styled.span`
+	color: ${COLORS.black};
+`;
 
 export default ActiveFiltersList;

@@ -10,7 +10,7 @@ export const COLORS = {
 	gray: {
 		body: '#F2F2F2',
 		card: '#F2F2F2',
-		divider: '#DEDEDE',
+		divider: '#CCC',
 		text: '#707070',
 		light: '#E6E6E6',
 		tag: '#DDDDDD',

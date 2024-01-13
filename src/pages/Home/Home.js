@@ -37,7 +37,7 @@ function Home() {
 	 * @property {Function} logout - Logout function.
 	 */
 
-	const { user, logout } = useUser();
+	const { user } = useUser();
 	return (
 		<>
 			<Header />
@@ -66,10 +66,6 @@ function Home() {
 					{/* Conditional rendering based on user authentication */}
 					{user ? (
 						<>
-							{/* Logout button for testing */}
-							<Button variant="primary" size="large" onClick={() => logout()}>
-								Log out (Testing only)
-							</Button>
 							{/* Explore Library button */}
 							<Button
 								href="/catalog"
@@ -97,4 +93,3 @@ function Home() {
 }
 
 export default Home;
-
