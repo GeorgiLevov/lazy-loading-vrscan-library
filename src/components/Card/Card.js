@@ -34,7 +34,7 @@ const IMAGESTYLES = {
 		'--marginBottom': `0px`,
 	},
 	inverted: {
-		'--backgroundColor': `${COLORS.gray.dark}`,
+		'--backgroundColor': `${COLORS.gray.light}`,
 		'--marginBottom': `0px`,
 	},
 	profile: {
@@ -64,12 +64,14 @@ const DETAILSTYLES = {
 
 function Card({
 	summary,
-	name,
-	variant,
-	imageAlt,
-	imageSrc,
-	favorited,
-	children,
+    name,
+    variant,
+    imageAlt,
+    imageSrc,
+    favorited,
+    vrScanId,
+    onFavoriteToggle,
+    children,
 }) {
 	let styles = CARDSTYLES[variant];
 	let imageStyles = IMAGESTYLES[variant];
@@ -95,6 +97,13 @@ function Card({
 			tags: summaryArray[2],
 		};
 	};
+	const handleFavoriteClick = () => {
+        console.log("Favorited:", favorited);  
+        if (onFavoriteToggle && vrScanId) {
+            onFavoriteToggle(vrScanId);
+        }
+    };
+
 
 	return (
 		<StyledComponent style={styles}>
@@ -110,15 +119,15 @@ function Card({
 					/>
 				)}
 
-				{variant === 'vrscan' && (
-					<Label>
-						{favorited ? (
-							<Heart strokeWidth={1.1} stroke={COLORS.red} fill={COLORS.red} />
-						) : (
-							<Heart strokeWidth={1.1} stroke={COLORS.red} />
-						)}
-					</Label>
-				)}
+{variant === 'vrscan' && (
+                   <Label onClick={handleFavoriteClick}>
+				   <HeartIcon 
+					   $favorited={favorited} 
+					   strokeWidth={1.1} 
+					   stroke="#FF0000"
+				   />
+			   </Label>
+                )}
 			</ImageWrapper>
 			<CardDetails style={detailStyles}>
 				{variant === 'inverted'
@@ -129,6 +138,18 @@ function Card({
 		</StyledComponent>
 	);
 }
+
+
+const HeartIcon = styled(Heart)`
+       fill: ${props => props.$favorited ? "#FF0000" : "none"};
+    cursor: pointer;
+    transition: fill 0.3s ease;
+
+    &:hover {
+        stroke: #FF6666;
+    }
+`;
+
 
 // expects parent to be display:flex
 const BaseCard = styled.article`
@@ -215,10 +236,11 @@ const CardDetails = styled.section`
 
 const Label = styled.div`
 	
-	background: transparent;
-	padding: 0 ${SPACING.small};
-	display: flex;
-  justify-content: end;
+	cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
 `;
 
 const CardTitle = styled.h2`
@@ -241,6 +263,8 @@ const ImageWrapper = styled.div`
 	background: var(--backgroundColor);
 	
 `;
+
+
 
 
 export default Card;

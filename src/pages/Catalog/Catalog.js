@@ -7,17 +7,26 @@ import styled from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
-import BackToTopButton from './BackToTopButton';
+import BackToTopButton from '../../components/Button/BackToTopButton';
 import { Objectify } from '../../helpers';
 import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
 import { useInView } from 'react-intersection-observer';
 import Loader from '../../components/Loader';
 import Footer from '../../components/Footer/Footer';
-import ViewScanDetails from './ViewScanDetails';
+import ViewScanDetails from '../../components/Modal/ViewScanDetails';
+import { useUser } from '../../../api/context/user.context';
 
 
 function Catalog() {
 	const { vrScans, search } = useVRScans();
+	const { toggleFavorite, favorites = [] } = useUser(); 
+	
+	const isFavorited = (vrScanId) => {
+		console.log('Favorites:', favorites); 
+		console.log('vrScanId:', vrScanId); 
+		return favorites.includes(vrScanId);
+	  };
+	
 
 	const { ref: scrollRef, inView } = useInView({
 		threshold: 1,
@@ -40,16 +49,15 @@ function Catalog() {
 	const [status, setStatus] = useState('idle');
 
 	async function handleSubmit() {
-		setResultsPage(1);
-		try {
-			await search(textSearchValue, filterSearchValues);
-		} catch (error) {
-			setStatus('error');
-			setScansErrorMessage(error.message);
-			console.error(error);	
-		}
-	}
-
+        setResultsPage(1);
+        try {
+            await search(textSearchValue, filterSearchValues);
+        } catch (error) {
+            setStatus('error');
+            setScansErrorMessage(error.message);
+            console.error(error); 
+        }
+    }
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
 		try {
@@ -63,15 +71,14 @@ function Catalog() {
 
 	// Only submit search request if it meets search conditions, wait 1500ms
 	useEffect(() => {
-		setStatus('loading');
-		const searchDelayFromLatestnput = 1500;
-		// preventing meaningless requests from happening
-		let timer = setTimeout(() => {
-			handleSubmit();
-		}, searchDelayFromLatestnput);
+        setStatus('loading');
+        const searchDelayFromLatestInput = 1500;
+        let timer = setTimeout(() => {
+            handleSubmit();
+        }, searchDelayFromLatestInput);
 
-		return () => clearTimeout(timer);
-	}, [textSearchValue, filterSearchValues]);
+        return () => clearTimeout(timer);
+    }, [textSearchValue, filterSearchValues]);
 
 	// Set fetch status to Success once we have the Scans loaded
 	useEffect(() => {
@@ -80,6 +87,8 @@ function Catalog() {
 			setStatus('success');
 		}
 	}, [vrScans]);
+
+	
 
 	return (
 		<>
@@ -116,15 +125,17 @@ function Catalog() {
 					<VRScansContainer>
 						{vrScans.map((scan, index) => {
 							const isElementinMiddle = index === vrScans.length - 9;
-
 							return (
 								<Card
-									key={`${scan.id}`}
-									variant="vrscan"
-									name={scan.name}
-									summary={[scan.material, scan.colors, scan.tags]}
-									imageSrc={scan.thumb}
-									imageAlt={scan.name}>
+								key={scan.id}
+								variant="vrscan"
+								name={scan.name}
+								summary={[scan.material, scan.colors, scan.tags]}
+								imageSrc={scan.thumb}
+								imageAlt={scan.name}
+								favorited={isFavorited(scan.id)}
+								vrScanId={scan.id}
+								onFavoriteToggle={toggleFavorite}>
 									{scan.manufacturer && (
 										<p className='manufacturer'>{Objectify(scan.manufacturer).name}</p>
 									)}
@@ -213,7 +224,7 @@ const VRScansContainer = styled.div`
 		margin-bottom: 10px;
 	}
 
-	img {background-color: transparent!important}
+	img {background-color: transparent}
 	
 `;
 
