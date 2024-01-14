@@ -12,6 +12,7 @@ import Subheading from '../../components/Subheading';
 import ProfileSettingsHandler from './ProfileSettingsHandler';
 import EditImageHandler from './EditImageHandler';
 import { useUser } from '../../../api/context/user.context';
+import Button from '../../components/Button';
 
 /**
  * @module Profile
@@ -22,7 +23,7 @@ import { useUser } from '../../../api/context/user.context';
  */
 
 function Profile() {
-	const { user } = useUser();
+	const { user, logout } = useUser();
 	return (
 		<>
 			<Header />
@@ -34,7 +35,11 @@ function Profile() {
 						<>
 							<ProfileSection>
 								<EditImageHandler />
+								{/* Logout button for testing */}
 							</ProfileSection>
+							{/* <Button variant="primary" size="large" onClick={() => logout()}>
+									Log out (Testing only)
+								</Button> */}
 
 							<ProfileSettings>
 								<Subheading>Account settings</Subheading>
@@ -49,4 +54,3 @@ function Profile() {
 }
 
 export default Profile;
-

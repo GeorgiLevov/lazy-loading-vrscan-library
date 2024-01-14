@@ -3,67 +3,6 @@ import styled from 'styled-components';
 import { COLORS, QUERIES, FONTS, SPACING } from '../../constants';
 import { Link } from 'react-router-dom';
 
-const SIZES = {
-	small: {
-		'--borderRadius': 24 + 'px',
-		'--fontSize': `${FONTS.text.small}`,
-		'--padding': '4px 10px',
-	},
-	medium: {
-		'--borderRadius': 30 + 'px',
-		'--fontSize': `${FONTS.text.normal}`,
-		'--padding': '12px 20px',
-	},
-	large: {
-		'--borderRadius': 32 + 'px',
-		'--fontSize': `${FONTS.text.normal}`,
-		'--padding': '16px 28px',
-	},
-	xl: {
-		'--borderRadius': 32 + 'px',
-		'--fontSize': `${FONTS.heading.small}`,
-		'--padding': '12px 48px',
-	},
-};
-
-const Button = ({
-	variant,
-	size,
-	icon: Icon,
-	iconfirst,
-	href,
-	children,
-	onClick,
-}) => {
-	const styles = SIZES[size];
-
-	let StyledComponent;
-	if (variant === 'base') {
-		StyledComponent = ButtonBase;
-	} else if (variant === 'primary') {
-		StyledComponent = PrimaryButton;
-	} else if (variant === 'secondary') {
-		StyledComponent = SecondaryButton;
-	} else if (variant === 'underline') {
-		StyledComponent = UnderlineButton;
-	} else {
-		throw new Error(`Unrecognized Button variant: ${variant}`);
-	}
-
-	// Dynamic tag setup based on: https://styled-components.com/docs/api#as-polymorphic-prop
-	return (
-		<StyledComponent
-			to={href}
-			as={href ? Link : 'button'}
-			$iconfirst={iconfirst}
-			style={styles}
-			onClick={() => onClick()}>
-			{Icon && <Icon strokeWidth={1.1} />}
-			{children}
-		</StyledComponent>
-	);
-};
-
 const ButtonBase = styled.button`
 	margin: 0;
 	border: 0;
@@ -179,5 +118,106 @@ const UnderlineButton = styled(ButtonBase)`
 		transition-property: width, left;
 	}
 `;
+
+const FilterButton = styled(ButtonBase)`
+	min-height: 40px;
+	min-width: calc(33% - 7px);
+	padding: 8px 11px;
+	background-color: ${COLORS.white};
+	border: var(--border);
+	box-shadow: var(--boxShadow);
+	color: black;
+	font-size: ${FONTS.text.normal};
+	transition: background-color 0.3s ease;
+	white-space: nowrap;
+
+	@media (${QUERIES.phoneAndDown}) {
+		max-width: revert;
+		flex: 1 0 30%;
+	}
+
+	&:hover {
+		opacity: 0.8;
+	}
+
+	&:focus {
+		outline: none;
+		border: var(--border);
+	}
+`;
+
+const COMPONENTS = {
+	base: ButtonBase,
+	primary: PrimaryButton,
+	secondary: SecondaryButton,
+	underline: UnderlineButton,
+	filter: FilterButton,
+};
+
+const SIZES = {
+	small: {
+		'--borderRadius': 24 + 'px',
+		'--fontSize': `${FONTS.text.small}`,
+		'--padding': '4px 10px',
+	},
+	medium: {
+		'--borderRadius': 30 + 'px',
+		'--fontSize': `${FONTS.text.normal}`,
+		'--padding': '12px 20px',
+	},
+	large: {
+		'--borderRadius': 32 + 'px',
+		'--fontSize': `${FONTS.text.normal}`,
+		'--padding': '16px 28px',
+	},
+	xl: {
+		'--borderRadius': 32 + 'px',
+		'--fontSize': `${FONTS.heading.small}`,
+		'--padding': '12px 48px',
+	},
+};
+
+const BORDER = {
+	true: {
+		'--border': `2px solid ${COLORS.black}`,
+		'--boxShadow': `0 0 0 2px ${COLORS.gray.light} inset`,
+	},
+	false: {
+		'--border': `1px solid ${COLORS.transparent}`,
+		'--boxShadow': `1px solid ${COLORS.transparent}`,
+	},
+};
+
+const Button = ({
+	variant = 'base',
+	size = 'medium',
+	icon: Icon,
+	iconfirst,
+	href,
+	children,
+	onClick,
+	selected = false,
+	style,
+}) => {
+	const sizeStyles = SIZES[size];
+	const isSelectedStyles = BORDER[selected.toString()];
+
+	if (!variant) throw new Error(`Unrecognized Button variant: ${variant}`);
+
+	const StyledComponent = COMPONENTS[variant];
+
+	// Dynamic tag setup based on: https://styled-components.com/docs/api#as-polymorphic-prop
+	return (
+		<StyledComponent
+			to={href}
+			as={href ? Link : 'button'}
+			$iconfirst={iconfirst}
+			style={{ ...sizeStyles, ...isSelectedStyles, ...style }}
+			onClick={() => onClick()}>
+			{Icon && <Icon strokeWidth={1.1} />}
+			{children}
+		</StyledComponent>
+	);
+};
 
 export default Button;

@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
 import Filters from './Filters';
 import PageTitle from '../../components/PageTitle';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
@@ -12,9 +12,9 @@ import { Objectify } from '../../helpers';
 import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
 import { useInView } from 'react-intersection-observer';
 import Loader from '../../components/Loader';
+import ActiveFiltersList from '../../components/ActiveFiltersList';
 import Footer from '../../components/Footer/Footer';
 import ViewScanDetails from './ViewScanDetails';
-
 
 function Catalog() {
 	const { vrScans, search } = useVRScans();
@@ -32,6 +32,7 @@ function Catalog() {
 
 	const textSearchFilter = useRef();
 	const [textSearchValue, setTextSearchValue] = useState('');
+	const [textSetValue, setTextSetValue] = useState('');
 	const [filterSearchValues, setFilterSearchValues] = useState(new Set());
 	const [resultsPage, setResultsPage] = useState(1);
 	const [scansErrorMessage, setScansErrorMessage] = useState('');
@@ -41,17 +42,24 @@ function Catalog() {
 
 	async function handleSubmit() {
 		setResultsPage(1);
+		// this will set the textFilter value in our ActiveFiltersList
+		setTextSetValue(textSearchValue);
+
+		// this will set the textFilter value in our ActiveFiltersList
+		setTextSetValue(textSearchValue);
+
 		try {
 			await search(textSearchValue, filterSearchValues);
 		} catch (error) {
 			setStatus('error');
 			setScansErrorMessage(error.message);
-			console.error(error);	
+			console.error(error);
 		}
 	}
 
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
+
 		try {
 			await search(textSearchValue, filterSearchValues, resultsPage);
 		} catch (error) {
@@ -111,44 +119,86 @@ function Catalog() {
 						filterSearchValues={filterSearchValues}
 						setFilterSearchValues={setFilterSearchValues}
 					/>
+					<ActiveFiltersList
+						textSetValue={textSetValue}
+						setTextSetValue={setTextSearchValue}
+						filterSearchValues={filterSearchValues}
+						setFilterSearchValues={setFilterSearchValues}
+					/>
 				</FiltersContainer>
 				<Loader isLoading={status === 'loading'}>
 					<VRScansContainer>
-						{vrScans.map((scan, index) => {
-							const isElementinMiddle = index === vrScans.length - 9;
+						{vrScans.length > 0
+							? vrScans.map((scan, index) => {
+									const isElementinMiddle = index === vrScans.length - 9;
 
-							return (
-								<Card
-									key={`${scan.id}`}
-									variant="vrscan"
-									name={scan.name}
-									summary={[scan.material, scan.colors, scan.tags]}
-									imageSrc={scan.thumb}
-									imageAlt={scan.name}>
-									{scan.manufacturer && (
-										<p className='manufacturer'>{Objectify(scan.manufacturer).name}</p>
-									)}
-									
-									<p className='filename'> {scan.file_name.replace('.vrscan', '')}</p>
-									<ViewScanDetails scan={scan} />
-									{isElementinMiddle && (
-										<span style={visuallyHiddenStyles} ref={scrollRef}>
-											Will start fetching next elements once this is reached!
-										</span>
-									)}
-									
-								</Card>
-							);
-						})}
+									return (
+										<Card
+											key={`${scan.id}`}
+											variant="vrscan"
+											name={scan.name}
+											summary={[scan.material, scan.colors, scan.tags]}
+											imageSrc={scan.thumb}
+											imageAlt={scan.name}>
+											{scan.manufacturer && (
+												<p className="manufacturer">
+													{Objectify(scan.manufacturer).name}
+												</p>
+											)}
 
+											<p className="filename">
+												{' '}
+												{scan.file_name.replace('.vrscan', '')}
+											</p>
+											<ViewScanDetails scan={scan} />
+											{isElementinMiddle && (
+												<span style={visuallyHiddenStyles} ref={scrollRef}>
+													Will start fetching next elements once this is
+													reached!
+												</span>
+											)}
+										</Card>
+									);
+								})
+							: status === 'success' && (
+									<ZeroFilteredRezultsHeader>
+										Your search yielded 0 results.
+									</ZeroFilteredRezultsHeader>
+								)}
 						{status === 'error' && <div>{scansErrorMessage}</div>}
 					</VRScansContainer>
 				</Loader>
 			</Main>
-			<Footer/> 
+			<Footer />
 		</>
 	);
 }
+
+const fadeInAnimation = keyframes`
+ 0% { transform: translateZ(-80px); opacity: 0; }
+    100% { transform: translateZ(0); opacity: 1; }
+`;
+
+const ZeroFilteredRezultsHeader = styled.div`
+	width: max-content;
+	font-size: ${FONTS.heading.large};
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: ${SPACING.mega};
+	grid-column-start: 1;
+	grid-column-end: 5;
+
+	animation-name: ${fadeInAnimation};
+	animation-duration: 1s;
+	animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+	animation-delay: 1s;
+	animation-fill-mode: both;
+	animation-iteration-count: 1;
+
+	@media ${QUERIES.phoneAndDown} {
+		width: inherit;
+	}
+`;
 
 const FiltersContainer = styled.div`
 	display: flex;
@@ -213,10 +263,9 @@ const VRScansContainer = styled.div`
 		margin-bottom: 10px;
 	}
 
-	img {background-color: transparent!important}
-	
+	img {
+		background-color: transparent !important;
+	}
 `;
-
-
 
 export default Catalog;
