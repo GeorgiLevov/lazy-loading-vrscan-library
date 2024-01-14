@@ -34,6 +34,23 @@ export function useUser() {
 
 export function UserProvider({ children }) {
 	const [user, setUser] = useState(null);
+	const [favorites, setFavorites] = useState([]);
+
+
+	// Fetch favorites when the component mounts
+	useEffect(() => {
+		async function fetchFavorites() {
+		try {
+			const userPrefs = await account.getPrefs();
+			const userFavorites = userPrefs.favorites || [];
+			setFavorites(userFavorites);
+		} catch (error) {
+			console.error("Error fetching favorites: ", error);
+		}
+		}
+
+		fetchFavorites();
+	}, []);
 
 	/**
 	 * Authenticates a user using email and password.
@@ -195,6 +212,39 @@ export function UserProvider({ children }) {
 		}
 	}
 
+
+	const toggleFavorite = async (vrScanId) => {
+		try {
+			const userPrefs = await account.getPrefs();
+			console.log('vrScanId:', vrScanId); 
+			console.log('userPrefs:', userPrefs); 
+			let newFavorites = userPrefs.favorites || [];
+	
+			if (newFavorites.includes(vrScanId)) {
+				newFavorites = newFavorites.filter(id => id !== vrScanId);
+			} else {
+				newFavorites = [...newFavorites, vrScanId];
+			}
+			newFavorites = newFavorites.filter(id => id != null);
+			await account.updatePrefs({ ...userPrefs, favorites: newFavorites });
+			setFavorites(newFavorites);
+		} catch (error) {
+			console.error("Error updating favorites: ", error);
+		}
+	};
+
+    
+    const fetchFavorites = async () => {
+        try {
+            const userPrefs = await account.getPrefs();
+            setFavorites(userPrefs.favorites || []);
+        } catch (error) {
+            console.error("Error fetching favorites: ", error);
+        }
+    };
+
+
+
 	/**
 	 * Fetches and updates the current user's data in the context.
 	 * @async
@@ -206,20 +256,27 @@ export function UserProvider({ children }) {
 	async function fetchUser() {
 		try {
 			const loggedIn = await account.get();
-			const profileImg = await getProfileImage();
+			const userPrefs = await account.getPrefs();
 			setUser({
 				...loggedIn,
-				photo: profileImg,
+				photo: await getProfileImage(),
 			});
+			setFavorites(userPrefs.favorites || []);
 		} catch (err) {
-			setUser(null);
+			console.error("Error fetching user data:", err);
 		}
 	}
+
 
 	// On mount - the app will check for a user session and will log in the user automatically
 	useEffect(() => {
 		fetchUser();
 	}, []);
+
+	// Fetch the user's favorites when the component mounts
+	useEffect(() => {
+        fetchFavorites(); 
+    }, []);
 
 	return (
 		<UserContext.Provider
@@ -233,6 +290,8 @@ export function UserProvider({ children }) {
 					name: updateName,
 					photo: updateProfileImage,
 				},
+				toggleFavorite, 
+				favorites
 			}}>
 			{children}
 		</UserContext.Provider>

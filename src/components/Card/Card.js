@@ -34,7 +34,7 @@ const IMAGESTYLES = {
 		'--marginBottom': `0px`,
 	},
 	inverted: {
-		'--backgroundColor': `${COLORS.gray.white}`,
+		'--backgroundColor': `${COLORS.gray.light}`,
 		'--marginBottom': `0px`,
 	},
 	profile: {
@@ -69,6 +69,8 @@ function Card({
 	imageAlt,
 	imageSrc,
 	favorited,
+	vrScanId,
+	onFavoriteToggle,
 	children,
 }) {
 	let cardStyles = CARDSTYLES[variant];
@@ -95,6 +97,12 @@ function Card({
 			tags: summaryArray[2],
 		};
 	};
+	const handleFavoriteClick = () => {
+		console.log('Favorited:', favorited);
+		if (onFavoriteToggle && vrScanId) {
+			onFavoriteToggle(vrScanId);
+		}
+	};
 
 	return (
 		<StyledComponent style={cardStyles}>
@@ -111,12 +119,12 @@ function Card({
 				)}
 
 				{variant === 'vrscan' && (
-					<Label>
-						{favorited ? (
-							<Heart strokeWidth={1.1} stroke={COLORS.red} fill={COLORS.red} />
-						) : (
-							<Heart strokeWidth={1.1} stroke={COLORS.red} />
-						)}
+					<Label onClick={handleFavoriteClick}>
+						<HeartIcon
+							$favorited={favorited}
+							strokeWidth={1.1}
+							stroke="#FF0000"
+						/>
 					</Label>
 				)}
 			</ImageWrapper>
@@ -129,6 +137,16 @@ function Card({
 		</StyledComponent>
 	);
 }
+
+const HeartIcon = styled(Heart)`
+	fill: ${(props) => (props.$favorited ? '#FF0000' : 'none')};
+	cursor: pointer;
+	transition: fill 0.3s ease;
+
+	&:hover {
+		stroke: #ff6666;
+	}
+`;
 
 // expects parent to be display:flex
 const BaseCard = styled.article`
@@ -176,7 +194,7 @@ const ProfileCard = styled(BaseCard)`
 
 	@media ${QUERIES.tabletAndDown} {
 		width: 100%;
-		text-align: center;
+
 		margin: 0 auto;
 	}
 `;
@@ -212,10 +230,11 @@ const CardDetails = styled.section`
 `;
 
 const Label = styled.div`
-	background: transparent;
-	padding: 0 ${SPACING.small};
+	cursor: pointer;
 	display: flex;
-	justify-content: end;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 10px;
 `;
 
 const CardTitle = styled.h2`

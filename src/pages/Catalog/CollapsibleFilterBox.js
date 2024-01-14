@@ -8,6 +8,7 @@ import { ArrowUpRight } from 'react-feather';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Loader from '../../components/Loader';
 import { capitalize } from '../../utils';
+import Catalog from './Catalog';
 
 const FilterBox = styled.div`
 	flex-basis: 32%;
@@ -94,7 +95,7 @@ const CollapsibleFilterBox = ({
 					{isExpanded ? `Show Less` : 'View All'}
 				</Button>
 			</Header>
-			<Loader isLoading={!filters.length}>
+			<Loader isLoading={!filters.length} variant="vrscan">
 				<FiltersContainer $isExpanded={isExpanded}>
 					{filters.map((filter) => {
 						const isSelected = selectedFilters.has(filter);
@@ -125,3 +126,4 @@ const CollapsibleFilterBox = ({
 };
 
 export default CollapsibleFilterBox;
+

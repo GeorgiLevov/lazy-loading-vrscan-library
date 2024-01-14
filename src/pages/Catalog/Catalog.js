@@ -7,17 +7,25 @@ import styled, { keyframes } from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
-import BackToTopButton from './BackToTopButton';
+import BackToTopButton from '../../components/Button/BackToTopButton';
 import { Objectify } from '../../helpers';
 import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
 import { useInView } from 'react-intersection-observer';
 import Loader from '../../components/Loader';
 import ActiveFiltersList from '../../components/ActiveFiltersList';
 import Footer from '../../components/Footer/Footer';
-import ViewScanDetails from './ViewScanDetails';
+import ViewScanDetails from '../../components/Modal/ViewScanDetails';
+import { useUser } from '../../../api/context/user.context';
 
 function Catalog() {
 	const { vrScans, search } = useVRScans();
+	const { toggleFavorite, favorites = [] } = useUser();
+
+	const isFavorited = (vrScanId) => {
+		console.log('Favorites:', favorites);
+		console.log('vrScanId:', vrScanId);
+		return favorites.includes(vrScanId);
+	};
 
 	const { ref: scrollRef, inView } = useInView({
 		threshold: 1,
@@ -56,7 +64,6 @@ function Catalog() {
 			console.error(error);
 		}
 	}
-
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
 
@@ -72,11 +79,10 @@ function Catalog() {
 	// Only submit search request if it meets search conditions, wait 1500ms
 	useEffect(() => {
 		setStatus('loading');
-		const searchDelayFromLatestnput = 1500;
-		// preventing meaningless requests from happening
+		const searchDelayFromLatestInput = 1500;
 		let timer = setTimeout(() => {
 			handleSubmit();
-		}, searchDelayFromLatestnput);
+		}, searchDelayFromLatestInput);
 
 		return () => clearTimeout(timer);
 	}, [textSearchValue, filterSearchValues]);
@@ -126,7 +132,7 @@ function Catalog() {
 						setFilterSearchValues={setFilterSearchValues}
 					/>
 				</FiltersContainer>
-				<Loader isLoading={status === 'loading'}>
+				<Loader isLoading={status === 'loading'} variant="vrscan">
 					<VRScansContainer>
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {
@@ -139,7 +145,10 @@ function Catalog() {
 											name={scan.name}
 											summary={[scan.material, scan.colors, scan.tags]}
 											imageSrc={scan.thumb}
-											imageAlt={scan.name}>
+											imageAlt={scan.name}
+											favorited={isFavorited(scan.id)}
+											vrScanId={scan.id}
+											onFavoriteToggle={toggleFavorite}>
 											{scan.manufacturer && (
 												<p className="manufacturer">
 													{Objectify(scan.manufacturer).name}

@@ -65,6 +65,7 @@ const Dialog = styled.div`
 	background: ${COLORS.gray.light};
 	border-radius: 20px;
 	padding: ${SPACING.large};
+	width: 840px;
 `;
 
 const CloseButton = styled.button`

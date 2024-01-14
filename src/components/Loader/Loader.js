@@ -24,16 +24,33 @@ const Overlay = styled.div`
 	align-items: center;
 `;
 
-const Loader = ({ isLoading, children }) => (
-	<Wrapper>
-		{isLoading ? (
-			<Overlay>
-				<LoadingAnimation />
-			</Overlay>
-		) : (
-			children
-		)}
-	</Wrapper>
-);
+const Loader = ({ isLoading, children, variant }) => {
+	const loaderStyles = {
+		base: {
+			overlayBackground: 'transparent',
+		},
+		profile: {
+			overlayBackground: 'rgba(0, 0, 0, 0.5)',
+		},
+		vrscan: {
+			overlayBackground: 'transparent',
+		},
+	};
+
+	const { overlayBackground } = loaderStyles[variant] || loaderStyles.base;
+
+	return (
+		<Wrapper>
+			{isLoading ? (
+				<Overlay style={{ background: overlayBackground }}>
+					<LoadingAnimation />
+				</Overlay>
+			) : (
+				children
+			)}
+		</Wrapper>
+	);
+};
 
 export default Loader;
+

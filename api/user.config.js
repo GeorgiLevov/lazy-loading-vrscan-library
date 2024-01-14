@@ -1,4 +1,4 @@
 export const newUserEmptyPreferences = {
-	favorites: [null],
+	favorites: [],
 	photo_url: '',
 };
