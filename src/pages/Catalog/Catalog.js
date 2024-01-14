@@ -151,7 +151,6 @@ function Catalog() {
 								</Card>
 							);
 						})}
-
 						{status === 'error' && <div>{scansErrorMessage}</div>}
 					</VRScansContainer>
 				</Loader>

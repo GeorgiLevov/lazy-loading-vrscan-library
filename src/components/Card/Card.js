@@ -64,14 +64,14 @@ const DETAILSTYLES = {
 
 function Card({
 	summary,
-    name,
-    variant,
-    imageAlt,
-    imageSrc,
-    favorited,
-    vrScanId,
-    onFavoriteToggle,
-    children,
+	name,
+	variant,
+	imageAlt,
+	imageSrc,
+	favorited,
+	vrScanId,
+	onFavoriteToggle,
+	children,
 }) {
 	let styles = CARDSTYLES[variant];
 	let imageStyles = IMAGESTYLES[variant];
@@ -98,12 +98,11 @@ function Card({
 		};
 	};
 	const handleFavoriteClick = () => {
-        console.log("Favorited:", favorited);  
-        if (onFavoriteToggle && vrScanId) {
-            onFavoriteToggle(vrScanId);
-        }
-    };
-
+		console.log('Favorited:', favorited);
+		if (onFavoriteToggle && vrScanId) {
+			onFavoriteToggle(vrScanId);
+		}
+	};
 
 	return (
 		<StyledComponent style={styles}>
@@ -119,15 +118,15 @@ function Card({
 					/>
 				)}
 
-{variant === 'vrscan' && (
-                   <Label onClick={handleFavoriteClick}>
-				   <HeartIcon 
-					   $favorited={favorited} 
-					   strokeWidth={1.1} 
-					   stroke="#FF0000"
-				   />
-			   </Label>
-                )}
+				{variant === 'vrscan' && (
+					<Label onClick={handleFavoriteClick}>
+						<HeartIcon
+							$favorited={favorited}
+							strokeWidth={1.1}
+							stroke="#FF0000"
+						/>
+					</Label>
+				)}
 			</ImageWrapper>
 			<CardDetails style={detailStyles}>
 				{variant === 'inverted'
@@ -139,17 +138,15 @@ function Card({
 	);
 }
 
-
 const HeartIcon = styled(Heart)`
-       fill: ${props => props.$favorited ? "#FF0000" : "none"};
-    cursor: pointer;
-    transition: fill 0.3s ease;
+	fill: ${(props) => (props.$favorited ? '#FF0000' : 'none')};
+	cursor: pointer;
+	transition: fill 0.3s ease;
 
-    &:hover {
-        stroke: #FF6666;
-    }
+	&:hover {
+		stroke: #ff6666;
+	}
 `;
-
 
 // expects parent to be display:flex
 const BaseCard = styled.article`
@@ -190,8 +187,6 @@ const ProfileCard = styled(BaseCard)`
 	align-items: center;
 
 	& > * {
-		
-
 		&:last-child {
 			margin-bottom: 0px;
 		}
@@ -199,7 +194,7 @@ const ProfileCard = styled(BaseCard)`
 
 	@media ${QUERIES.tabletAndDown} {
 		width: 100%;
-		text-align: center;
+
 		margin: 0 auto;
 	}
 `;
@@ -210,7 +205,7 @@ const VRScanCard = styled(ProfileCard)`
 	justify-content: space-between;
 	border-radius: 20px;
 	padding: 0;
-	border: 1px solid ${COLORS.gray.light};	
+	border: 1px solid ${COLORS.gray.light};
 	overflow: hidden;
 	position: relative;
 
@@ -235,12 +230,11 @@ const CardDetails = styled.section`
 `;
 
 const Label = styled.div`
-	
 	cursor: pointer;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 10px;
 `;
 
 const CardTitle = styled.h2`
@@ -261,10 +255,7 @@ const ImageWrapper = styled.div`
 	width: 100%;
 	text-align: center;
 	background: var(--backgroundColor);
-	
 `;
 
-
-
-
 export default Card;
+
