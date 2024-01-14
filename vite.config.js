@@ -29,7 +29,6 @@ export default defineConfig({
 			},
 		}),
 	],
-	loader: { '.js': 'jsx' },
 	server: {
 		port: '3000',
 	},
