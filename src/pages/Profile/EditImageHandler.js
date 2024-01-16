@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Button from '../../components/Button';
-import { useUser } from '../../../api/context/user.context';
 import { Edit } from 'react-feather';
 import Card from '../../components/Card';
 import useToggle from '../../hooks/useToggle.hook';
@@ -8,6 +7,8 @@ import Loader from '../../components/Loader/Loader';
 import { SPACING } from '../../constants';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, updatePhoto } from '../../redux/slices/userSlice';
 
 /**
  * @module EditImageHandler
@@ -17,23 +18,11 @@ import { useNavigate } from 'react-router-dom';
  */
 
 function EditImageHandler() {
-	const { user, update, logout } = useUser();
-	const [profileUrl, setProfileUrl] = useState('');
-	const fileInputRef = useRef(null);
-	const [isUploading, toggleisUploading] = useToggle(false);
-	const navigate = useNavigate();
+	const { data: user, status, isLoggedIn } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 
-	/**
-	 * Updates the profile URL state when the user data changes.
-	 * @function
-	 * @name useEffect
-	 * @memberof module:EditImageHandler
-	 */
-	useEffect(() => {
-		if (user) {
-			setProfileUrl(user?.photo);
-		}
-	}, [user]);
+	const fileInputRef = useRef(null);
+	const navigate = useNavigate();
 
 	/**
 	 * Initiates the profile image update process by triggering a click on the hidden file input.
@@ -56,26 +45,26 @@ function EditImageHandler() {
 	const handleFileChange = async (event) => {
 		const file = event.target.files[0];
 		if (file) {
-			toggleisUploading();
 			try {
-				await update.photo(file);
-				toggleisUploading();
+				await dispatch(updatePhoto(file));
 			} catch (error) {
 				console.error(error.message);
-				toggleisUploading();
 			}
 		}
 	};
 
 	const handleLogout = () => {
-		logout();
-		navigate('/');
+		dispatch(logout());
+		// navigate('/');
 	};
 
 	return (
 		<>
-			<Loader isLoading={isUploading} variant="profile">
-				<Card variant="profile" imageSrc={profileUrl} imageAlt="Profile image">
+			<Loader isLoading={status === 'loading'} variant="profile">
+				<Card
+					variant="profile"
+					imageSrc={user.prefs.photo || ''}
+					imageAlt="Profile image">
 					<input
 						type="file"
 						style={{ display: 'none' }}
@@ -94,7 +83,11 @@ function EditImageHandler() {
 						<p style={{ fontWeight: '700' }}>{user.name}</p>
 						<p>{user.email}</p>
 					</UserInfoWrap>
-					<Button variant="primary" size="medium" onClick={handleLogout}>
+					<Button
+						variant="primary"
+						size="medium"
+						onClick={handleLogout}
+						href={'/'}>
 						Log out
 					</Button>
 				</Card>
@@ -107,4 +100,3 @@ const UserInfoWrap = styled.div`
 	padding-bottom: ${SPACING.medium};
 `;
 export default EditImageHandler;
-

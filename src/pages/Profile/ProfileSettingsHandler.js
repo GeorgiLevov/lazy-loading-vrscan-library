@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import {
 	InputField,
@@ -10,12 +10,13 @@ import {
 	CancelButton,
 	ErrorMessage,
 } from './ProfileStyles';
-import { useUser } from '../../../api/context/user.context';
 import Modal from '../../components/Modal';
 import { Edit, ArrowRight } from 'react-feather';
 import Subheading from '../../components/Subheading';
 import Divider from '../../components/Divider';
 import useToggle from '../../hooks/useToggle.hook';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateName, updateEmail } from '../../redux/slices/userSlice';
 
 /**
  * @module ProfileSettingsHandler
@@ -25,7 +26,8 @@ import useToggle from '../../hooks/useToggle.hook';
  */
 
 function ProfileSettingsHandler() {
-	const { user, update } = useUser();
+	const { data: user, isLoggedIn } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 	const [firstname, setFirstname] = useState('');
 	const [lastname, setLastname] = useState('');
 	const [email, setEmail] = useState('');
@@ -99,24 +101,24 @@ function ProfileSettingsHandler() {
 	};
 
 	/**
-	 * Updates the first name in the user context.
+	 * Updates the first name in the user slice.
 	 * @function
 	 * @name handleFirstNameUpdate
 	 * @memberof module:ProfileSettingsHandler
 	 */
 	const handleFirstNameUpdate = () => {
-		update.name(firstname + ' ' + lastname);
+		dispatch(updateName(`${firstname} ${lastname}`));
 		toggleEdit('firstname');
 	};
 
 	/**
-	 * Updates the last name in the user context.
+	 * Updates the last name in the user slice.
 	 * @function
 	 * @name handleLastNameUpdate
 	 * @memberof module:ProfileSettingsHandler
 	 */
 	const handleLastNameUpdate = () => {
-		update.name(firstname + ' ' + lastname);
+		dispatch(updateName(`${firstname} ${lastname}`));
 		toggleEdit('lastname');
 	};
 
@@ -156,7 +158,7 @@ function ProfileSettingsHandler() {
 		}
 
 		try {
-			await update.email(email, password);
+			dispatch(updateEmail({ email, password }));
 			toggleEmailModal();
 			setFormErrorMessage('');
 		} catch (error) {
@@ -302,4 +304,3 @@ function ProfileSettingsHandler() {
 	);
 }
 export default ProfileSettingsHandler;
-

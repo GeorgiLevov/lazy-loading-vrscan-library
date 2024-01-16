@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useResponsivePadding from '../../hooks/ResponsvieContainer';
-import { ContainerHeader, HeaderWrap } from './HeaderStylings';
-import { useUser } from '../../../api/context/user.context';
+import styled from 'styled-components';
+import { QUERIES } from '../../constants';
 import Logo from './Logo';
 import UserNav from './UserNav';
 
 function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
-	const padding = useResponsivePadding();
-	const { user } = useUser();
+	const responsivePadding = useResponsivePadding();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -22,13 +21,44 @@ function Header() {
 	}, []);
 
 	return (
-		<ContainerHeader className="header" $isScrolled={isScrolled}>
-			<HeaderWrap style={{ padding: `0 ${padding}` }}>
+		<ContainerHeader $isScrolled={isScrolled}>
+			<HeaderWrap style={{ '--padding': responsivePadding }}>
 				<Logo />
-				{user && <UserNav key={user.id} name={user.name} />}
+				<UserNav />
 			</HeaderWrap>
 		</ContainerHeader>
 	);
 }
+
+export const ContainerHeader = styled.div`
+	position: sticky;
+	top: 0;
+	margin: 0 auto;
+	width: 100%;
+
+	z-index: 1000;
+	background-color: ${({ $isScrolled }) =>
+		$isScrolled ? 'rgba(255, 255, 255, 0.4)' : 'transparent'};
+	backdrop-filter: ${({ $isScrolled }) => ($isScrolled ? 'blur(4px)' : 'none')};
+	padding: ${({ $isScrolled }) => ($isScrolled ? `10px 0` : `25px 0`)};
+
+	transition: ${({ $isScrolled }) =>
+		$isScrolled ? `all 0.2s ease-in` : `none`};
+`;
+
+export const HeaderWrap = styled.div`
+	display: flex;
+	gap: 20px;
+	z-index: 100;
+	max-width: 1360px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 80px;
+	padding: 0 var(--padding);
+
+	@media ${QUERIES.tabletAndDown} {
+		display: block;
+	}
+`;
 
 export default Header;

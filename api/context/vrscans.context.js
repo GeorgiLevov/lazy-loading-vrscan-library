@@ -27,6 +27,7 @@ export function useVRScans() {
 export function VRScansProvider({ children }) {
 	const [loginVRScans, setLoginVRScans] = useState([]);
 	const [vrScans, setVRScans] = useState([]);
+	const [favoriteScans, setFavoriteScans] = useState([]);
 	const [offsetCount, setOffsetCount] = useState(24);
 	const [colors, setColors] = useState([]);
 	const [tags, setTags] = useState([]);
@@ -46,42 +47,6 @@ export function VRScansProvider({ children }) {
 	// 		DATABASE_ID,
 	// 		MATERIALS_COLLECTION_ID,
 	// 		[Query.equal('id', [material_id])]
-	// 	);
-	// 	return response.documents;
-	// }
-
-	// async function getVRScanManufacturer(manufacturer_id) {
-	// 	const response = await databases.listDocuments(
-	// 		DATABASE_ID,
-	// 		MANUFACTURERS_COLLECTION_ID,
-	// 		[Query.equal('id', [manufacturer_id])]
-	// 	);
-	// 	return response.documents;
-	// }
-
-	// async function getVRScanIndustries(industry_array) {
-	// 	const response = await databases.listDocuments(
-	// 		DATABASE_ID,
-	// 		INDUSTRIES_COLLECTION_ID,
-	// 		[Query.equal('id', industry_array)]
-	// 	);
-	// 	return response.documents;
-	// }
-
-	// async function getVRScanColors(color_array) {
-	// 	const response = await databases.listDocuments(
-	// 		DATABASE_ID,
-	// 		COLORS_COLLECTION_ID,
-	// 		[Query.equal('id', color_array)]
-	// 	);
-	// 	return response.documents;
-	// }
-
-	// async function getVRScanTags(tag_array) {
-	// 	const response = await databases.listDocuments(
-	// 		DATABASE_ID,
-	// 		TAGS_COLLECTION_ID,
-	// 		[Query.equal('id', tag_array)]
 	// 	);
 	// 	return response.documents;
 	// }
@@ -144,43 +109,6 @@ export function VRScansProvider({ children }) {
 		);
 	}
 
-	// async function getFinalizedVRscans(documents) {
-	// 	try {
-	// 		const fullDocuments = documents.map(async (document) => {
-	// 			const materialType = await getVRScanMaterial(document.material_type_id);
-	// 			// prettier-ignore
-	// 			const manufacturer = await getVRScanManufacturer(document.manufacturer_id);
-	// 			const industries = await getVRScanIndustries(document.industries);
-	// 			const colors = await getVRScanColors(document.colors);
-	// 			const tags = document.tags.length
-	// 				? await getVRScanTags(document.tags)
-	// 				: [];
-
-	// 			return {
-	// 				...document,
-	// 				material: materialType,
-	// 				manufacturer: manufacturer,
-	// 				industries: industries,
-	// 				colors: colors,
-	// 				tags: tags,
-	// 			};
-	// 		});
-
-	// 		const result = await Promise.all(fullDocuments);
-	// 		return result;
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// }
-
-	// async function init() {
-	// 	const response = await databases.listDocuments(
-	// 		DATABASE_ID,
-	// 		VRSCANPREVIEWS_COLLECTION_ID,
-	// 		[Query.limit(48), Query.orderAsc('id')]
-	// 	);
-	// 	setVRScans(response.documents);
-	// }
 	async function fetchFilters() {
 		const colorsResponse = await databases.listDocuments(
 			DATABASE_ID,
@@ -204,6 +132,20 @@ export function VRScansProvider({ children }) {
 		setMaterials(materialsResponse.documents);
 	}
 
+	async function getFavorites(userFavorites = []) {
+		if (userFavorites.length === 0) {
+			setFavoriteScans([]);
+			return;
+		}
+
+		const response = await databases.listDocuments(
+			DATABASE_ID,
+			VRSCANPREVIEWS_COLLECTION_ID,
+			[Query.equal('id', userFavorites), Query.orderAsc('id')]
+		);
+		setFavoriteScans(response.documents);
+	}
+
 	useEffect(() => {
 		search();
 		get10VRScans();
@@ -216,9 +158,11 @@ export function VRScansProvider({ children }) {
 		<vrScansContext.Provider
 			value={{
 				vrScans,
+				favoriteScans,
 				search,
 				loginVRScans,
 				get10VRScans,
+				getFavorites,
 				colors,
 				tags,
 				materials,

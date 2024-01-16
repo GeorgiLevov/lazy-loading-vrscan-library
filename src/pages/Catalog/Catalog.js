@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
 import Filters from './Filters';
 import PageTitle from '../../components/PageTitle';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
@@ -15,17 +15,18 @@ import Loader from '../../components/Loader';
 import ActiveFiltersList from '../../components/ActiveFiltersList';
 import Footer from '../../components/Footer/Footer';
 import ViewScanDetails from '../../components/Modal/ViewScanDetails';
-import { useUser } from '../../../api/context/user.context';
+import NoResultsHeader from '../../components/NoResultsHeader';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePrefs } from '../../redux/slices/userSlice';
 
 function Catalog() {
-	const { vrScans, search } = useVRScans();
-	const { toggleFavorite, favorites = [] } = useUser();
+	const dispatch = useDispatch();
+	const { data: user } = useSelector((state) => state.user);
 
-	const isFavorited = (vrScanId) => {
-		console.log('Favorites:', favorites);
-		console.log('vrScanId:', vrScanId);
-		return favorites.includes(vrScanId);
-	};
+	const { vrScans, search } = useVRScans();
+	const [favorites, setFavorites] = useState(
+		JSON.parse(user.prefs.favorites) || []
+	);
 
 	const { ref: scrollRef, inView } = useInView({
 		threshold: 1,
@@ -87,9 +88,21 @@ function Catalog() {
 		return () => clearTimeout(timer);
 	}, [textSearchValue, filterSearchValues]);
 
+	const toggleFavorite = (scanId) => {
+		let newFavorites;
+		if (favorites.includes(scanId)) {
+			newFavorites = favorites.filter(
+				(favoriteScanId) => favoriteScanId !== scanId
+			);
+		} else {
+			newFavorites = [...favorites, scanId];
+		}
+		dispatch(updatePrefs({ favorites: JSON.stringify(newFavorites) }));
+		setFavorites(newFavorites);
+	};
+
 	// Set fetch status to Success once we have the Scans loaded
 	useEffect(() => {
-		// making sure status is appropriate sicne we're rendeding based on the status
 		if (vrScans) {
 			setStatus('success');
 		}
@@ -141,14 +154,15 @@ function Catalog() {
 									return (
 										<Card
 											key={`${scan.id}`}
+											scanId={scan.id}
 											variant="vrscan"
 											name={scan.name}
 											summary={[scan.material, scan.colors, scan.tags]}
 											imageSrc={scan.thumb}
 											imageAlt={scan.name}
-											favorited={isFavorited(scan.id)}
+											favorited={favorites.includes(scan.id)}
 											vrScanId={scan.id}
-											onFavoriteToggle={toggleFavorite}>
+											toggleFavorite={toggleFavorite}>
 											{scan.manufacturer && (
 												<p className="manufacturer">
 													{Objectify(scan.manufacturer).name}
@@ -170,9 +184,9 @@ function Catalog() {
 									);
 								})
 							: status === 'success' && (
-									<ZeroFilteredRezultsHeader>
+									<NoResultsHeader>
 										Your search yielded 0 results.
-									</ZeroFilteredRezultsHeader>
+									</NoResultsHeader>
 								)}
 						{status === 'error' && <div>{scansErrorMessage}</div>}
 					</VRScansContainer>
@@ -182,32 +196,6 @@ function Catalog() {
 		</>
 	);
 }
-
-const fadeInAnimation = keyframes`
- 0% { transform: translateZ(-80px); opacity: 0; }
-    100% { transform: translateZ(0); opacity: 1; }
-`;
-
-const ZeroFilteredRezultsHeader = styled.div`
-	width: max-content;
-	font-size: ${FONTS.heading.large};
-	text-align: center;
-	margin: 0 auto;
-	margin-bottom: ${SPACING.mega};
-	grid-column-start: 1;
-	grid-column-end: 5;
-
-	animation-name: ${fadeInAnimation};
-	animation-duration: 1s;
-	animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
-	animation-delay: 1s;
-	animation-fill-mode: both;
-	animation-iteration-count: 1;
-
-	@media ${QUERIES.phoneAndDown} {
-		width: inherit;
-	}
-`;
 
 const FiltersContainer = styled.div`
 	display: flex;
