@@ -7,8 +7,8 @@ import StyledInput from './StyledInput';
 import FormSubmitContainer from './FormSubmitContainer';
 import Button from '../Button/Button';
 import useToggle from '../../hooks/useToggle.hook';
-import { useUser } from '../../../api/context/user.context';
-import { Navigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, signup } from '../../redux/slices/userSlice';
 
 /**
  * @module SignInForm
@@ -26,30 +26,37 @@ function SignInForm() {
 	 * @returns {Array} An array containing a boolean state and a function to toggle it.
 	 */
 
-	const { user, login, signup } = useUser();
-
-	const [isSignupShown, toggleIsSignupShown] = useToggle(false);
-	const [formErrorMessage, setFormErrorMessage] = useState('');
-
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	// idle / loading / success / error
-	const [status, setStatus] = useState('idle');
-
+	const { status, error, isloggedIn } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 	const id = useId();
-	const firstNameId = `${id}-first-name`;
-	const lastNameId = `${id}-last-name`;
-	const emailId = `${id}-email`;
-	const passwordId = `${id}-password`;
 
-	const canSignUp = firstName && lastName && email && password;
-	const canLogIn = email && password;
+	const [userData, setUserData] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		password: '',
+	});
+	const { firstName, lastName, email, password } = userData;
 
-	const userActionText = isSignupShown ? 'Sign Up' : 'Login';
-	const userOppositeActionText = isSignupShown ? 'Login' : 'Sign Up';
+	const [signupShown, toggleSignupShown] = useToggle(false);
+	const [enableSubmit, setEnableSubmit] = useState(false);
+
+	const checkIfFormIsValid = () => {
+		let dataIsValid = true;
+
+		const canSignUp =
+			firstName.length > 1 &&
+			lastName.length > 1 &&
+			email.length > 1 &&
+			password.length > 1;
+		const canLogIn = email.length > 1 && password.length > 1;
+
+		// preventing empty requests from happening
+		if (signupShown && !canSignUp) dataIsValid = false;
+		if (!signupShown && !canLogIn) dataIsValid = false;
+
+		setEnableSubmit(dataIsValid);
+	};
 
 	/**
 	 * Handles the form submission process for both login and sign-up.
@@ -60,94 +67,76 @@ function SignInForm() {
 	 * @memberof module:SignInForm
 	 */
 
-	async function handleSubmit(event) {
-		event.preventDefault();
-		setStatus('loading');
-
-		// preventing empty requests from happening
-		if (isSignupShown && !canSignUp) return;
-		if (!isSignupShown && !canLogIn) return;
-
-		try {
-			const response = isSignupShown
-				? await signup(firstName, lastName, email, password)
-				: await login(email, password);
-
-			if (await response) {
-				setStatus('success');
-			}
-		} catch (error) {
-			setStatus('error');
-			setFormErrorMessage(error.message);
-			console.error(error);
-		}
+	async function handleSubmit() {
+		signupShown
+			? dispatch(signup({ firstName, lastName, email, password }))
+			: dispatch(login({ email, password }));
 	}
+
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setUserData((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
+	useEffect(() => {
+		checkIfFormIsValid();
+	}, [userData]);
 
 	return (
 		<>
-			{user && <Navigate to="/" replace={true} />}
-
-			<StyledForm onSubmit={(event) => handleSubmit(event)}>
-				<PageTitle>{userActionText}</PageTitle>
-				{isSignupShown && (
+			<StyledForm
+				onSubmit={(event) => event.preventDefault()}
+				autoComplete="off">
+				<PageTitle>{signupShown ? 'Sign Up' : 'Login'}</PageTitle>
+				{signupShown && (
 					<>
-						{/* NEED TO HAVE VALIDATION AND MAKE SURE WE ONLY ACCEPT 1 NAME PER FIELD, AKA - NO SPACES OR SPECIAL CHARACTERS */}
 						<StyledInput>
-							{/* <label htmlFor={firstNameId}>First Name</label> */}
+							{/* <label htmlFor={`${id}-firstName`}>First Name</label> */}
 							<input
-								required={true}
-								disabled={status === 'loading'}
 								type="text"
-								id={firstNameId}
+								id={`${id}-firstName`}
+								name="firstName"
 								placeholder="First Name"
-								value={firstName}
-								onChange={(event) => {
-									setFirstName(event.target.value);
-								}}
+								value={userData.firstName}
+								onChange={handleChange}
 							/>
 						</StyledInput>
 						<StyledInput>
-							{/* <label htmlFor={lastNameId}>Last Name</label> */}
+							{/* <label htmlFor={`${id}-lastName`}>Last Name</label> */}
 							<input
-								required={true}
-								disabled={status === 'loading'}
 								type="text"
-								id={lastNameId}
+								id={`${id}-lastName`}
+								name="lastName"
 								placeholder="Last Name"
-								value={lastName}
-								onChange={(event) => {
-									setLastName(event.target.value);
-								}}
+								value={userData.lastName}
+								onChange={handleChange}
 							/>
 						</StyledInput>
 					</>
 				)}
 				<StyledInput>
-					{/* <label htmlFor={emailId}>Email</label> */}
+					{/* <label htmlFor={`${id}-email`}>Email</label> */}
 					<input
-						required={true}
-						disabled={status === 'loading'}
 						type="email"
-						id={emailId}
+						id={`${id}-email`}
+						name="email"
 						placeholder="Email"
-						value={email}
-						onChange={(event) => {
-							setEmail(event.target.value);
-						}}
+						value={userData.email}
+						onChange={handleChange}
 					/>
 				</StyledInput>
 				<StyledInput>
-					{/* <label htmlFor={passwordId}>Password</label> */}
+					{/* <label htmlFor={`${id}-password`}>Password</label> */}
 					<input
-						required={true}
-						disabled={status === 'loading'}
 						type="password"
-						id={passwordId}
+						id={`${id}-password`}
+						name="password"
 						placeholder="Password"
-						value={password}
-						onChange={(event) => {
-							setPassword(event.target.value);
-						}}
+						value={userData.password}
+						onChange={handleChange}
 					/>
 				</StyledInput>
 				<FormSubmitContainer>
@@ -155,21 +144,19 @@ function SignInForm() {
 						variant="primary"
 						size="large"
 						type="submit"
-						disabled={status === 'loading'}
+						disabled={!enableSubmit}
 						onClick={handleSubmit}>
-						{userActionText}
+						{signupShown ? 'Sign Up' : 'Login'}
 					</Button>
 					<Button
 						variant="secondary"
 						size="large"
 						type="submit"
-						onClick={toggleIsSignupShown}>
-						{userOppositeActionText}
+						onClick={toggleSignupShown}>
+						{signupShown ? 'Login' : 'Sign Up'}
 					</Button>
 				</FormSubmitContainer>
-				{status === 'error' && (
-					<FormResponseField>{formErrorMessage}</FormResponseField>
-				)}
+				{status === 'failed' && <FormResponseField>{error}</FormResponseField>}
 			</StyledForm>
 		</>
 	);

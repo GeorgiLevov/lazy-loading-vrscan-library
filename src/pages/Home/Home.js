@@ -12,15 +12,13 @@
  * @requires Button
  */
 
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { Compass, ArrowRight } from 'react-feather';
 import Header from '../../components/Header/Header';
+import Button from '../../components/Button';
+import Footer from '../../components/Footer';
 import { HomeBackground, HeroContainer, FlexCenterWrapper } from './HomeStyles';
 import HeroText from './HeroText';
-import { Compass, ArrowRight } from 'react-feather';
-import Footer from '../../components/Footer/Footer';
-import { useUser } from '../../../api/context/user.context';
-import Button from '../../components/Button/Button';
-
 /**
  * @module Home
  * @description The main page component of the application, showcasing the hero section,
@@ -37,7 +35,11 @@ function Home() {
 	 * @property {Function} logout - Logout function.
 	 */
 
-	const { user } = useUser();
+	const { data: user, isLoggedIn } = useSelector((state) => state.user);
+
+	// console.log(user);
+	// console.log(isLoggedIn);
+
 	return (
 		<>
 			<Header />
@@ -64,7 +66,7 @@ function Home() {
 						pre-defined REST API
 					</p>
 					{/* Conditional rendering based on user authentication */}
-					{user ? (
+					{isLoggedIn ? (
 						<>
 							{/* Explore Library button */}
 							<Button

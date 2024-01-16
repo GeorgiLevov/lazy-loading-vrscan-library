@@ -63,14 +63,14 @@ const DETAILSTYLES = {
 };
 
 function Card({
+	scanId,
 	summary,
 	name,
 	variant,
 	imageAlt,
 	imageSrc,
 	favorited,
-	vrScanId,
-	onFavoriteToggle,
+	toggleFavorite,
 	children,
 }) {
 	let cardStyles = CARDSTYLES[variant];
@@ -97,12 +97,6 @@ function Card({
 			tags: summaryArray[2],
 		};
 	};
-	const handleFavoriteClick = () => {
-		console.log('Favorited:', favorited);
-		if (onFavoriteToggle && vrScanId) {
-			onFavoriteToggle(vrScanId);
-		}
-	};
 
 	return (
 		<StyledComponent style={cardStyles}>
@@ -119,7 +113,7 @@ function Card({
 				)}
 
 				{variant === 'vrscan' && (
-					<Label onClick={handleFavoriteClick}>
+					<Label onClick={() => toggleFavorite(scanId)}>
 						<HeartIcon
 							$favorited={favorited}
 							strokeWidth={1.1}
@@ -229,8 +223,10 @@ const CardDetails = styled.section`
 	min-height: 92px;
 `;
 
-const Label = styled.div`
+const Label = styled.button`
+	background-color: ${COLORS.transparent};
 	cursor: pointer;
+	border: none;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;

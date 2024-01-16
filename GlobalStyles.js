@@ -24,12 +24,16 @@ const GlobalStyles = createGlobalStyle`
   @media (prefers-reduced-motion: no-preference) {
     html {
         scroll-behavior: smooth;
+        height: 100%;
+        height: 100dvh;
     }
-  }
+    }
 
-  body {
-
+body {
+    
     background-color: ${COLORS.gray['body']};
+    height: 100%;
+    height: 100dvh;
     font-size: 16px;
     color: ${COLORS.black};
     overflow-y: scroll;
@@ -81,8 +85,12 @@ const GlobalStyles = createGlobalStyle`
  
   #root, #__next {
     isolation: isolate;
-    height: 100%;
-    height: 100dvh;
+    min-height: 100%;
+  }
+  #root {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
   }
 
   ul{font-family: 'Helvetica', sans-serif;margin:0; padding:0; list-style: none;}
@@ -90,4 +98,3 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export default GlobalStyles;
-

@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useRef } from 'react';
 import Main from '../../components/Main/Main';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Header from '../../components/Header/Header';
@@ -11,8 +10,7 @@ import PageTitle from '../../components/PageTitle';
 import Subheading from '../../components/Subheading';
 import ProfileSettingsHandler from './ProfileSettingsHandler';
 import EditImageHandler from './EditImageHandler';
-import { useUser } from '../../../api/context/user.context';
-import Button from '../../components/Button';
+import { useSelector } from 'react-redux';
 
 /**
  * @module Profile
@@ -23,7 +21,7 @@ import Button from '../../components/Button';
  */
 
 function Profile() {
-	const { user, logout } = useUser();
+	const { data: user, isLoggedIn } = useSelector((state) => state.user);
 	return (
 		<>
 			<Header />
@@ -31,15 +29,11 @@ function Profile() {
 				<Breadcrumbs />
 				<PageTitle>Profile</PageTitle>
 				<ProfileContainer>
-					{user && (
+					{isLoggedIn && (
 						<>
 							<ProfileSection>
 								<EditImageHandler />
-								{/* Logout button for testing */}
 							</ProfileSection>
-							{/* <Button variant="primary" size="large" onClick={() => logout()}>
-									Log out (Testing only)
-								</Button> */}
 
 							<ProfileSettings>
 								<Subheading>Account settings</Subheading>

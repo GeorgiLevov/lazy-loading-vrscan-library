@@ -1,8 +1,8 @@
 export const getFirstName = (username) => {
 	if (username === undefined) {
-		return;
+		return `Hello there!`;
 	} else {
 		// Splitting user first and last name since our DB will always give us first+last separated by 'space'
-		return username.split(' ')['0'];
+		return `Hi, ${username.split(' ')['0']}`;
 	}
 };

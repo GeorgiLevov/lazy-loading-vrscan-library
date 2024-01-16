@@ -1,13 +1,34 @@
+import styled from 'styled-components';
+import { QUERIES } from '../../constants';
 import chaosLogo from '/src/assets/images/chaosgroup-logo.svg';
+import Picture from '../Picture';
 
 function Logo() {
 	return (
-		<div className="logo-container">
+		<LogoContainer>
 			<a href="/">
-				<img src={chaosLogo} alt="ChaosGroup Logo" />
+				<StyledLogo src={chaosLogo} alt="ChaosGroup Logo" />
 			</a>
-		</div>
+		</LogoContainer>
 	);
 }
-export default Logo;
 
+const LogoContainer = styled.div`
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@media ${QUERIES.tabletAndDown} {
+		margin-bottom: 20px;
+	}
+`;
+
+const StyledLogo = styled(Picture)`
+	max-width: 220px;
+	display: block;
+	height: 41px;
+	width: 493px;
+`;
+
+export default Logo;

@@ -1,19 +1,17 @@
 import { User, Heart } from 'react-feather';
 import Button from '../Button/Button';
 import { getFirstName } from './Header.utils';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { QUERIES } from '../../constants';
+import styled from 'styled-components';
 
-function UserNav({ name }) {
-	const [username, setUsername] = useState(name);
-
-	if (name !== username) {
-		setUsername(name);
-	}
+function UserNav() {
+	const { data: user, isLoggedIn } = useSelector((state) => state.user);
 
 	return (
 		<>
-			{username && (
-				<div className="userNav-container">
+			{isLoggedIn && (
+				<NavContainer>
 					<ul>
 						<li>
 							<Button
@@ -22,7 +20,7 @@ function UserNav({ name }) {
 								size="medium"
 								icon={User}
 								href="/profile">
-								<span>Hi, {getFirstName(username)}</span>
+								<span>{getFirstName(user.name)}</span>
 							</Button>
 						</li>
 						<li>
@@ -36,9 +34,39 @@ function UserNav({ name }) {
 							</Button>
 						</li>
 					</ul>
-				</div>
+				</NavContainer>
 			)}
 		</>
 	);
 }
+
+const NavContainer = styled.nav`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	ul {
+		display: flex;
+		list-style: none;
+		padding: 0;
+
+		li {
+			display: flex;
+			align-items: center;
+			margin-right: 30px;
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			@media ${QUERIES.tabletAndDown} {
+				margin-right: 20px;
+				text-align: center;
+				span {
+					display: none;
+				}
+			}
+		}
+	}
+`;
 export default UserNav;
