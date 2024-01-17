@@ -34,11 +34,7 @@ async function setEmptyUserPreferences() {
 async function createAccount({ username, email, password }) {
 	try {
 		const userID = ID.unique();
-		const userCreated = await account.create(userID, email, password, username);
-		if (userCreated) {
-			await setEmptyUserPreferences();
-			return await createSession({ email, password });
-		}
+		return await account.create(userID, email, password, username);
 	} catch (error) {
 		console.error("Backend service: 'signup' error:", error);
 		throw error;
@@ -48,7 +44,6 @@ async function createAccount({ username, email, password }) {
 async function updateUserEmail({ email, password }) {
 	try {
 		const updatedEmail = await account.updateEmail(email, password);
-		console.log(updatedEmail);
 		if (updatedEmail) return email;
 	} catch (error) {
 		console.error("Backend service: 'update email' error:", error);
@@ -150,7 +145,7 @@ export {
 	createAccount,
 	getCurrentUser,
 	getCurrentSession,
-	getCurrentPreferences,
+	setEmptyUserPreferences,
 	updateUserEmail,
 	updateUserName,
 	updateUserPreferences,

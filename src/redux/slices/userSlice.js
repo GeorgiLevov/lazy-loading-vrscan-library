@@ -5,7 +5,7 @@ import {
 	createAccount,
 	getCurrentUser,
 	getCurrentSession,
-	getCurrentPreferences,
+	setEmptyUserPreferences,
 	updateUserEmail,
 	updateUserName,
 	updateUserPreferences,
@@ -139,15 +139,17 @@ const userSlice = createSlice({
 export const signup = createAsyncThunk(
 	'user/signup',
 	async ({ firstName, lastName, email, password }) => {
-		const session = await createAccount({
+		const createdAccount = await createAccount({
 			username: `${firstName} ${lastName}`,
 			email,
 			password,
 		});
-		if (session) {
-			return await createSession({ email, password });
-			// const prefs = await getCurrentPreferences();
-			// return { ...session, ...prefs };
+		if (createdAccount) {
+			const loggedInUser = await createSession({ email, password });
+			if (loggedInUser) {
+				await setEmptyUserPreferences();
+				return loggedInUser;
+			}
 		}
 	}
 );
@@ -173,11 +175,8 @@ export const getSession = createAsyncThunk('user/getSession', async () => {
 	}
 });
 export const getUser = createAsyncThunk('user/getUser', async () => {
-	const session = await getCurrentSession();
-	console.log('session:', session);
 	const user = await getCurrentUser();
 	if (user) {
-		console.log('user:', user);
 		return user;
 	}
 });

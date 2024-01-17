@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from '../../pages/Home';
@@ -20,13 +20,13 @@ import {
 
 const UserProvider = ({ children }) => {
 	const dispatch = useDispatch();
-	dispatch(incrementLoadingCounter());
 
 	const getSession = async () => {
 		await dispatch(getUser());
 		dispatch(decrementLoadingCounter());
 	};
 
+	dispatch(incrementLoadingCounter());
 	getSession();
 
 	return children;
@@ -40,11 +40,11 @@ function App() {
 			<UserProvider>
 				<VRScansProvider>
 					<Routes location={location} key={location.pathname}>
+						{/* Index */}
 						<Route index path="/" element={<Home />} />
 
 						{/* Outlet */}
 						<Route element={<UserRoutes />}>
-							{/* Index */}
 							<Route path="/catalog" element={<Catalog />} />
 							<Route path="/profile" element={<Profile />} />
 							<Route path="/reviews" element={<Reviews />} />

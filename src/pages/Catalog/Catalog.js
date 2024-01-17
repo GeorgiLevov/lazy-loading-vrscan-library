@@ -25,7 +25,7 @@ function Catalog() {
 
 	const { vrScans, search } = useVRScans();
 	const [favorites, setFavorites] = useState(
-		JSON.parse(user.prefs.favorites) || []
+		user.prefs.favorites.length > 0 ? user.prefs.favorites : []
 	);
 
 	const { ref: scrollRef, inView } = useInView({
@@ -97,7 +97,7 @@ function Catalog() {
 		} else {
 			newFavorites = [...favorites, scanId];
 		}
-		dispatch(updatePrefs({ favorites: JSON.stringify(newFavorites) }));
+		dispatch(updatePrefs({ favorites: newFavorites }));
 		setFavorites(newFavorites);
 	};
 
@@ -150,7 +150,6 @@ function Catalog() {
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {
 									const isElementinMiddle = index === vrScans.length - 9;
-
 									return (
 										<Card
 											key={`${scan.id}`}

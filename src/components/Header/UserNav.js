@@ -20,7 +20,7 @@ function UserNav() {
 								size="medium"
 								icon={User}
 								href="/profile">
-								<span>{getFirstName(user.name)}</span>
+								<span>{getFirstName(user?.name)}</span>
 							</Button>
 						</li>
 						<li>

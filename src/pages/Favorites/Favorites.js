@@ -23,12 +23,8 @@ function Favorites() {
 	const [favorites, setFavorites] = useState(user?.prefs.favorites || []);
 
 	useEffect(() => {
-		if (favorites.length > 0) {
-			const favoritesArray =
-				typeof favorites === 'string' ? JSON.parse(favorites) : favorites;
-			setFavorites(favoritesArray);
-			getFavorites(favoritesArray);
-		}
+		setFavorites(favorites);
+		getFavorites(favorites);
 	}, [favorites]);
 
 	const toggleFavorite = (scanId) => {
@@ -39,7 +35,7 @@ function Favorites() {
 			);
 		}
 		setFavorites(newFavorites);
-		dispatch(updatePrefs({ favorites: JSON.stringify(newFavorites) }));
+		dispatch(updatePrefs({ favorites: newFavorites }));
 	};
 
 	return (
