@@ -39,10 +39,10 @@ function App() {
 			<UserProvider>
 				<VRScansProvider>
 					<Routes location={location} key={location.pathname}>
+						{/* Index */}
+						<Route index path="/" element={<Home />} />
 						{/* Outlet */}
 						<Route element={<UserRoutes />}>
-							{/* Index */}
-							<Route index path="/" element={<Home />} />
 							<Route path="/catalog" element={<Catalog />} />
 							<Route path="/profile" element={<Profile />} />
 							<Route path="/reviews" element={<Reviews />} />
