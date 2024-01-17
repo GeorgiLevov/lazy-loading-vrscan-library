@@ -18,16 +18,15 @@ import {
 	incrementLoadingCounter,
 } from '../../redux/slices/loaderSlice';
 
-const UserProvider = async ({ children }) => {
+const UserProvider = ({ children }) => {
 	const dispatch = useDispatch();
+	dispatch(incrementLoadingCounter());
 
 	const getSession = async () => {
 		await dispatch(getUser());
 		dispatch(decrementLoadingCounter());
 	};
-
-	dispatch(incrementLoadingCounter());
-	await getSession();
+	getSession();
 
 	return children;
 };
@@ -40,11 +39,10 @@ function App() {
 			<UserProvider>
 				<VRScansProvider>
 					<Routes location={location} key={location.pathname}>
-						{/* Index */}
-						<Route index path="/" element={<Home />} />
-
 						{/* Outlet */}
 						<Route element={<UserRoutes />}>
+							{/* Index */}
+							<Route index path="/" element={<Home />} />
 							<Route path="/catalog" element={<Catalog />} />
 							<Route path="/profile" element={<Profile />} />
 							<Route path="/reviews" element={<Reviews />} />
