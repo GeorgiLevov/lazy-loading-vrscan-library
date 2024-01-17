@@ -11,10 +11,10 @@ import { COLORS } from '../../constants';
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current
 
 function Breadcrumbs({ children }) {
-	const location = useLocation();
+	// const location = useLocation();
 
 	return (
-		<nav aria-label="Breadcrumb">
+		<nav role="nav" aria-label="Breadcrumb">
 			<BreadcrumbList>
 				{/* generating path for each breadcrumb based on react-router locaiton */}
 				{location.pathname.split('/').map((path, index, array) => {
