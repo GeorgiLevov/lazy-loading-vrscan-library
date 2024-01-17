@@ -21,8 +21,8 @@ module.exports = {
 		],
 		'react/no-unescaped-entities': ['warn'],
 		'no-unused-vars': ['warn'],
-		'no-console': ['warn'],
+		'no-console': [{ allow: ['warn', 'error'] }],
+
 		'react/prop-types': ['warn'],
 	},
 };
-

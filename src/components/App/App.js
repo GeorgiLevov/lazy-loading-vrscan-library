@@ -18,7 +18,7 @@ import {
 	incrementLoadingCounter,
 } from '../../redux/slices/loaderSlice';
 
-const UserProvider = ({ children }) => {
+const UserProvider = async ({ children }) => {
 	const dispatch = useDispatch();
 
 	const getSession = async () => {
@@ -27,7 +27,7 @@ const UserProvider = ({ children }) => {
 	};
 
 	dispatch(incrementLoadingCounter());
-	getSession();
+	await getSession();
 
 	return children;
 };
