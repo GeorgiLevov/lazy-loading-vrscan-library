@@ -1,5 +1,5 @@
 import React from 'react';
-import { BREAKPOINTS } from './../constants';
+import { BREAKPOINTS } from '/src/constants.js';
 
 const useResponsivePadding = () => {
 	const [padding, setPadding] = React.useState('80px');

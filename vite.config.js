@@ -6,29 +6,30 @@ import eslint from 'vite-plugin-eslint';
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
-	  eslint(),
-	  react({
-		babel: {
-		  plugins: [
-			[
-			  'babel-plugin-styled-components',
-			  {
-				pure: true,
-				transpileTemplateLiterals: false,
-			  },
-			],
-			[
-			  '@babel/plugin-transform-react-jsx',
-			  {
-				runtime: 'automatic', // Use automatic runtime
-			  },
-			],
-		  ],
-		  configFile: true,
-		},
-	  }),
+		eslint(),
+		react({
+			babel: {
+				plugins: [
+					[
+						'babel-plugin-styled-components',
+						{
+							pure: true,
+							transpileTemplateLiterals: false,
+						},
+					],
+					[
+						'@babel/plugin-transform-react-jsx',
+						{
+							runtime: 'automatic',
+						},
+					],
+				],
+				babelrc: true,
+				configFile: true,
+			},
+		}),
 	],
 	server: {
-	  port: '3000',
+		port: '3000',
 	},
-  });
+});
