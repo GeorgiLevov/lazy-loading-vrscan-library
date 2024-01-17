@@ -11,9 +11,10 @@
 		"url": "https://gitlab.com/ivatsaneva/lazy-loading-vrscans-library.git"
 	},
 	"scripts": {
-		"dev": "vite --open --port 3000",
-		"hdev": "vite --host --open --port 3000",
+		"dev": "vite --open",
+		"hdev": "vite --host --open",
 		"build": "vite build",
+		"vitest": "vitest",
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"docs": "jsdoc -c jsdoc.json",
@@ -21,12 +22,17 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-transform-react-jsx": "^7.23.4",
+		"@testing-library/jest-dom": "^6.2.0",
+		"@testing-library/react": "^14.1.2",
+		"@testing-library/user-event": "^14.5.2",
 		"@types/node": "^20.10.4",
 		"@types/react": "^18.2.45",
 		"@types/react-dom": "^18.2.17",
 		"@types/react-responsive": "^8.0.8",
 		"@types/styled-components": "^5.1.34",
 		"@vitejs/plugin-react": "^4.2.1",
+		"@vitest/coverage-v8": "^1.2.0",
+		"@vitest/ui": "^1.2.0",
 		"babel-plugin-styled-components": "^2.1.4",
 		"css-loader": "^6.8.1",
 		"eslint": "^8.55.0",
@@ -42,12 +48,14 @@
 		"eslint-plugin-react-refresh": "^0.4.5",
 		"eslint-plugin-storybook": "^0.6.15",
 		"jsdoc": "^4.0.2",
+		"jsdom": "^23.2.0",
 		"minami": "^1.2.3",
 		"react-intersection-observer": "^9.5.3",
 		"storybook": "^7.6.7",
 		"vite": "^5.0.10",
 		"vite-plugin-eslint": "^1.8.1",
-		"vite-plugin-node-polyfills": "^0.19.0"
+		"vite-plugin-node-polyfills": "^0.19.0",
+		"vitest": "^1.2.0"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.0.1",
