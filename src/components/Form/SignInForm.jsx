@@ -152,7 +152,7 @@ function SignInForm() {
 						variant="secondary"
 						size="large"
 						type="submit"
-						onClick={toggleSignupShown}>
+						onClick={toggleSignupShown} >
 						{signupShown ? 'Login' : 'Sign Up'}
 					</Button>
 				</FormSubmitContainer>
