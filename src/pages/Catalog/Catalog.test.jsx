@@ -1,30 +1,26 @@
 import { describe, expect, test } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { VRScansProvider } from '../../../api/context/vrscans.context';
+import { render, screen } from '../../test/test.utils';
 import Catalog from './Catalog';
-import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
-
-const mockStore = configureMockStore();
 
 describe('Catalog Component', () => {
-  const store = mockStore({
-    user: {
-      data: { prefs: { favorites: [] } },
-    },
-  });
-
   test('renders the Catalog component with essential elements', () => {
+    const customState = {
+      user: {
+        data: { 
+          prefs: { favorites: [] }, 
+        },
+        isLoggedIn: true 
+      }
+    };
+
     render(
-      <Provider store={store}>
-        <VRScansProvider>
-          <Catalog />
-        </VRScansProvider>
-      </Provider>
+      <Catalog />,
+      { state: customState }
     );
 
     expect(screen.getByText('VRScans Catalog')).toBeInTheDocument();
-    
+    // Additional assertions...
   });
-  
+
+  // Additional tests...
 });

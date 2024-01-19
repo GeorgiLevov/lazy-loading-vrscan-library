@@ -25,8 +25,9 @@ function Catalog() {
 
 	const { vrScans, search } = useVRScans();
 	const [favorites, setFavorites] = useState(
-		user.prefs.favorites.length > 0 ? user.prefs.favorites : []
-	);
+		user?.prefs?.favorites?.length > 0 ? user.prefs.favorites : []
+	  );
+	  
 
 	const { ref: scrollRef, inView } = useInView({
 		threshold: 1,
