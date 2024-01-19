@@ -12,7 +12,7 @@ import {
 	updateProfileImage,
 } from '../store/user';
 
-const initialState = {
+export const userIinitialState = {
 	status: 'idle', // 'idle' | 'loading' | 'success' | 'failed'
 	isLoggedIn: false,
 	data: null,
@@ -21,7 +21,7 @@ const initialState = {
 
 export const userSlice = createSlice({
 	name: 'user',
-	initialState: initialState,
+	initialState: userIinitialState,
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
