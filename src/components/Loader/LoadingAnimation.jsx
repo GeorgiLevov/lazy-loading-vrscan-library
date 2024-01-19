@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 `;
 
 const LoadingAnimation = () => (
-	<Wrapper>
+	<Wrapper data-testid="loading-animation">
 		<Dot style={{ animationDelay: '-0.32s' }} />
 		<Dot style={{ animationDelay: '-0.16s' }} />
 		<Dot />

@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import FocusLock from 'react-focus-lock';
 import { RemoveScroll } from 'react-remove-scroll';
-
 import { X } from 'react-feather';
 import { COLORS, SPACING } from '../../constants';
 import Button from '../Button';
@@ -31,7 +30,7 @@ function Modal({ closeDialog, title, children }) {
 			<RemoveScroll>
 				<Wrapper>
 					{/* Backdrop should not a button because we don't want it to be focusable */}
-					<Backdrop onClick={closeDialog} />
+					<Backdrop onClick={closeDialog} data-testid="backdrop"/>
 					<Dialog role="dialog" aria-modal="true" aria-label={title}>
 						<CloseButton onClick={closeDialog} aria-label="Close Dialog">
 							<X strokeWidth={2} />

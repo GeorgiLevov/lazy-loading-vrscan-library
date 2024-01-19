@@ -36,10 +36,15 @@ export default defineConfig({
 		port: '3000',
 	},
 	test: {
-		globals: true,
-		environment: 'jsdom',
-		setupFiles: './src/test/setup.js',
-		css: true,
-		// parsing CSS is slow but we need it
-	},
+        globals: true,
+        environment: 'jsdom',
+        coverage: {
+            provider: 'v8'
+          },
+        setupFiles: './src/test/setup.js',
+        include: ['**/*(*.)?{test,spec}.{js,jsx}'],
+        exclude: ['node_modules', 'dist', '.git'],
+        css: true,
+        // parsing CSS is slow but we need it
+    },
 });

@@ -21,8 +21,8 @@ function Header() {
 	}, []);
 
 	return (
-		<ContainerHeader $isScrolled={isScrolled}>
-			<HeaderWrap style={{ '--padding': responsivePadding }}>
+		<ContainerHeader $isScrolled={isScrolled} data-testid="container-header">
+			<HeaderWrap style={{ '--padding': responsivePadding }} data-testid="header">
 				<Logo />
 				<UserNav />
 			</HeaderWrap>
