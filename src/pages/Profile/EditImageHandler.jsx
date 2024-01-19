@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Button from '../../components/Button';
 import { Edit } from 'react-feather';
 import Card from '../../components/Card';
-import useToggle from '../../hooks/useToggle.hook';
 import Loader from '../../components/Loader/Loader';
 import { SPACING } from '../../constants';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, updatePhoto } from '../../redux/slices/userSlice';
 
@@ -22,7 +20,6 @@ function EditImageHandler() {
 	const dispatch = useDispatch();
 
 	const fileInputRef = useRef(null);
-	const navigate = useNavigate();
 
 	/**
 	 * Initiates the profile image update process by triggering a click on the hidden file input.
