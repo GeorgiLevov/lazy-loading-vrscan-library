@@ -1,4 +1,3 @@
-import React from 'react';
 import Container from '../Container';
 import styled from 'styled-components';
 import { SPACING } from '../../constants';

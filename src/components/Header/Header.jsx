@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useResponsivePadding from '../../hooks/ResponsvieContainer';
+import useResponsivePadding from '../../hooks/useResponsivePadding';
 import styled from 'styled-components';
 import { QUERIES } from '../../constants';
 import Logo from './Logo';

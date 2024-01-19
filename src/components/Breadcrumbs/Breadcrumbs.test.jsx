@@ -1,10 +1,14 @@
-import { describe, expect, it } from 'vitest';
-import { screen, render, userEvent } from '../../test/test.utils';
-import Breadcrumbs, { Crumb } from './Breadcrumbs';
+import { expect, it, describe } from 'vitest';
+import { screen, render } from '../../test/test.utils';
+import Breadcrumbs from './Breadcrumbs';
 
-// describe('Breadcrumbs', async () => {
-// 	it('should render an empty nav', () => {
-// 		render(<Breadcrumbs />);
-// 		expect(screen.getByRole('nav'))
-// 	});
-// });
+describe('Breadcrumbs', () => {
+	it('should always render the Breadcrumb nav', () => {
+		render(<Breadcrumbs />);
+		expect(screen.getByLabelText('Breadcrumb')).toBeInTheDocument();
+	});
+	it('should always show Home Crumb', () => {
+		render(<Breadcrumbs />);
+		expect(screen.getByText('Home')).toBeVisible();
+	});
+});

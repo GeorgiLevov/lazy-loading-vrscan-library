@@ -1,4 +1,7 @@
-const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+export const random = (min, max) =>
+	Math.floor(Math.random() * (max - min)) + min;
+export const dedupeArray = (array) =>
+	array.filter((value, index) => array.indexOf(value) === index);
 
 const range = (start, end, step = 1) => {
 	let output = [];

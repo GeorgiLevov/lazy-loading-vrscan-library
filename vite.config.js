@@ -1,7 +1,4 @@
 // vite.config.js
-///<reference types="vitest" />
-///<reference types="vite/client" />
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
@@ -38,7 +35,12 @@ export default defineConfig({
 	test: {
 		globals: true,
 		environment: 'jsdom',
+		coverage: {
+			provider: 'v8',
+		},
 		setupFiles: './src/test/setup.js',
+		include: ['**/*(*.)?{test,spec}.{js,jsx}'],
+		exclude: ['node_modules', 'dist', '.git'],
 		css: true,
 		// parsing CSS is slow but we need it
 	},

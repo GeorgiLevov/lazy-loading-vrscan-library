@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 import Divider from '../Divider';
 import { insertItemAtIndex } from '../../utils';
 import styled from 'styled-components';
