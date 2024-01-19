@@ -19,9 +19,9 @@ const initialState = {
 	error: '',
 };
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
 	name: 'user',
-	initialState,
+	initialState: initialState,
 	reducers: {},
 	extraReducers: (builder) => {
 		builder

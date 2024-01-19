@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux';
  */
 
 function Profile() {
-	const { data: user, isLoggedIn } = useSelector((state) => state.user);
+	const { isLoggedIn } = useSelector((state) => state.user);
 	return (
 		<>
 			<Header />

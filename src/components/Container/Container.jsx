@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useResponsivePadding from '../../hooks/ResponsvieContainer';
+import useResponsivePadding from '../../hooks/useResponsivePadding';
 
 function Container({ children, style }) {
 	const responsivePadding = useResponsivePadding();
@@ -19,18 +19,5 @@ export const StyledContainer = styled.div`
 	padding: 0 80px;
 	padding: 0 var(--padding);
 `;
-
-/* padding: ${(p) => p.$padding !== undefined ? `0 ${p.$padding}` : '0 80px'}; */
-
-// export const StyledContainer = styled.div.attrs((props) => ({
-// 	style: {
-// 		padding: `${
-// 			props.$padding !== undefined ? `0 ${props.$padding}` : '0 80px'
-// 		}`,
-// 		maxWidth: '1360px',
-// 		width: '100%',
-// 		margin: '0 auto',
-// 	},
-// }))``;
 
 export default Container;
