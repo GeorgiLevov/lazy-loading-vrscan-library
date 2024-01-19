@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { databases } from '../appwrite';
 import { ID, Query } from 'appwrite';
 import { Stringify } from '../../src/helpers';
@@ -152,7 +152,20 @@ export function VRScansProvider({ children }) {
 		fetchFilters();
 	}, []);
 
-	useEffect(() => {}, []);
+	// eslint-disable-next-line react/display-name
+	const exportedFunctions = React.memo(() => {
+		return {
+			vrScans,
+			favoriteScans,
+			search,
+			loginVRScans,
+			get10VRScans,
+			getFavorites,
+			colors,
+			tags,
+			materials,
+		};
+	});
 
 	return (
 		<vrScansContext.Provider
