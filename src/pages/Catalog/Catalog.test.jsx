@@ -19,8 +19,7 @@ describe('Catalog Component', () => {
     );
 
     expect(screen.getByText('VRScans Catalog')).toBeInTheDocument();
-    // Additional assertions...
+
   });
 
-  // Additional tests...
 });
