@@ -49,17 +49,11 @@ function customRender(
 	return render(ui, {
 		// wrap provider(s) here
 		wrapper: Wrapper,
-		wrapper: Wrapper,
-		wrapper: Wrapper,
 		...options,
 	});
 }
 
 export * from '@testing-library/react';
-export * from '@testing-library/dom';
-
-export * from '@testing-library/dom';
-
 export * from '@testing-library/dom';
 
 export { default as userEvent } from '@testing-library/user-event';
