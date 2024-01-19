@@ -189,7 +189,7 @@ const BORDER = {
 };
 
 const Button = ({
-	variant = 'base',
+	variant,
 	size = 'medium',
 	icon: Icon,
 	iconfirst,

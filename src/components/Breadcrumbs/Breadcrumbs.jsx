@@ -1,8 +1,7 @@
-import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { capitalize } from '../../utils';
+import { capitalize, dedupeArray } from '../../utils';
 import { COLORS } from '../../constants';
 
 // WAI-ARIA guidelines for Breadcrumbs
@@ -10,14 +9,13 @@ import { COLORS } from '../../constants';
 // https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/examples/breadcrumb/
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current
 
-function Breadcrumbs({ children }) {
-	// const location = useLocation();
-
+function Breadcrumbs() {
+	const location = useLocation();
 	return (
-		<nav role="nav" aria-label="Breadcrumb">
+		<nav aria-label="Breadcrumb">
 			<BreadcrumbList>
 				{/* generating path for each breadcrumb based on react-router locaiton */}
-				{location.pathname.split('/').map((path, index, array) => {
+				{dedupeArray(location.pathname.split('/')).map((path, index, array) => {
 					let href = array.slice(0, index + 1).join('/');
 					href = href === '' ? '/' : href;
 					return (
