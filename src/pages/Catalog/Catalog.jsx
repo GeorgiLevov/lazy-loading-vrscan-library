@@ -145,7 +145,7 @@ function Catalog() {
 						setFilterSearchValues={setFilterSearchValues}
 					/>
 				</FiltersContainer>
-				<Loader isLoading={status === 'loading'} variant="vrscan">
+				<Loader isLoading={status === 'loading'} variant="vrscan" >
 					<VRScansContainer>
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {

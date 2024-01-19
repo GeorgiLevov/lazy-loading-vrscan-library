@@ -42,7 +42,7 @@ const BackToTopButton = () => {
 	};
 
 	return (
-		<ScrollButton $show={showTopBtn} onClick={scrollToTop}>
+		<ScrollButton $show={showTopBtn} onClick={scrollToTop} data-testid="back-to-top-button">
 			<ArrowUp />
 		</ScrollButton>
 	);
