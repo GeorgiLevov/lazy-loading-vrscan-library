@@ -40,7 +40,7 @@ const Loader = ({ isLoading, children, variant }) => {
 	const { overlayBackground } = loaderStyles[variant] || loaderStyles.base;
 
 	return (
-		<Wrapper >
+		<Wrapper>
 			{isLoading ? (
 				<Overlay style={{ background: overlayBackground }} data-testid="overlay">
 					<LoadingAnimation  />
