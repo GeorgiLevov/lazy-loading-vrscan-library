@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const FormResponseField = ({ children }) => {
-	return <ErrorResponse>{children}</ErrorResponse>;
+	return <ErrorResponse className="error-message">{children}</ErrorResponse>;
 };
 
 const ErrorResponse = styled.p`
