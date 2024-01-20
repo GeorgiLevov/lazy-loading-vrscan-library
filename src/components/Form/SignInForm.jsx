@@ -156,7 +156,7 @@ function SignInForm() {
 						{signupShown ? 'Login' : 'Sign Up'}
 					</Button>
 				</FormSubmitContainer>
-				{status === 'failed' && <FormResponseField>{error}</FormResponseField>}
+				{status === 'failed' && <FormResponseField className="error-message">{error}</FormResponseField>}
 			</StyledForm>
 		</>
 	);

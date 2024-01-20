@@ -147,7 +147,7 @@ function Catalog() {
 					/>
 				</FiltersContainer>
 				<Loader isLoading={status === 'loading'} variant="vrscan" >
-					<VRScansContainer>
+					<VRScansContainer className="vr-scans-container">
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {
 									const isElementinMiddle = index === vrScans.length - 9;
