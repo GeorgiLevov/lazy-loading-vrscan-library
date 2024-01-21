@@ -1,36 +1,44 @@
-import React from 'react';
 import styled from 'styled-components';
 import Picture from '../Picture/Picture';
-import { COLORS, GRADIENTS, QUERIES, SPACING } from '../../constants';
+import { SPACING } from '../../constants';
+import PropTypes from 'prop-types';
 
-const CardImage = ({ src, source2x, source3x, alt, variant }) => {
+const CardImage = ({
+	src,
+	source1x = src,
+	source2x,
+	source3x,
+	alt,
+	variant,
+}) => {
 	let StyledImage;
-	if (!variant) {
-		StyledImage = StyledCardImage;
-	} else if (variant === 'profile') {
+	if (variant === 'profile') {
 		StyledImage = ProfileImage;
 	} else if (variant === 'vrscan') {
 		StyledImage = VRScanImage;
+	} else if (variant === 'inverted') {
+		StyledImage = InvertedCardImage;
 	} else {
-		throw new Error(`Unrecognized Button variant: ${variant}`);
+		StyledImage = BaseCardImage;
 	}
 
 	return (
 		<StyledImage
-			source1x={src}
+			source1x={src || source1x}
 			source2x={source2x}
 			source3x={source3x}
 			alt={alt}></StyledImage>
 	);
 };
 
-const StyledCardImage = styled(Picture)`
-	// expected to be flex child
-	/* flex-grow: 1; */
-	/* max-width: 320px; */
-	/* width: 50%; */
+const BaseCardImage = styled(Picture)`
 	max-height: 100%;
 	padding: ${SPACING.medium};
+`;
+const InvertedCardImage = styled(Picture)`
+	width: 279.6px;
+	height: 282px;
+	padding: 0;
 `;
 
 const ProfileImage = styled(Picture)`
@@ -49,3 +57,12 @@ const VRScanImage = styled(Picture)`
 `;
 
 export default CardImage;
+
+CardImage.propTypes = {
+	variant: PropTypes.string.isRequired,
+	src: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	alt: PropTypes.string,
+	source1x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	source2x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	source3x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+};

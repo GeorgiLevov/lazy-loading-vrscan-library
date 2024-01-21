@@ -10,7 +10,6 @@ import PageTitle from '../../components/PageTitle';
 import Subheading from '../../components/Subheading';
 import ProfileSettingsHandler from './ProfileSettingsHandler';
 import EditImageHandler from './EditImageHandler';
-import { useSelector } from 'react-redux';
 
 /**
  * @module Profile
@@ -21,7 +20,6 @@ import { useSelector } from 'react-redux';
  */
 
 function Profile() {
-	const { isLoggedIn } = useSelector((state) => state.user);
 	return (
 		<>
 			<Header />
@@ -29,18 +27,16 @@ function Profile() {
 				<Breadcrumbs />
 				<PageTitle>Profile</PageTitle>
 				<ProfileContainer>
-					{isLoggedIn && (
-						<>
-							<ProfileSection>
-								<EditImageHandler />
-							</ProfileSection>
+					<>
+						<ProfileSection>
+							<EditImageHandler />
+						</ProfileSection>
 
-							<ProfileSettings>
-								<Subheading>Account settings</Subheading>
-								<ProfileSettingsHandler />
-							</ProfileSettings>
-						</>
-					)}
+						<ProfileSettings>
+							<Subheading>Account settings</Subheading>
+							<ProfileSettingsHandler />
+						</ProfileSettings>
+					</>
 				</ProfileContainer>
 			</Main>
 		</>

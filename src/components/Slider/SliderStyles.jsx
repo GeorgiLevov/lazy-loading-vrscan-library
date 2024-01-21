@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { QUERIES, SPACING } from '../../constants';
+import { QUERIES } from '../../constants';
 
 export const SliderContainer = styled.div`
 	width: 100%;
@@ -25,4 +25,3 @@ export const Slide = styled(motion.div)`
 	justify-content: center;
 	align-items: center;
 `;
-

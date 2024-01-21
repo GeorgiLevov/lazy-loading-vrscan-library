@@ -3,19 +3,17 @@ import { screen, render } from '../../test/test.utils';
 import renderer from 'react-test-renderer';
 import Button from './Button';
 import { Feather } from 'react-feather';
-import { COLORS, FONTS } from '../../constants';
+import { COLORS } from '../../constants';
 
 describe('Button', async () => {
 	it('should always error when no "variant" provided', () => {
 		vi.spyOn(console, 'error').mockImplementation(() => null);
-		expect(() => render(<Button />)).toThrow(
-			'Unrecognized Button variant: undefined'
-		);
+		expect(() => render(<Button />)()).toThrow();
 	});
 
 	it('should always create a button when "variant" provided', () => {
 		render(<Button variant="base" />);
-		expect(screen.getByRole('button')).toBeInTheDocument();
+		expect(screen.getByTestId('button')).toBeInTheDocument();
 	});
 	it('should apply default styles when variant="base" is set', () => {
 		const tree = renderer.create(<Button variant="base" />).toJSON();

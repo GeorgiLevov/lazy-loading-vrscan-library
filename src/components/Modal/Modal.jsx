@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import FocusLock from 'react-focus-lock';
 import { RemoveScroll } from 'react-remove-scroll';
 import { X } from 'react-feather';
-import { COLORS, SPACING } from '../../constants';
-import Button from '../Button';
-
+import { COLORS, QUERIES, SPACING } from '../../constants';
+import PropTypes from 'prop-types';
 // Would be nice if we could use something like: https://reach.tech/dialog/
 
 function Modal({ closeDialog, title, children }) {
@@ -30,7 +29,7 @@ function Modal({ closeDialog, title, children }) {
 			<RemoveScroll>
 				<Wrapper>
 					{/* Backdrop should not a button because we don't want it to be focusable */}
-					<Backdrop onClick={closeDialog} data-testid="backdrop"/>
+					<Backdrop onClick={closeDialog} data-testid="backdrop" />
 					<Dialog role="dialog" aria-modal="true" aria-label={title}>
 						<CloseButton onClick={closeDialog} aria-label="Close Dialog">
 							<X strokeWidth={2} />
@@ -64,7 +63,14 @@ const Dialog = styled.div`
 	background: ${COLORS.gray.light};
 	border-radius: 20px;
 	padding: ${SPACING.large};
-	width: 840px;
+	width: 924px;
+
+	@media ${QUERIES.laptopAndDown} {
+		width: 780px;
+	}
+	@media ${QUERIES.tabletAndDown} {
+		width: 480px;
+	}
 `;
 
 const CloseButton = styled.button`
@@ -84,3 +90,8 @@ const CloseButton = styled.button`
 
 export default Modal;
 
+Modal.propTypes = {
+	closeDialog: PropTypes.func,
+	title: PropTypes.string,
+	children: PropTypes.object,
+};

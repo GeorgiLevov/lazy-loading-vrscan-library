@@ -1,23 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
 import Filters from './Filters';
 import PageTitle from '../../components/PageTitle';
 import styled from 'styled-components';
-import { COLORS, FONTS, QUERIES, SPACING } from '../../constants';
+import { COLORS, FONTS, QUERIES, SHADOWS, SPACING } from '../../constants';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Card from '../../components/Card';
 import BackToTopButton from '../../components/Button/BackToTopButton';
 import { Objectify } from '../../helpers';
-import { visuallyHiddenStyles } from '../../components/VisuallyHidden/VisuallyHidden';
+import { visuallyHiddenStyles } from '../../components/VisuallyHidden';
 import { useInView } from 'react-intersection-observer';
 import Loader from '../../components/Loader';
 import ActiveFiltersList from '../../components/ActiveFiltersList';
 import Footer from '../../components/Footer/Footer';
-import ViewScanDetails from '../../components/Modal/ViewScanDetails';
 import NoResultsHeader from '../../components/NoResultsHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePrefs } from '../../redux/slices/userSlice';
+import ViewScanDetails from '../../components/ViewScanDetails';
+import Breadcrumbs from '../../components/Breadcrumbs';
 
 function Catalog() {
 	const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function Catalog() {
 		user.prefs.favorites.length > 0 ? user.prefs.favorites : []
 	);
 
-	const { ref: scrollRef, inView } = useInView({
+	const { ref: scrollRef } = useInView({
 		threshold: 1,
 		triggerOnce: true,
 		onChange: (inView) => {
@@ -86,6 +87,7 @@ function Catalog() {
 		}, searchDelayFromLatestInput);
 
 		return () => clearTimeout(timer);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [textSearchValue, filterSearchValues]);
 
 	const toggleFavorite = (scanId) => {
@@ -113,12 +115,13 @@ function Catalog() {
 			<Header />
 			<BackToTopButton />
 			<Main>
+				<Breadcrumbs />
 				<PageTitle>VRScans Catalog</PageTitle>
 				<FiltersContainer>
 					{/* <SearchFilter></SearchFilter> */}
 					<form
 						onSubmit={(event) => {
-							event.preventDefault;
+							event.preventDefault();
 							return false;
 						}}>
 						<SearchInput
@@ -131,6 +134,7 @@ function Catalog() {
 							onChange={(e) => {
 								setTextSearchValue(e.target.value);
 							}}
+							autoComplete="off"
 						/>
 					</form>
 					<Filters
@@ -164,13 +168,14 @@ function Catalog() {
 											toggleFavorite={toggleFavorite}>
 											{scan.manufacturer && (
 												<p className="manufacturer">
-													{Objectify(scan.manufacturer).name}
+													Manufacturer: {Objectify(scan.manufacturer).name}
 												</p>
 											)}
-
-											<p className="filename">
-												{' '}
-												{scan.file_name.replace('.vrscan', '')}
+											<p key={crypto.randomUUID()} className="filename">
+												Industries:{' '}
+												{scan.industries
+													.map((industry) => Objectify(industry).name)
+													.join(', ')}
 											</p>
 											<ViewScanDetails scan={scan} />
 											{isElementinMiddle && (
@@ -215,6 +220,7 @@ const SearchInput = styled.input`
 	width: 100%;
 	border: 0;
 	padding: ${SPACING.small};
+	transition: box-shadow 0.1s ease-in-out;
 
 	@media ${QUERIES.tabletAndDown} {
 		font-size: ${FONTS.heading.small};
@@ -240,6 +246,7 @@ const SearchInput = styled.input`
 	}
 
 	&:focus {
+		box-shadow: ${SHADOWS.low};
 		&::placeholder {
 			opacity: 0;
 		}

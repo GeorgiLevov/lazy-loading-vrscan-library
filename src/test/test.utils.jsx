@@ -41,11 +41,6 @@ function customRender(
 		state: PropTypes.object,
 	};
 
-	Wrapper.defaultProps = {
-		children: PropTypes.object,
-		state: userInitialState,
-	};
-
 	return render(ui, {
 		// wrap provider(s) here
 		wrapper: Wrapper,

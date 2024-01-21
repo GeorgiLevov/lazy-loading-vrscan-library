@@ -1,12 +1,13 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import { Edit } from 'react-feather';
 import Card from '../../components/Card';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader';
 import { SPACING } from '../../constants';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, updatePhoto } from '../../redux/slices/userSlice';
+import useToggle from '../../hooks/useToggle.hook';
 
 /**
  * @module EditImageHandler
@@ -16,9 +17,9 @@ import { logout, updatePhoto } from '../../redux/slices/userSlice';
  */
 
 function EditImageHandler() {
-	const { data: user, status, isLoggedIn } = useSelector((state) => state.user);
+	const { data: user, status } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-
+	const [profileStatusPending, toggleProfileStatusPending] = useToggle();
 	const fileInputRef = useRef(null);
 
 	/**
@@ -40,10 +41,12 @@ function EditImageHandler() {
 	 */
 
 	const handleFileChange = async (event) => {
+		toggleProfileStatusPending();
 		const file = event.target.files[0];
 		if (file) {
 			try {
 				await dispatch(updatePhoto(file));
+				toggleProfileStatusPending();
 			} catch (error) {
 				console.error(error.message);
 			}
@@ -52,12 +55,13 @@ function EditImageHandler() {
 
 	const handleLogout = () => {
 		dispatch(logout());
-		// navigate('/');
 	};
 
 	return (
 		<>
-			<Loader isLoading={status === 'loading'} variant="profile">
+			<Loader
+				isLoading={status === 'loading' && profileStatusPending}
+				variant="profile">
 				<Card
 					variant="profile"
 					imageSrc={user.prefs.photo || ''}
@@ -94,6 +98,7 @@ function EditImageHandler() {
 }
 
 const UserInfoWrap = styled.div`
+	text-align: center;
 	padding-bottom: ${SPACING.medium};
 `;
 export default EditImageHandler;

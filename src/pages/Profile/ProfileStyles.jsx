@@ -26,6 +26,7 @@ export const ProfileContainer = styled.div`
 export const ProfileSection = styled.section`
 	flex: 1 0;
 	display: flex;
+	justify-content: center;
 `;
 
 export const ProfileDetails = styled.div`
@@ -102,7 +103,7 @@ export const EmailEditInputContainer = styled.div`
 
 export const InputField = styled.input`
 	color: ${({ $isEditing }) => ($isEditing ? 'black' : `${COLORS.gray.dark}`)};
-	border: 1px solid transparent;
+	border: 1px solid ${COLORS.gray.tag};
 	outline: none;
 	padding: ${SPACING.micro} ${SPACING.small};
 	flex-grow: 1;
@@ -112,7 +113,7 @@ export const InputField = styled.input`
 		outline: none;
 		border: 1px solid
 			${({ $isEditing }) =>
-				$isEditing ? `${COLORS.primaryBlue}` : 'transparent'};
+				$isEditing ? `${COLORS.primaryBlue}` : COLORS.gray.tag};
 	}
 `;
 
@@ -154,4 +155,3 @@ export const ErrorMessage = styled.div`
 	font-weight: 300;
 	font-size: 14px;
 `;
-

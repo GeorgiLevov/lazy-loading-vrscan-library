@@ -42,8 +42,10 @@ const Loader = ({ isLoading, children, variant }) => {
 	return (
 		<Wrapper>
 			{isLoading ? (
-				<Overlay style={{ background: overlayBackground }} data-testid="overlay">
-					<LoadingAnimation  />
+				<Overlay
+					style={{ background: overlayBackground }}
+					data-testid="overlay">
+					<LoadingAnimation />
 				</Overlay>
 			) : (
 				children
@@ -53,4 +55,3 @@ const Loader = ({ isLoading, children, variant }) => {
 };
 
 export default Loader;
-

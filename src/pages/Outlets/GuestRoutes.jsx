@@ -1,16 +1,14 @@
-import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const GuestRoutes = () => {
-	const { data: user } = useSelector((state) => state.user);
-	const loadingCounter = useSelector((state) => state.loader.loadingCounter);
 	const homePagePath = '/';
+	const { data: user, status } = useSelector((state) => state.user);
 
-	if (!user && loadingCounter === 0) {
+	if (status === 'success') {
+		return !user ? <Outlet /> : <Navigate replace to={homePagePath} />;
+	} else if (!user) {
 		return <Outlet />;
-	} else if (user) {
-		return <Navigate replace to={homePagePath} />;
 	}
 };
 

@@ -283,14 +283,14 @@ function ProfileSettingsHandler() {
 			)}
 
 			<Divider />
-			<Subheading>More links</Subheading>
+			<Subheading>Quick Access</Subheading>
 			<Button
 				variant="secondary"
 				iconfirst={true}
 				size="medium"
 				icon={ArrowRight}
 				href="/catalog">
-				<span>Explore Library</span>
+				<span>VRScan Library</span>
 			</Button>
 			<Button
 				variant="secondary"
@@ -298,7 +298,7 @@ function ProfileSettingsHandler() {
 				size="medium"
 				icon={ArrowRight}
 				href="/favorites">
-				<span>Favourites</span>
+				<span>Your Favourites</span>
 			</Button>
 		</>
 	);
