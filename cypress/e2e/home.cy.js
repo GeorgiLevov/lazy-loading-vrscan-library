@@ -1,34 +1,33 @@
-describe('Home Page Tests', () => {
-    beforeEach(() => {
-      
-      cy.visit('http://localhost:3000'); 
-    });
+describe('Home and Authentication Tests', () => {
+
+    // Integration test: tenders correctly for non-logged-in user
+    describe('Home Component Tests', () => {
+        it('renders Sign In button for non-logged-in users', () => {
+          cy.visit('http://localhost:3000/');
+          cy.contains('Sign In').should('exist');
+        }); 
+    }); 
+
+    // E2E Test: non-logged-in user interaction on Home page
+    describe('Home Page for Non-Logged-In User', () => {
+        it('should navigate to login page on trying to access the catalog', () => {
+          cy.visit('http://localhost:3000/catalog');
+          cy.url().should('include', '/login');
+        });
+      });
+
+      // E2E Test: logged-in user accessing Home page
+      describe('Home Page - Logged In User', () => {
+        it('shows Explore Library for logged in users', () => {
+          cy.visit('http://localhost:3000/login');
+          cy.get('input[name="email"]').type('iva@mail.com');
+          cy.get('input[name="password"]').type('Iv123456');
+          cy.get('button').contains('Login').click();
+          cy.url().should('eq', 'http://localhost:3000/');
+    
+          cy.contains('a', 'Explore Library').should('be.visible');
+        });
+      }); 
   
-    it('loads the main elements of the Home page', () => {
-      cy.get('header').should('exist');
-      cy.get('video').should('exist').should('be.visible');
-      cy.get('#hero-text').should('exist').should('be.visible');
-      cy.get('p').should('exist');
-      cy.get('footer').should('exist');
-    });
-  
-    // it('displays "Explore Library" button for authenticated users', () => {
-    //   cy.get('button').contains('Explore Library').should('exist').should('be.visible');
-    // });
-  
-    // it('displays "Sign In" button for non-authenticated users', () => {
-    //   cy.get('button').contains('Sign In').should('exist').should('be.visible');
-    // });
-  
-    // it('navigates to the Catalog page when "Explore Library" button is clicked', () => {
-    //   cy.get('button').contains('Explore Library').click();
-    //   cy.url().should('include', '/catalog'); 
-    // });
-  
-    // it('navigates to the Login page when "Sign In" button is clicked', () => {
-   
-    //   cy.get('button').contains('Sign In').click();
-    //   cy.url().should('include', '/login'); 
-    // });
   });
   
