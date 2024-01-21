@@ -12,8 +12,10 @@ const fadeInAnimation = keyframes`
 `;
 
 const StyledNoResultsHeader = styled.div`
-	width: max-content;
+	font-family: 'Helvetica', sans-serif;
+	font-weight: 300;
 	font-size: ${FONTS.heading.large};
+	width: max-content;
 	text-align: center;
 	margin: 0 auto;
 	margin-bottom: ${SPACING.mega};

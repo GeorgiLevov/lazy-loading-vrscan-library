@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CollapsibleFilterBox from './CollapsibleFilterBox';
-import { QUERIES } from '../../constants';
+import { QUERIES, SHADOWS } from '../../constants';
 
 const OuterFiltersWrapper = styled.div`
 	position: relative;

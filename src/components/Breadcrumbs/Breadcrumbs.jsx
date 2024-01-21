@@ -92,17 +92,8 @@ Breadcrumbs.propTypes = {
 	children: PropTypes.array,
 };
 
-Breadcrumbs.defaultProps = {
-	children: PropTypes.function,
-};
-
 Crumb.propTypes = {
 	target: PropTypes.string,
 	isCurrentPage: PropTypes.bool,
 	children: PropTypes.string.isRequired,
-};
-
-Crumb.defaultProps = {
-	target: '/',
-	isCurrentPage: false,
 };

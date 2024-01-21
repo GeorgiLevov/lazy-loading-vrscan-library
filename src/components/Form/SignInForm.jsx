@@ -26,7 +26,7 @@ function SignInForm() {
 	 * @returns {Array} An array containing a boolean state and a function to toggle it.
 	 */
 
-	const { status, error, isloggedIn } = useSelector((state) => state.user);
+	const { status, error } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const id = useId();
 
@@ -83,6 +83,7 @@ function SignInForm() {
 
 	useEffect(() => {
 		checkIfFormIsValid();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userData]);
 
 	return (
@@ -126,6 +127,7 @@ function SignInForm() {
 						placeholder="Email"
 						value={userData.email}
 						onChange={handleChange}
+						required
 					/>
 				</StyledInput>
 				<StyledInput>
@@ -137,6 +139,8 @@ function SignInForm() {
 						placeholder="Password"
 						value={userData.password}
 						onChange={handleChange}
+						required
+						minLength="8"
 					/>
 				</StyledInput>
 				<FormSubmitContainer>
@@ -152,7 +156,7 @@ function SignInForm() {
 						variant="secondary"
 						size="large"
 						type="submit"
-						onClick={toggleSignupShown} >
+						onClick={toggleSignupShown}>
 						{signupShown ? 'Login' : 'Sign Up'}
 					</Button>
 				</FormSubmitContainer>

@@ -1,22 +1,27 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { COLORS, SPACING } from '../../constants';
+import PropTypes from 'prop-types';
+import { COLORS, SHADOWS, SPACING } from '../../constants';
 import Button from '../../components/Button/Button';
 import { ArrowDownRight } from 'react-feather';
 import { ArrowUpRight } from 'react-feather';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Loader from '../../components/Loader';
 import { capitalize } from '../../utils';
-import Catalog from './Catalog';
 
 const FilterBox = styled.div`
 	flex-basis: 32%;
-	margin-bottom: 15px;
+	margin-bottom: ${SPACING.small};
 	padding: ${SPACING.small};
-	border-radius: 15px;
+	border-radius: ${SPACING.small};
+	transition: box-shadow 0.1s ease-in-out;
 
 	background: ${COLORS.gray.light};
+
+	&:hover {
+		box-shadow: ${SHADOWS.low};
+	}
 `;
 
 const Header = styled.div`
@@ -127,3 +132,8 @@ const CollapsibleFilterBox = ({
 
 export default CollapsibleFilterBox;
 
+CollapsibleFilterBox.propTypes = {
+	filterType: PropTypes.string,
+	selectedFilters: PropTypes.object,
+	setSelectedFilters: PropTypes.func,
+};

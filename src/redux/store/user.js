@@ -18,6 +18,7 @@ async function createSession({ email, password }) {
 async function deleteSessions() {
 	try {
 		await account.deleteSessions();
+		setUserLocalStatus(false);
 	} catch (error) {
 		console.error("Backend service: 'logout' error:", error);
 		throw error;
@@ -37,6 +38,60 @@ async function createAccount({ username, email, password }) {
 		return await account.create(userID, email, password, username);
 	} catch (error) {
 		console.error("Backend service: 'signup' error:", error);
+		throw error;
+	}
+}
+
+export function getUserLocalStatus() {
+	try {
+		const localUserStateKey = Object.keys(localStorage).filter((key) =>
+			key.startsWith('vrscan_user_')
+		)[0];
+		// returning the value
+		if (typeof localUserStateKey !== 'undefined') {
+			return JSON.parse(localStorage[localUserStateKey]);
+		}
+	} catch (error) {
+		console.error('Error fetching user local state:', error);
+		throw error;
+	}
+}
+export function setUserLocalStatus(status) {
+	try {
+		localStorage.setItem(`vrscan_user_`, JSON.stringify(status));
+	} catch (error) {
+		console.error('Error setting user local state:', error);
+		throw error;
+	}
+}
+
+async function getCurrentSession() {
+	try {
+		const session = await account.getSession('current');
+		return session;
+	} catch (error) {
+		console.error('Error fetching user session:', error);
+		throw error;
+	}
+}
+
+async function getCurrentUser() {
+	try {
+		const user = await account.get();
+		if (user) {
+			return user;
+		}
+	} catch (error) {
+		console.error('Error fetching user session:', error);
+		throw error;
+	}
+}
+
+async function getCurrentPreferences() {
+	try {
+		return await account.getPrefs();
+	} catch (error) {
+		console.error('Error fetching user preferences:', error);
 		throw error;
 	}
 }
@@ -103,38 +158,6 @@ async function updateProfileImage(file) {
 		}
 	} catch (error) {
 		console.error("Backend service: 'update user profile photo' error:", error);
-		throw error;
-	}
-}
-
-async function getCurrentSession() {
-	try {
-		const session = await account.getSession('current');
-		return session;
-	} catch (error) {
-		console.error('Error fetching user session:', error);
-		throw error;
-	}
-}
-
-async function getCurrentUser() {
-	try {
-		const user = await account.get();
-		if (user) {
-			return user;
-		}
-		// setFavorites(userPrefs.favorites || []);
-	} catch (error) {
-		console.error('Error fetching user session:', error);
-		throw error;
-	}
-}
-
-async function getCurrentPreferences() {
-	try {
-		return await account.getPrefs();
-	} catch (error) {
-		console.error('Error fetching user preferences:', error);
 		throw error;
 	}
 }

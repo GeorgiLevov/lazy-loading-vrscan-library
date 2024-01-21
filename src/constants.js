@@ -6,6 +6,7 @@ export const COLORS = {
 	white: '#FFFFFF',
 	offwhite: '#F3F3F3',
 	primaryBlue: '#17A2DF',
+	primaryBlueHighlight: '#CB17DF',
 	red: '#FF0000',
 	gray: {
 		body: '#F2F2F2',
@@ -16,7 +17,7 @@ export const COLORS = {
 		tag: '#DDDDDD',
 		breadcrumb: '#A5A5A5',
 		dark: '#3B3B3B',
-		vrscan: '#F8F8F8'
+		vrscan: '#F5F5F5',
 	},
 	shadow: '0deg 0% 0%',
 };
@@ -86,17 +87,25 @@ export const SHADOWS = {
 };
 
 export const GRADIENTS = {
-	grayBodyToGrayText: `linear-gradient(
-        0deg,
-        hsl(0deg 0% 44%) 0%,
-        hsl(0deg 0% 50%) 0%,
-        hsl(0deg 0% 55%) 0%,
-        hsl(0deg 0% 61%) 0%,
-        hsl(0deg 0% 67%) 0%,
-        hsl(0deg 0% 72%) 42%,
-        hsl(0deg 0% 78%) 61%,
-        hsl(0deg 0% 84%) 76%,
-        hsl(0deg 0% 89%) 88%,
-        hsl(0deg 0% 95%) 100%
-      );`,
+	white: `
+        180deg,
+        hsl(0deg 0% 100%) 0%,
+        hsl(0deg 0% 100%) 50%,
+        hsl(0deg 0% 100%) 100%
+      `,
+	whiteToVRScan: `
+    225deg,
+    hsl(0deg 0% 100%) 0%,
+    hsl(0deg 0% 100%) 9%,
+    hsl(0deg 0% 99%) 18%,
+    hsl(0deg 0% 99%) 27%,
+    hsl(0deg 0% 99%) 36%,
+    hsl(0deg 0% 98%) 45%,
+    hsl(0deg 0% 98%) 55%,
+    hsl(0deg 0% 98%) 64%,
+    hsl(0deg 0% 97%) 73%,
+    hsl(0deg 0% 97%) 82%,
+    hsl(0deg 0% 96%) 91%,
+    hsl(0deg 0% 96%) 100%
+`,
 };

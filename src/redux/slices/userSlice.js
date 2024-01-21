@@ -10,6 +10,7 @@ import {
 	updateUserName,
 	updateUserPreferences,
 	updateProfileImage,
+	setUserLocalStatus,
 } from '../store/user';
 
 const initialState = {
@@ -58,7 +59,7 @@ export const userSlice = createSlice({
 			.addCase(logout.pending, (state) => {
 				state.status = 'loading';
 			})
-			.addCase(logout.fulfilled, (state, action) => {
+			.addCase(logout.fulfilled, (state) => {
 				state.status = 'success';
 				state.error = '';
 				state.isLoggedIn = false;
@@ -145,10 +146,11 @@ export const signup = createAsyncThunk(
 			password,
 		});
 		if (createdAccount) {
-			const loggedInUser = await createSession({ email, password });
-			if (loggedInUser) {
+			const session = await createSession({ email, password });
+			if (session) {
+				setUserLocalStatus(true);
 				await setEmptyUserPreferences();
-				return loggedInUser;
+				return session;
 			}
 		}
 	}
@@ -159,6 +161,7 @@ export const login = createAsyncThunk(
 	async ({ email, password }) => {
 		const session = await createSession({ email, password });
 		if (session) {
+			setUserLocalStatus(true);
 			return await getCurrentUser();
 		}
 	}
