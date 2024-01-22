@@ -56,9 +56,6 @@ function Catalog() {
 		// this will set the textFilter value in our ActiveFiltersList
 		setTextSetValue(textSearchValue);
 
-		// this will set the textFilter value in our ActiveFiltersList
-		setTextSetValue(textSearchValue);
-
 		try {
 			await search(textSearchValue, filterSearchValues);
 		} catch (error) {

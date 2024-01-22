@@ -45,7 +45,7 @@ function Favorites() {
 			<BackToTopButton />
 			<Main>
 				<Breadcrumbs />
-				<PageTitle>Favourites</PageTitle>
+				<PageTitle>Favorites</PageTitle>
 				{isLoggedIn && (
 					<VRScansContainer>
 						{favoriteScans.length > 0 ? (
@@ -81,13 +81,12 @@ function Favorites() {
 									<br />
 									What are you waiting for?
 									<br />
-									<br />
 									<Button
 										href="/catalog"
 										variant="primary"
 										icon={Compass}
 										size="large"
-										style={{ margin: '20px auto' }}>
+										style={{ margin: '40px auto' }}>
 										Explore VRScans!
 									</Button>
 								</NoResultsHeader>

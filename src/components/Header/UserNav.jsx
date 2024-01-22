@@ -30,7 +30,7 @@ function UserNav() {
 								size="medium"
 								icon={Heart}
 								href="/favorites">
-								<span>Favourites</span>
+								<span>Favorites</span>
 							</Button>
 						</li>
 					</ul>

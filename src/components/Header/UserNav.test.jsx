@@ -33,6 +33,6 @@ describe('UserNav Component', () => {
 			//   </Provider>
 		);
 		expect(screen.getByRole('navigation')).toBeInTheDocument();
-		expect(screen.getByText('Favourites')).toBeInTheDocument();
+		expect(screen.getByText('Favorites')).toBeInTheDocument();
 	});
 });

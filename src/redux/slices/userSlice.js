@@ -150,7 +150,10 @@ export const signup = createAsyncThunk(
 			if (session) {
 				setUserLocalStatus(true);
 				await setEmptyUserPreferences();
-				return session;
+				const user = await getCurrentUser();
+				if (user) {
+					return user;
+				}
 			}
 		}
 	}

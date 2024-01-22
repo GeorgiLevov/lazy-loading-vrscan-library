@@ -20,20 +20,21 @@ const AdditionalText = styled.span`
 const SingleDetail = styled.div`
 	font-family: 'Helvetica', sans-serif;
 	font-weight: 300;
-	margin-bottom: 12px;
+	line-break: anywhere;
 `;
 
 const DetailName = styled.div`
 	padding-right: 10px;
 	display: inline-block;
 	color: ${COLORS.black};
+	line-height: 2rem;
 `;
 
 const DetailItem = styled.span`
 	display: inline;
 	font-size: ${FONTS.text.normal};
 	border-radius: 16px;
-	padding: 4px 12px;
+	padding: 2px 12px;
 	border: 1px solid ${COLORS.primaryBlue};
 	color: ${COLORS.primaryBlue};
 	background-color: ${COLORS.transparent};

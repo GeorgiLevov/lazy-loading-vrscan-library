@@ -35,7 +35,7 @@ const IMAGESTYLES = {
 		'--marginBottom': `0px`,
 	},
 	inverted: {
-		'--backgroundColor': COLORS.gray.vrscan,
+		'--backgroundColor': COLORS.white,
 		'--marginBottom': `0px`,
 		'--display': `flex`,
 		'--alignItems': `center`,
@@ -59,8 +59,8 @@ const DETAILSTYLES = {
 	},
 	inverted: {
 		'--alignItems': `flex-start`,
-		'--backgroundColor': COLORS.white,
-		'--backgroundImage': GRADIENTS.white,
+		'--backgroundColor': COLORS.gray.vrscan,
+		'--backgroundImage': GRADIENTS.whiteToVRScan,
 	},
 	profile: {
 		'--alignItems': `center`,
