@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>JSDoc: Source: pages/Profile/ProfileSettingsHandler.js</title>
+
+		<script src="scripts/prettify/prettify.js"></script>
+		<script src="scripts/prettify/lang-css.js"></script>
+		<!--[if lt IE 9]>
+			<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link
+			type="text/css"
+			rel="stylesheet"
+			href="styles/prettify-tomorrow.css"
+		/>
+		<link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css" />
+	</head>
+
+	<body>
+		<div id="main">
+			<h1 class="page-title">
+				Source: pages/Profile/ProfileSettingsHandler.js
+			</h1>
+
+			<section>
+				<article>
+					<pre
+						class="prettyprint source linenums"
+					><code>import React, { useEffect, useRef, useState } from 'react';
+import Button from '../../components/Button';
+import {
+	InputField,
+	SaveButton,
+	TextInputWrapper,
+	EmailEditContainer,
+	EmailEditMessage,
+	EmailEditInputContainer,
+	CancelButton,
+	ErrorMessage,
+} from './ProfileStyles';
+import { useUser } from '../../../api/context/user.context';
+import Modal from '../../components/Modal';
+import { Edit, ArrowRight } from 'react-feather';
+import Subheading from '../../components/Subheading';
+import Divider from '../../components/Divider';
+import useToggle from '../../hooks/useToggle.hook';
+
+/**
+ * @module ProfileSettingsHandler
+ * @description Handles the functionality for updating user profile settings.
+ * Includes form elements and logic for editing name, email, and other user-specific information.
+ * @returns {React.Component} Component with form elements for user profile settings.
+ */
+
+function ProfileSettingsHandler() {
+	const { user, update } = useUser();
+	const [firstname, setFirstname] = useState('');
+	const [lastname, setLastname] = useState('');
+	const [email, setEmail] = useState('');
+	const [isEditing, setIsEditing] = useState({
+		firstname: false,
+		lastname: false,
+		email: false,
+	});
+	const [showEmailModal, toggleEmailModal] = useToggle(false);
+	const [password, setPassword] = useState('');
+	const inputRef = useRef({ firstname: null, lastname: null, email: null });
+	const [formErrorMessage, setFormErrorMessage] = useState('');
+
+	/**
+	 * Synchronizes component state with current user details.
+	 * @function
+	 * @name useEffect
+	 * @memberof module:ProfileSettingsHandler
+	 */
+
+	useEffect(() => {
+		if (user) {
+			setFirstname(user?.name.split(' ')[0]);
+			setLastname(user?.name.split(' ')[1]);
+			setEmail(user?.email);
+		}
+	}, [user]);
+
+	/**
+	 * Toggles edit mode for a given profile field.
+	 * @function
+	 * @name toggleEdit
+	 * @param {string} field - The field to toggle edit mode (e.g., 'firstname', 'lastname', 'email').
+	 * @memberof module:ProfileSettingsHandler
+	 */
+
+	const toggleEdit = (field) => {
+		setIsEditing((prev) => {
+			const isFieldEditing = !prev[field];
+			if (isFieldEditing) {
+				setTimeout(() => inputRef.current[field]?.focus(), 0);
+			}
+			return { ...prev, [field]: isFieldEditing };
+		});
+	};
+
+	/**
+	 * Cancels edit mode for a given profile field and resets its value.
+	 * @function
+	 * @name cancelEdit
+	 * @param {string} field - The field to cancel edit mode for.
+	 * @memberof module:ProfileSettingsHandler
+	 */
+	const cancelEdit = (field) => {
+		setIsEditing((prev) => ({ ...prev, [field]: false }));
+
+		if (field === 'firstname') setFirstname(user?.name.split(' ')[0]);
+		if (field === 'lastname') setLastname(user?.name.split(' ')[1]);
+	};
+
+	/**
+	 * Handles cancelation of email editing.
+	 * @function
+	 * @name handleCancelEmailEdit
+	 * @memberof module:ProfileSettingsHandler
+	 */
+	const handleCancelEmailEdit = () => {
+		setEmail(user?.email);
+		setFormErrorMessage('');
+		toggleEmailModal();
+	};
+
+	/**
+	 * Updates the first name in the user context.
+	 * @function
+	 * @name handleFirstNameUpdate
+	 * @memberof module:ProfileSettingsHandler
+	 */
+	const handleFirstNameUpdate = () => {
+		update.name(firstname + ' ' + lastname);
+		toggleEdit('firstname');
+	};
+
+	/**
+	 * Updates the last name in the user context.
+	 * @function
+	 * @name handleLastNameUpdate
+	 * @memberof module:ProfileSettingsHandler
+	 */
+	const handleLastNameUpdate = () => {
+		update.name(firstname + ' ' + lastname);
+		toggleEdit('lastname');
+	};
+
+	/**
+	 * Initiates the process for email editing.
+	 * @function
+	 * @name handleEmailEdit
+	 * @memberof module:ProfileSettingsHandler
+	 */
+	const handleEmailEdit = () => {
+		setIsEditing((prev) => ({ ...prev, email: true }));
+	};
+
+	/**
+	 * Handles the focus-out event for the email input field.
+	 * @function
+	 * @name handleEmailFocusOut
+	 * @memberof module:ProfileSettingsHandler
+	 */
+	const handleEmailFocusOut = () => {
+		if (email !== user?.email) {
+			toggleEmailModal();
+		}
+		setIsEditing((prev) => ({ ...prev, email: false }));
+	};
+
+	/**
+	 * Handles updating the user's email.
+	 * @function
+	 * @name handleEmailUpdate
+	 * @param {Event} event - The event object.
+	 * @memberof module:ProfileSettingsHandlers
+	 */
+	const handleEmailUpdate = async (event) => {
+		if (event) {
+			event.preventDefault();
+		}
+
+		try {
+			await update.email(email, password);
+			toggleEmailModal();
+			setFormErrorMessage('');
+		} catch (error) {
+			console.error(error);
+			setFormErrorMessage(error.message);
+		}
+	};
+
+	return (
+		&lt;>
+			&lt;TextInputWrapper>
+				&lt;label htmlFor="first-name-update-input">First Name&lt;/label>
+				&lt;InputField
+					id="first-name-update-input"
+					ref={(el) => (inputRef.current.firstname = el)}
+					type="text"
+					value={firstname}
+					readOnly={!isEditing.firstname}
+					$isEditing={isEditing.firstname}
+					onChange={(e) => setFirstname(e.target.value)}
+				/>
+				{isEditing.firstname ? (
+					&lt;>
+						&lt;SaveButton onClick={handleFirstNameUpdate}>Save&lt;/SaveButton>
+						&lt;CancelButton onClick={() => cancelEdit('firstname')}>
+							Cancel
+						&lt;/CancelButton>
+					&lt;/>
+				) : (
+					&lt;Button
+						variant="secondary"
+						iconfirst={true}
+						size="medium"
+						icon={Edit}
+						onClick={() => toggleEdit('firstname')}>
+						Edit
+					&lt;/Button>
+				)}
+			&lt;/TextInputWrapper>
+
+			&lt;TextInputWrapper>
+				&lt;label htmlFor="last-name-update-input">Last Name&lt;/label>
+				&lt;InputField
+					id="last-name-update-input"
+					ref={(el) => (inputRef.current.lastname = el)}
+					type="text"
+					value={lastname}
+					readOnly={!isEditing.lastname}
+					onChange={(e) => setLastname(e.target.value)}
+					$isEditing={isEditing.lastname}
+				/>
+				{isEditing.lastname ? (
+					&lt;>
+						&lt;SaveButton onClick={handleLastNameUpdate}>Save&lt;/SaveButton>
+						&lt;CancelButton onClick={() => cancelEdit('lastname')}>
+							Cancel
+						&lt;/CancelButton>
+					&lt;/>
+				) : (
+					&lt;Button
+						variant="secondary"
+						iconfirst={true}
+						size="medium"
+						icon={Edit}
+						onClick={() => toggleEdit('lastname')}>
+						Edit
+					&lt;/Button>
+				)}
+			&lt;/TextInputWrapper>
+
+			&lt;TextInputWrapper>
+				&lt;label htmlFor="email-update-input">Email&lt;/label>
+				&lt;InputField
+					id="email-update-input"
+					ref={(el) => (inputRef.current.email = el)}
+					type="email"
+					value={email}
+					readOnly={!isEditing.email}
+					$isEditing={isEditing.email}
+					onChange={(e) => setEmail(e.target.value)}
+					onBlur={handleEmailFocusOut}
+				/>{' '}
+				{isEditing.email ? (
+					&lt;>
+						&lt;SaveButton onClick={handleEmailEdit}>Save&lt;/SaveButton>
+					&lt;/>
+				) : (
+					&lt;Button
+						variant="secondary"
+						iconfirst={true}
+						size="medium"
+						icon={Edit}
+						onClick={() => toggleEdit('email')}>
+						Edit
+					&lt;/Button>
+				)}
+			&lt;/TextInputWrapper>
+
+			{showEmailModal &amp;&amp; (
+				&lt;Modal title="Email Edit Modal" closeDialog={handleCancelEmailEdit}>
+					&lt;EmailEditContainer>
+						&lt;EmailEditMessage>
+							Are you sure you want to change your email to:{' '}
+							&lt;span>{email}&lt;/span>
+							&lt;p>Please verify this is you by entering your password below:&lt;/p>
+						&lt;/EmailEditMessage>
+						&lt;EmailEditInputContainer>
+							&lt;InputField
+								type="password"
+								placeholder="Enter password"
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							&lt;SaveButton onClick={(e) => handleEmailUpdate(e)}>
+								Confirm
+							&lt;/SaveButton>
+						&lt;/EmailEditInputContainer>
+						{formErrorMessage &amp;&amp; (
+							&lt;ErrorMessage>{formErrorMessage}&lt;/ErrorMessage>
+						)}
+					&lt;/EmailEditContainer>
+				&lt;/Modal>
+			)}
+
+			&lt;Divider />
+			&lt;Subheading>Reviews &amp; Favorites&lt;/Subheading>
+			&lt;Button
+				variant="secondary"
+				iconfirst={true}
+				size="medium"
+				icon={ArrowRight}
+				href="/reviews">
+				My Reviews
+			&lt;/Button>
+			&lt;Button
+				variant="secondary"
+				iconfirst={true}
+				size="medium"
+				icon={ArrowRight}
+				href="/favorites">
+				&lt;span>Favorites&lt;/span>
+			&lt;/Button>
+		&lt;/>
+	);
+}
+export default ProfileSettingsHandler;
+
+</code></pre>
+				</article>
+			</section>
+		</div>
+
+		<nav>
+			<h2><a href="index.html">Home</a></h2>
+			<h3>Modules</h3>
+			<ul>
+				<li><a href="module-EditImageHandler.html">EditImageHandler</a></li>
+				<li><a href="module-Home.html">Home</a></li>
+				<li><a href="module-Profile.html">Profile</a></li>
+				<li>
+					<a href="module-ProfileSettingsHandler.html"
+						>ProfileSettingsHandler</a
+					>
+				</li>
+				<li><a href="module-SignInForm.html">SignInForm</a></li>
+			</ul>
+		</nav>
+
+		<br class="clear" />
+
+		<footer>
+			Documentation generated by
+			<a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 06
+			2024 18:43:38 GMT+0200 (Eastern European Standard Time)
+		</footer>
+
+		<script>
+			prettyPrint();
+		</script>
+		<script src="scripts/linenumber.js"></script>
+	</body>
+</html>

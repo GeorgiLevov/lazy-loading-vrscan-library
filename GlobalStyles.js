@@ -1,37 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import { FONTS, COLORS } from './src/constants';
-import Monument from './src/assets/fonts/Monument-Extended-Regular.woff2';
-import HelveticaLight from './src/assets/fonts/HelveticaNeue-Light.woff2';
-import HelveticaRegular from './src/assets/fonts/HelveticaNeue-Regular.woff2';
-import HelveticaMedium from './src/assets/fonts/HelveticaNeue-Medium.woff2';
 
 const GlobalStyles = createGlobalStyle`
 
-@font-face {
-  font-family: 'Monument';
-  src: url(${Monument}) format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Helvetica';
-  src: url(${HelveticaLight}) format('woff2');
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Helvetica';
-  src: url(${HelveticaRegular}) format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Helvetica';
-  src: url(${HelveticaMedium}) format('woff2');
-  font-weight: 500;
-  font-style: normal;
-}
 
 :root {
     line-height: 1.5;
@@ -50,9 +21,19 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
 
-  body {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+        height: 100%;
+        height: 100dvh;
+    }
+    }
 
+body {
+    
     background-color: ${COLORS.gray['body']};
+    height: 100%;
+    height: 100dvh;
     font-size: 16px;
     color: ${COLORS.black};
     overflow-y: scroll;
@@ -65,11 +46,15 @@ const GlobalStyles = createGlobalStyle`
     height: auto;
   }
 
+  label {font-family: 'Helvetica', sans-serif;
+    font-size: ${FONTS.text['normal']};
+  font-weight: 300;}
+
   input, button, textarea, select {
     font-family: 'Helvetica', sans-serif;
     font-size: ${FONTS.text['normal']};
-    border: 1px solid ${COLORS.gray['devider']};
-    border-radius: 5px;
+    border: 1px solid ${COLORS.gray.divider};
+    border-radius: 30px;
     padding: 8px 15px;
   }
 
@@ -81,16 +66,15 @@ const GlobalStyles = createGlobalStyle`
 
   p {
     font-family: 'Helvetica', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     font-size: ${FONTS.text['normal']};
-    line-height: 26px;
   }
 
   input:focus,
   button:focus,
   textarea:focus,
   select:focus{
-    outline: none;
+    outline: ${COLORS.almostTransparent};
     border-color: ${COLORS.primaryBlue};
   }
 
@@ -100,11 +84,16 @@ const GlobalStyles = createGlobalStyle`
  
   #root, #__next {
     isolation: isolate;
+    min-height: 100%;
+  }
+  #root {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
   }
 
-  ul{margin:0; padding:0; list-style: none;}
+  ul{font-family: 'Helvetica', sans-serif;margin:0; padding:0; list-style: none;}
 	li{margin:0; padding:0;}
 `;
 
 export default GlobalStyles;
-
