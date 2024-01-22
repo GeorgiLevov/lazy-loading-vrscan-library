@@ -1,3 +1,9 @@
+/**
+ * @module Favorites
+ * @description This React component displays the user's favorited VRScans. It allows users to view and manage
+ * their favorite scans. The component interacts with the VRScans context for fetching favorite scans and uses Redux
+ * for state management. It also handles toggling of favorites and dynamically updates the list of favorite scans.
+ */
 import { useEffect, useState } from 'react';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Header from '../../components/Header/Header';
@@ -22,12 +28,25 @@ function Favorites() {
 
 	const [favorites, setFavorites] = useState(user?.prefs.favorites || []);
 
+	/**
+	 * useEffect hook to synchronize the component's favorites state with the user's preferences.
+	 * Calls the `getFavorites` function from the VRScans context to fetch favorite scans.
+	 * @memberof module:Favorites
+	 */
 	useEffect(() => {
 		setFavorites(favorites);
 		getFavorites(favorites);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [favorites]);
 
+	/**
+	 * Toggles the inclusion of a scan in the user's favorites.
+	 * Updates both the local state and the user preferences in the Redux store.
+	 * @function
+	 * @name toggleFavorite
+	 * @param {string} scanId - The unique identifier of the scan to be toggled.
+	 * @memberof module:Favorites
+	 */
 	const toggleFavorite = (scanId) => {
 		let newFavorites;
 		if (favorites.includes(scanId)) {
@@ -119,3 +138,4 @@ const VRScansContainer = styled.div`
 `;
 
 export default Favorites;
+

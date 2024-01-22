@@ -1,3 +1,13 @@
+/**
+ * @module Filters
+ * @description This React component renders a set of filter boxes for the VRScans catalog.
+ * It uses the `CollapsibleFilterBox` component to display individual filter categories such as materials, colors, and tags.
+ * The component facilitates the selection and deselection of filters to refine the VRScans search results.
+ *
+ * @prop {Set} filterSearchValues - A Set containing the identifiers of the currently selected filters.
+ * @prop {Function} setFilterSearchValues - Function to update the selected filters.
+ */
+
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CollapsibleFilterBox from './CollapsibleFilterBox';
@@ -48,3 +58,4 @@ function Filters({ filterSearchValues, setFilterSearchValues }) {
 	);
 }
 export default Filters;
+

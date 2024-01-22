@@ -1,3 +1,20 @@
+/**
+ * @module Button
+ * @description This component renders a customizable button that adapts its appearance based on provided props.
+ * It supports multiple variants, sizes, and the ability to include an icon. The button can be rendered as a
+ * standard button or as a link (using react-router's Link component) based on the provided props.
+ * @prop {string} [id] - Optional ID for the button.
+ * @prop {string} variant - The variant of the button, which defines its styling.
+ * @prop {string} [size='medium'] - The size of the button, influencing padding and font size.
+ * @prop {object} [icon] - Icon component to be rendered inside the button.
+ * @prop {boolean} [iconfirst] - Determines if the icon is positioned before the text.
+ * @prop {string} [href] - URL for the button link. If provided, the button is rendered as a Link.
+ * @prop {ReactNode} children - The content inside the button.
+ * @prop {function} [onClick] - The function to be executed on button click.
+ * @prop {boolean} [selected=false] - Indicates if the button is selected (for toggleable buttons).
+ * @prop {object} [style] - Custom style object to override default styles.
+ */
+
 import styled from 'styled-components';
 import { COLORS, QUERIES, FONTS, SPACING } from '../../constants';
 import { Link } from 'react-router-dom';
@@ -237,3 +254,4 @@ Button.propTypes = {
 	selected: PropTypes.bool,
 	style: PropTypes.object,
 };
+

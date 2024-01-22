@@ -1,6 +1,16 @@
+/**
+ * @module CollapsibleFilterBox
+ * @description This React component renders a filter box for VRScans, which can be expanded or collapsed.
+ * It supports filters for materials, colors, and tags. Users can select or deselect filters to refine their scan results.
+ * The component uses a combination of local state, context, and props to manage its behavior and UI.
+ *
+ * @prop {string} filterType - The type of filter to display (materials, colors, or tags).
+ * @prop {Set} selectedFilters - A Set containing the currently selected filters' identifiers.
+ * @prop {Function} setSelectedFilters - Function to update the selected filters.
+ */
+
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-
 import PropTypes from 'prop-types';
 import { COLORS, SHADOWS, SPACING } from '../../constants';
 import Button from '../../components/Button/Button';
@@ -55,6 +65,10 @@ const CollapsibleFilterBox = ({
 	selectedFilters,
 	setSelectedFilters,
 }) => {
+	/**
+	 * Validates the filterType prop to ensure it is one of the accepted values.
+	 * Throws an error if the filterType is unrecognized.
+	 */
 	if (!['materials', 'colors', 'tags'].includes(filterType)) {
 		throw new Error(`Unrecognized Filter '${filterType}'!
         Please use a proper VRScan Filter Type: colors, materials, tags!`);
@@ -65,6 +79,14 @@ const CollapsibleFilterBox = ({
 
 	const filterBoxRef = useRef(null);
 
+	/**
+	 * Toggles the selection of a filter.
+	 * Adds the filter to the selected filters if it's not already selected, otherwise removes it.
+	 * @function
+	 * @name toggleFilter
+	 * @param {string} filterId - The unique identifier of the filter to toggle.
+	 * @memberof module:CollapsibleFilterBox
+	 */
 	const toggleFilter = (filterId) => {
 		setSelectedFilters((prevSelected) => {
 			const newSelected = new Set(prevSelected);
@@ -77,12 +99,24 @@ const CollapsibleFilterBox = ({
 		});
 	};
 
+	/**
+	 * Handles click events outside the component to automatically collapse the filter box.
+	 * @function
+	 * @name handleClickOutside
+	 * @param {Event} event - The DOM event triggered by a click.
+	 * @memberof module:CollapsibleFilterBox
+	 */
 	const handleClickOutside = (event) => {
 		if (filterBoxRef.current && !filterBoxRef.current.contains(event.target)) {
 			setIsExpanded(false);
 		}
 	};
 
+	/**
+	 * Sets up an event listener for handling outside clicks to collapse the filter box.
+	 * This effect sets up the event listener on component mount and cleans it up on unmount.
+	 * @memberof module:CollapsibleFilterBox
+	 */
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClickOutside);
 		return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -137,3 +171,4 @@ CollapsibleFilterBox.propTypes = {
 	selectedFilters: PropTypes.object,
 	setSelectedFilters: PropTypes.func,
 };
+

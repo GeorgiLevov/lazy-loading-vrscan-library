@@ -1,3 +1,11 @@
+/**
+ * @module Slider
+ * @description This React component renders a slider for cycling through a series of content, such as images.
+ * It supports automatic playback and animation for transitioning between slides. The component utilizes `framer-motion`
+ * for animations and `CardImage` for rendering individual slide images.
+ * @prop {array} contents - Array of content objects to be displayed in the slider.
+ * @prop {number} [autoplaySpeed=3000] - Duration in milliseconds before transitioning to the next slide.
+ */
 import { useState, useEffect } from 'react';
 import { SliderContainer, Slide } from './SliderStyles';
 import { AnimatePresence } from 'framer-motion';
@@ -58,3 +66,4 @@ Slider.propTypes = {
 	contents: PropTypes.array,
 	autoplaySpeed: PropTypes.number,
 };
+

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Profile/EditImageHandler.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Profile/EditImageHandler.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useRef, useState } from 'react';
+import Button from '../../components/Button';
+import { Edit } from 'react-feather';
+import Card from '../../components/Card';
+import Loader from '../../components/Loader';
+import { SPACING } from '../../constants';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, updatePhoto } from '../../redux/slices/userSlice';
+import useToggle from '../../hooks/useToggle.hook';
+
+/**
+ * @module EditImageHandler
+ * @description Provides functionality to update the user's profile image.
+ * Includes an image loader and a handler to upload a new image.
+ * @returns {React.Component} Component for profile image editing.
+ */
+
+function EditImageHandler() {
+	const { data: user, status } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+	const fileInputRef = useRef(null);
+
+	/**
+	 * Initiates the profile image update process by triggering a click on the hidden file input.
+	 * @function
+	 * @name handleProfileImageUpdate
+	 * @memberof module:EditImageHandler
+	 */
+	const handleProfileImageUpdate = () => {
+		fileInputRef.current.click();
+	};
+
+	/**
+	 * Handles the new image file selection and updates the user's profile image.
+	 * @function
+	 * @name handleFileChange
+	 * @param {Event} event - The event triggered by changing the file input.
+	 * @memberof module:EditImageHandler
+	 */
+
+	const handleFileChange = async (event) => {
+		const file = event.target.files[0];
+		if (file) {
+			try {
+				await dispatch(updatePhoto(file));
+			} catch (error) {
+				console.error(error.message);
+			}
+		}
+	};
+
+	const handleLogout = () => {
+		dispatch(logout());
+	};
+
+	return (
+		&lt;>
+			&lt;Loader isLoading={status === 'loading'} variant="profile">
+				&lt;Card
+					variant="profile"
+					imageSrc={user?.prefs.photo || ''}
+					imageAlt="Profile image">
+					&lt;input
+						type="file"
+						style={{ display: 'none' }}
+						ref={fileInputRef}
+						onChange={handleFileChange}
+					/>
+					&lt;Button
+						id="update-profile-image"
+						variant="secondary"
+						iconfirst={true}
+						size="medium"
+						icon={Edit}
+						onClick={handleProfileImageUpdate}>
+						Edit Profile Image
+					&lt;/Button>
+					&lt;UserInfoWrap>
+						&lt;p style={{ fontWeight: '700' }}>{user.name}&lt;/p>
+						&lt;p>{user.email}&lt;/p>
+					&lt;/UserInfoWrap>
+					&lt;Button
+						variant="primary"
+						size="medium"
+						onClick={handleLogout}
+						href={'/'}>
+						Log out
+					&lt;/Button>
+				&lt;/Card>
+			&lt;/Loader>
+		&lt;/>
+	);
+}
+
+const UserInfoWrap = styled.div`
+	text-align: center;
+	padding-bottom: ${SPACING.medium};
+`;
+export default EditImageHandler;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ActiveFiltersList.html">ActiveFiltersList</a></li><li><a href="module-App.html">App</a></li><li><a href="module-BackToTopButton.html">BackToTopButton</a></li><li><a href="module-BackendServices.html">BackendServices</a></li><li><a href="module-Button.html">Button</a></li><li><a href="module-Card.html">Card</a></li><li><a href="module-CardImage.html">CardImage</a></li><li><a href="module-Catalog.html">Catalog</a></li><li><a href="module-CollapsibleFilterBox.html">CollapsibleFilterBox</a></li><li><a href="module-EditImageHandler.html">EditImageHandler</a></li><li><a href="module-Favorites.html">Favorites</a></li><li><a href="module-Filters.html">Filters</a></li><li><a href="module-GuestRoutes.html">GuestRoutes</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-Modal.html">Modal</a></li><li><a href="module-Profile.html">Profile</a></li><li><a href="module-ProfileSettingsHandler.html">ProfileSettingsHandler</a></li><li><a href="module-SignInForm.html">SignInForm</a></li><li><a href="module-Slider.html">Slider</a></li><li><a href="module-UserNav.html">UserNav</a></li><li><a href="module-UserRoutes.html">UserRoutes</a></li><li><a href="module-userSlice.html">userSlice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jan 22 2024 22:22:41 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,3 +1,18 @@
+/**
+ * @module Card
+ * @description This React component renders a card that can display various types of content based on the provided variant.
+ * It supports multiple styles like base, inverted, profile, and vrscan. The component is highly customizable, allowing
+ * for different layouts and content such as images, summaries, and additional children elements.
+ * @prop {number} [scanId] - Optional ID for the card, used in VRScan cards.
+ * @prop {array} [summary] - Array containing summary details for the card.
+ * @prop {string} [name] - Name to be displayed on the card.
+ * @prop {string} variant - Variant of the card to determine its style.
+ * @prop {string} [imageAlt] - Alt text for the image.
+ * @prop {string|array} [imageSrc] - Source for the image or array of images.
+ * @prop {bool} [favorited] - Indicates if the item is favorited (for vrscan cards).
+ * @prop {func} [toggleFavorite] - Function to toggle the favorite status (for vrscan cards).
+ * @prop {ReactNode} [children] - Additional children elements to be rendered inside the card.
+ */
 import styled from 'styled-components';
 import { SPACING, COLORS, FONTS, WEIGHTS, GRADIENTS } from '../../constants';
 import CardImage from './CardImage';
@@ -209,3 +224,4 @@ Card.propTypes = {
 	toggleFavorite: PropTypes.func,
 	children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
+

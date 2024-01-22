@@ -1,3 +1,14 @@
+/**
+ * @module UserNav
+ * @description This React component renders the user navigation area in the application's header.
+ * It displays buttons for user profile and favorites, which are visible only when the user is logged in.
+ * The component uses Redux to access the user's authentication status and information.
+ *
+ * @requires User, Heart from react-feather - Feather icons for the navigation buttons.
+ * @requires Button - Custom button component.
+ * @requires getFirstName - Utility function to extract the first name from a full name.
+ */
+
 import { User, Heart } from 'react-feather';
 import Button from '../Button/Button';
 import { getFirstName } from './Header.utils';
@@ -70,3 +81,4 @@ const NavContainer = styled.nav`
 	}
 `;
 export default UserNav;
+

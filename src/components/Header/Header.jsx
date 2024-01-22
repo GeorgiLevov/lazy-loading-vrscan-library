@@ -1,3 +1,13 @@
+/**
+ * @module Header
+ * @description This React component renders the header section of the application. It includes a logo and user navigation elements. The header's appearance changes based on the page scroll, providing a responsive design. The component utilizes a custom hook, `useResponsivePadding`, to adjust padding based on screen size.
+ * @requires React - React library for building UI components.
+ * @requires styled-components - Library for styling React components.
+ * @requires useResponsivePadding - Custom hook to determine responsive padding.
+ * @requires QUERIES - Constants for media queries.
+ * @requires Logo - Component for displaying the application logo.
+ * @requires UserNav - Component for displaying user navigation elements.
+ */
 import { useState, useEffect } from 'react';
 import useResponsivePadding from '../../hooks/useResponsivePadding';
 import styled from 'styled-components';
@@ -9,6 +19,10 @@ function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const responsivePadding = useResponsivePadding();
 
+	/**
+	 * Adds an event listener to the window to detect scroll events.
+	 * Updates the `isScrolled` state based on the scroll position.
+	 */
 	useEffect(() => {
 		const handleScroll = () => {
 			setIsScrolled(window.scrollY > 0);
@@ -22,7 +36,9 @@ function Header() {
 
 	return (
 		<ContainerHeader $isScrolled={isScrolled} data-testid="container-header">
-			<HeaderWrap style={{ '--padding': responsivePadding }} data-testid="header">
+			<HeaderWrap
+				style={{ '--padding': responsivePadding }}
+				data-testid="header">
 				<Logo />
 				<UserNav />
 			</HeaderWrap>
@@ -62,3 +78,4 @@ export const HeaderWrap = styled.div`
 `;
 
 export default Header;
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/App/App.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/App/App.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module App
+ * @description This React component is the main entry point for the application. It sets up routing for different pages
+ * and provides context providers for global state management. The component uses React Router for navigation and
+ * conditional rendering of components based on the route. It includes a custom `UserProvider` for managing user session
+ * state and a `VRScansProvider` for providing VR scans related context.
+ *
+ * @requires useLayoutEffect from React - Hook for performing side effects with DOM layout dependencies.
+ * @requires Routes, Route, useLocation from react-router-dom - Components and hooks for routing in a React application.
+ * @requires Home, Favorites, Catalog, Login, Reviews, Profile, NotFound - Pages components for respective routes.
+ * @requires VRScansProvider - Context provider for VR scans related data.
+ * @requires useDispatch from react-redux - Hook for dispatching Redux actions.
+ * @requires getUser from userSlice - Redux action for fetching user data.
+ * @requires UserRoutes, GuestRoutes - Outlet components for handling user and guest-specific routes.
+ * @requires getUserLocalStatus - Utility function for fetching local user session status.
+ */
+
+import { useLayoutEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Home from '../../pages/Home';
+import Favorites from '../../pages/Favorites';
+import Catalog from '../../pages/Catalog';
+import Login from '../../pages/Login';
+import Reviews from '../../pages/Reviews';
+import Profile from '../../pages/Profile';
+import NotFound from '../../pages/NotFound';
+import { VRScansProvider } from '../../../api/context/vrscans.context';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../redux/slices/userSlice';
+import UserRoutes from '../../pages/Outlets/UserRoutes';
+import GuestRoutes from '../../pages/Outlets/GuestRoutes';
+import { getUserLocalStatus } from '../../redux/store/user';
+
+const UserProvider = ({ children }) => {
+	const dispatch = useDispatch();
+	const getSession = async () => {
+		await dispatch(getUser());
+	};
+
+	const userSession = getUserLocalStatus();
+
+	useLayoutEffect(() => {
+		if (userSession) {
+			getSession();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return children;
+};
+
+function App() {
+	const location = useLocation();
+	return (
+		&lt;>
+			&lt;UserProvider>
+				&lt;VRScansProvider>
+					&lt;Routes location={location} key={location.pathname}>
+						{/* Index */}
+						&lt;Route index path="/" element={&lt;Home />} />
+						{/* Outlet */}
+						&lt;Route element={&lt;UserRoutes />}>
+							&lt;Route path="/catalog" element={&lt;Catalog />} />
+							&lt;Route path="/profile" element={&lt;Profile />} />
+							&lt;Route path="/reviews" element={&lt;Reviews />} />
+							&lt;Route path="/favorites" element={&lt;Favorites />} />
+						&lt;/Route>
+
+						{/* Outlet */}
+						&lt;Route element={&lt;GuestRoutes />}>
+							&lt;Route path="/login" element={&lt;Login />} />
+						&lt;/Route>
+
+						{/* 404 page */}
+						&lt;Route path="*" element={&lt;NotFound />} />
+					&lt;/Routes>
+				&lt;/VRScansProvider>
+			&lt;/UserProvider>
+		&lt;/>
+	);
+}
+
+export default App;
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ActiveFiltersList.html">ActiveFiltersList</a></li><li><a href="module-App.html">App</a></li><li><a href="module-BackToTopButton.html">BackToTopButton</a></li><li><a href="module-BackendServices.html">BackendServices</a></li><li><a href="module-Button.html">Button</a></li><li><a href="module-Card.html">Card</a></li><li><a href="module-CardImage.html">CardImage</a></li><li><a href="module-Catalog.html">Catalog</a></li><li><a href="module-CollapsibleFilterBox.html">CollapsibleFilterBox</a></li><li><a href="module-EditImageHandler.html">EditImageHandler</a></li><li><a href="module-Favorites.html">Favorites</a></li><li><a href="module-Filters.html">Filters</a></li><li><a href="module-GuestRoutes.html">GuestRoutes</a></li><li><a href="module-Header.html">Header</a></li><li><a href="module-Home.html">Home</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-Modal.html">Modal</a></li><li><a href="module-Profile.html">Profile</a></li><li><a href="module-ProfileSettingsHandler.html">ProfileSettingsHandler</a></li><li><a href="module-SignInForm.html">SignInForm</a></li><li><a href="module-Slider.html">Slider</a></li><li><a href="module-UserNav.html">UserNav</a></li><li><a href="module-UserRoutes.html">UserRoutes</a></li><li><a href="module-userSlice.html">userSlice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jan 22 2024 22:22:41 GMT+0200 (Eastern European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

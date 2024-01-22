@@ -1,3 +1,16 @@
+/**
+ * @module CardImage
+ * @description This React component renders an image for a card, supporting different styles based on the card's variant.
+ * It uses the `Picture` component for rendering the image and applies specific styles for variants like 'profile', 'vrscan',
+ * and 'inverted'. The component is designed to be flexible, allowing for various image sources and resolutions.
+ * @prop {string} src - Default source for the image.
+ * @prop {string} [source1x] - Fallback source for 1x resolution, defaults to src if not provided.
+ * @prop {string} [source2x] - Source for 2x resolution.
+ * @prop {string} [source3x] - Source for 3x resolution.
+ * @prop {string} alt - Alt text for the image.
+ * @prop {string} variant - Variant of the card to determine the image style.
+ */
+
 import styled from 'styled-components';
 import Picture from '../Picture/Picture';
 import { SPACING } from '../../constants';
@@ -66,3 +79,4 @@ CardImage.propTypes = {
 	source2x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	source3x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
+

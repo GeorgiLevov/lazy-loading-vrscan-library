@@ -1,3 +1,10 @@
+/**
+ * @module Catalog
+ * @description The Catalog component is responsible for displaying and managing a collection of VRScans.
+ * It integrates functionalities like searching, filtering, managing favorites, and viewing scan details.
+ * The component leverages Redux for state management and context for fetching scans.
+ */
+
 import { useEffect, useRef, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
@@ -27,8 +34,7 @@ function Catalog() {
 	const { vrScans, search } = useVRScans();
 	const [favorites, setFavorites] = useState(
 		user?.prefs?.favorites?.length > 0 ? user.prefs.favorites : []
-	  );
-	  
+	);
 
 	const { ref: scrollRef } = useInView({
 		threshold: 1,
@@ -64,6 +70,14 @@ function Catalog() {
 			console.error(error);
 		}
 	}
+
+	/**
+	 * Initiates the process of fetching additional scans when the user scrolls to a certain point.
+	 * It increments the page number and triggers the search function with updated parameters.
+	 * @function
+	 * @name getMoreScans
+	 * @memberof module:Catalog
+	 */
 	async function getMoreScans() {
 		setResultsPage((prevCount) => prevCount + 1);
 
@@ -76,7 +90,11 @@ function Catalog() {
 		}
 	}
 
-	// Only submit search request if it meets search conditions, wait 1500ms
+	/**
+	 * useEffect hook that manages the submission of search requests. It waits for a specified delay
+	 * after the last input change before triggering the search, to optimize performance.
+	 * @memberof module:Catalog
+	 */
 	useEffect(() => {
 		setStatus('loading');
 		const searchDelayFromLatestInput = 1500;
@@ -88,6 +106,14 @@ function Catalog() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [textSearchValue, filterSearchValues]);
 
+	/**
+	 * Toggles the inclusion of a scan in the user's favorites list.
+	 * Updates both the local state and the user preferences in the Redux store.
+	 * @function
+	 * @name toggleFavorite
+	 * @param {string} scanId - The unique identifier of the scan to be toggled.
+	 * @memberof module:Catalog
+	 */
 	const toggleFavorite = (scanId) => {
 		let newFavorites;
 		if (favorites.includes(scanId)) {
@@ -147,7 +173,7 @@ function Catalog() {
 						setFilterSearchValues={setFilterSearchValues}
 					/>
 				</FiltersContainer>
-				<Loader isLoading={status === 'loading'} variant="vrscan" >
+				<Loader isLoading={status === 'loading'} variant="vrscan">
 					<VRScansContainer className="vr-scans-container">
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {
@@ -270,3 +296,4 @@ const VRScansContainer = styled.div`
 `;
 
 export default Catalog;
+

@@ -1,3 +1,17 @@
+/**
+ * @module Modal
+ * @description This React component renders a modal dialog box. It is designed to provide a focus-locked,
+ * scroll-disabled overlay for displaying content. The modal can be closed by clicking the backdrop or pressing
+ * the Escape key. It utilizes `FocusLock` and `RemoveScroll` for enhancing accessibility and user experience.
+ *
+ * @requires useEffect from React - Hook for performing side effects in functional components.
+ * @requires PropTypes - For type-checking the props of the component.
+ *
+ * @prop {function} closeDialog - Function to close the modal.
+ * @prop {string} title - The title of the modal, used for accessibility.
+ * @prop {ReactNode} children - The content to be displayed inside the modal.
+ */
+
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import FocusLock from 'react-focus-lock';
@@ -99,3 +113,4 @@ Modal.propTypes = {
 	title: PropTypes.string,
 	children: PropTypes.object,
 };
+
