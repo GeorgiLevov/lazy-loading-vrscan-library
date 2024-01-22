@@ -109,3 +109,4 @@ export const GRADIENTS = {
     hsl(0deg 0% 96%) 100%
 `,
 };
+
