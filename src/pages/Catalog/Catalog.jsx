@@ -25,8 +25,9 @@ function Catalog() {
 
 	const { vrScans, search } = useVRScans();
 	const [favorites, setFavorites] = useState(
-		user.prefs.favorites.length > 0 ? user.prefs.favorites : []
-	);
+		user?.prefs?.favorites?.length > 0 ? user.prefs.favorites : []
+	  );
+	  
 
 	const { ref: scrollRef, inView } = useInView({
 		threshold: 1,
@@ -145,8 +146,8 @@ function Catalog() {
 						setFilterSearchValues={setFilterSearchValues}
 					/>
 				</FiltersContainer>
-				<Loader isLoading={status === 'loading'} variant="vrscan">
-					<VRScansContainer>
+				<Loader isLoading={status === 'loading'} variant="vrscan" >
+					<VRScansContainer className="vr-scans-container">
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {
 									const isElementinMiddle = index === vrScans.length - 9;
