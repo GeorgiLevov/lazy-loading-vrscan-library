@@ -1,5 +1,11 @@
-import styled from 'styled-components';
-import { QUERIES, FONTS, COLORS } from '../../constants';
+import styled, { keyframes } from 'styled-components';
+import { QUERIES, FONTS } from '../../constants';
+
+const entranceAnimation = keyframes`
+  0% {opacity:0}
+  50% {opacity:0}
+  100% {opacity:1}
+`;
 
 export const HomeBackground = styled.div`
 	position: fixed;
@@ -9,12 +15,6 @@ export const HomeBackground = styled.div`
 	bottom: 0;
 	overflow: hidden;
 	z-index: -1;
-
-	video {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
 
 	&:after {
 		content: '';
@@ -31,11 +31,13 @@ export const HomeBackground = styled.div`
 			url(https://grainy-gradients.vercel.app/noise.svg);
 		z-index: 1;
 	}
+`;
 
-	@media ${QUERIES.tabletAndDown} {
-		video {
-		}
-	}
+export const StyledVideo = styled.video`
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	animation: ${entranceAnimation} 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 `;
 
 export const FlexCenterWrapper = styled.div`
@@ -77,6 +79,7 @@ export const HeroTextContainer = styled.div`
 	backdrop-filter: blur(2px);
 	width: 100%;
 	margin-bottom: 30px;
+	user-select: none;
 
 	h1 {
 		font-size: ${FONTS.heading.xl};

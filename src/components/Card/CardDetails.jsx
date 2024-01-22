@@ -1,6 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import { QUERIES } from '../../constants';
+import PropTypes from 'prop-types';
 
 const CardDetails = ({ children }) => {
 	return <StyledCardDetails>{children}</StyledCardDetails>;
@@ -16,5 +16,8 @@ const StyledCardDetails = styled.section`
 	@media ${QUERIES.tabletAndDown} {
 	}
 `;
-
 export default CardDetails;
+
+CardDetails.propTypes = {
+	children: PropTypes.arrayOf(PropTypes.node),
+};

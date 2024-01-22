@@ -1,7 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import { COLORS, QUERIES, FONTS, SPACING } from '../../constants';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const ButtonBase = styled.button`
 	margin: 0;
@@ -83,7 +83,7 @@ const SecondaryButton = styled(ButtonBase)`
 	color: ${COLORS.primaryBlue};
 	transition: color 0.2s ease-in-out;
 	&:hover {
-		color: ${COLORS.gray.text};
+		color: ${COLORS.primaryBlueHighlight};
 	}
 `;
 
@@ -189,6 +189,7 @@ const BORDER = {
 };
 
 const Button = ({
+	id,
 	variant,
 	size = 'medium',
 	icon: Icon,
@@ -209,11 +210,13 @@ const Button = ({
 	// Dynamic tag setup based on: https://styled-components.com/docs/api#as-polymorphic-prop
 	return (
 		<StyledComponent
+			id={id}
+			data-testid="button"
 			to={href}
 			as={href ? Link : 'button'}
 			$iconfirst={iconfirst}
 			style={{ ...sizeStyles, ...isSelectedStyles, ...style }}
-			onClick={() => onClick()}>
+			onClick={onClick ? () => onClick() : () => false}>
 			{Icon && <Icon strokeWidth={1.1} />}
 			{children}
 		</StyledComponent>
@@ -221,3 +224,16 @@ const Button = ({
 };
 
 export default Button;
+
+Button.propTypes = {
+	id: PropTypes.string,
+	variant: PropTypes.string.isRequired,
+	size: PropTypes.string,
+	icon: PropTypes.object,
+	iconfirst: PropTypes.bool,
+	href: PropTypes.string,
+	children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+	onClick: PropTypes.func,
+	selected: PropTypes.bool,
+	style: PropTypes.object,
+};

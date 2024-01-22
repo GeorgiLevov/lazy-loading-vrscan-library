@@ -1,9 +1,9 @@
-import React from 'react';
 import { FONTS, SPACING, COLORS } from '../../constants';
 import styled from 'styled-components';
 import { Objectify } from '../../helpers';
+import PropTypes from 'prop-types';
 
-const CardSummary = ({ material, colors, tags }) => {
+const CardSummary = ({ material, colors, tags, style }) => {
 	const materialObject = Objectify(material);
 	const materialItem = {
 		...materialObject,
@@ -34,7 +34,7 @@ const CardSummary = ({ material, colors, tags }) => {
 	// https://codesandbox.io/p/sandbox/framer-motion-scroll-velocity-forked-kwnqys?file=%2Fsrc%2FApp.tsx%3A71%2C33
 
 	return (
-		<StyledSummary>
+		<StyledSummary data-testid="card-summary" style={style}>
 			{allItems.map((item) => {
 				return <StyledSummaryItem key={item.id}>{item.name}</StyledSummaryItem>;
 			})}
@@ -50,13 +50,11 @@ const StyledSummary = styled.ol`
 	display: flex;
 	min-height: ${FONTS.heading.normal};
 	margin: 0;
-	background: ${COLORS.gray.vrscan};
-	
-	
+	margin-bottom: var(--marginBottom);
+	background-color: var(--backgroundColor);
 
 	& > * {
 		margin-right: ${SPACING.micro};
-		
 	}
 `;
 
@@ -66,7 +64,7 @@ const StyledSummaryItem = styled.li`
 	border: 1px solid ${COLORS.transparent};
 	border-radius: 16px;
 	padding: 0 ${SPACING.micro};
-
+	line-height: 1.5rem;
 	color: ${COLORS.black};
 	background: ${COLORS.gray.tag};
 
@@ -79,3 +77,9 @@ const StyledSummaryItem = styled.li`
 `;
 
 export default CardSummary;
+
+CardSummary.propTypes = {
+	material: PropTypes.string,
+	colors: PropTypes.array,
+	tags: PropTypes.array,
+};

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { databases } from '../appwrite';
-import { ID, Query } from 'appwrite';
+import { Query } from 'appwrite';
 import { Stringify } from '../../src/helpers';
 
 export const DATABASE_ID = import.meta.env.VITE_DB_KEY;

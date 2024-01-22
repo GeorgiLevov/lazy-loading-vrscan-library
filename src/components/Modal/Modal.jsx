@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import FocusLock from 'react-focus-lock';
 import { RemoveScroll } from 'react-remove-scroll';
 import { X } from 'react-feather';
-import { COLORS, SPACING } from '../../constants';
-import Button from '../Button';
-
+import { COLORS, QUERIES, SPACING } from '../../constants';
+import PropTypes from 'prop-types';
 // Would be nice if we could use something like: https://reach.tech/dialog/
 
 function Modal({ closeDialog, title, children }) {
@@ -30,10 +29,10 @@ function Modal({ closeDialog, title, children }) {
 			<RemoveScroll>
 				<Wrapper>
 					{/* Backdrop should not a button because we don't want it to be focusable */}
-					<Backdrop onClick={closeDialog} data-testid="backdrop"/>
+					<Backdrop onClick={closeDialog} data-testid="backdrop" />
 					<Dialog role="dialog" aria-modal="true" aria-label={title}>
 						<CloseButton onClick={closeDialog} aria-label="Close Dialog">
-							<X strokeWidth={2} />
+							<X strokeWidth={1.5} size={32} />
 						</CloseButton>
 						{children}
 					</Dialog>
@@ -50,6 +49,10 @@ const Wrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	z-index: 900;
+
+	@media ${QUERIES.tabletAndDown} {
+		padding-top: 160px;
+	}
 `;
 
 const Backdrop = styled.div`
@@ -64,7 +67,14 @@ const Dialog = styled.div`
 	background: ${COLORS.gray.light};
 	border-radius: 20px;
 	padding: ${SPACING.large};
-	width: 840px;
+	width: 924px;
+
+	@media ${QUERIES.laptopAndDown} {
+		width: 780px;
+	}
+	@media ${QUERIES.tabletAndDown} {
+		width: 420px;
+	}
 `;
 
 const CloseButton = styled.button`
@@ -74,13 +84,18 @@ const CloseButton = styled.button`
 	background: transparent;
 	overflow: hidden;
 	position: absolute;
-	top: 0;
-	right: 0;
-	padding-bottom: ${SPACING.small};
+	top: 52px;
+	right: -12px;
+	padding: ${SPACING.small};
 	transform: translateY(-100%);
-	color: ${COLORS.white};
+	color: ${COLORS.red};
 	cursor: pointer;
 `;
 
 export default Modal;
 
+Modal.propTypes = {
+	closeDialog: PropTypes.func,
+	title: PropTypes.string,
+	children: PropTypes.object,
+};

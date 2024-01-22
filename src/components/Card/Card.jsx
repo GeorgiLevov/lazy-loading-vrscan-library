@@ -1,48 +1,52 @@
-import React from 'react';
 import styled from 'styled-components';
-import {
-	SPACING,
-	SHADOWS,
-	COLORS,
-	QUERIES,
-	FONTS,
-	WEIGHTS,
-} from '../../constants';
+import { SPACING, COLORS, FONTS, WEIGHTS, GRADIENTS } from '../../constants';
 import CardImage from './CardImage';
 import { Heart } from 'react-feather';
 import Slider from '../Slider';
 import CardSummary from './CardSummary';
+import { BaseCard, InvertedCard, ProfileCard, VRScanCard } from './CardStyles';
+import PropTypes from 'prop-types';
+
+const CARDVARIANTS = {
+	base: BaseCard,
+	inverted: InvertedCard,
+	profile: ProfileCard,
+	vrscan: VRScanCard,
+};
 
 const CARDSTYLES = {
 	base: {
-		'--backgroundColor': `${COLORS.white}`,
+		'--backgroundColor': COLORS.white,
 	},
 	inverted: {
-		'--backgroundColor': `${COLORS.gray.dark}`,
+		'--backgroundColor': COLORS.gray.dark,
 	},
 	profile: {
-		'--backgroundColor': `${COLORS.white}`,
+		'--backgroundColor': COLORS.white,
 	},
 	vrscan: {
-		'--backgroundColor': `${COLORS.white}`,
+		'--backgroundColor': COLORS.white,
 	},
 };
 
 const IMAGESTYLES = {
 	base: {
-		'--backgroundColor': `${COLORS.white}`,
+		'--backgroundColor': COLORS.white,
 		'--marginBottom': `0px`,
 	},
 	inverted: {
-		'--backgroundColor': `${COLORS.gray.light}`,
+		'--backgroundColor': COLORS.white,
 		'--marginBottom': `0px`,
+		'--display': `flex`,
+		'--alignItems': `center`,
+		'--justifyContent': `center`,
 	},
 	profile: {
-		'--backgroundColor': `${COLORS.white}`,
-		'--marginBottom': `${SPACING.micro}`,
+		'--backgroundColor': COLORS.white,
+		'--marginBottom': SPACING.micro,
 	},
 	vrscan: {
-		'--backgroundColor': `${COLORS.gray.vrscan}`,
+		'--backgroundColor': COLORS.white,
 		'--marginBottom': `0px`,
 	},
 };
@@ -50,15 +54,23 @@ const IMAGESTYLES = {
 const DETAILSTYLES = {
 	base: {
 		'--alignItems': `center`,
+		'--backgroundColor': COLORS.white,
+		'--backgroundImage': GRADIENTS.white,
 	},
 	inverted: {
 		'--alignItems': `flex-start`,
+		'--backgroundColor': COLORS.gray.vrscan,
+		'--backgroundImage': GRADIENTS.whiteToVRScan,
 	},
 	profile: {
 		'--alignItems': `center`,
+		'--backgroundColor': COLORS.white,
+		'--backgroundImage': GRADIENTS.white,
 	},
 	vrscan: {
 		'--alignItems': `flex-start`,
+		'--backgroundColor': COLORS.gray.vrscan,
+		'--backgroundImage': GRADIENTS.whiteToVRScan,
 	},
 };
 
@@ -73,21 +85,13 @@ function Card({
 	toggleFavorite,
 	children,
 }) {
-	let cardStyles = CARDSTYLES[variant];
-	let imageStyles = IMAGESTYLES[variant];
-	let detailStyles = DETAILSTYLES[variant];
+	const cardStyles = CARDSTYLES[variant];
+	const imageStyles = IMAGESTYLES[variant];
+	const detailStyles = DETAILSTYLES[variant];
+	const StyledComponent = CARDVARIANTS[variant];
 
-	let StyledComponent;
-	if (variant === 'base') {
-		StyledComponent = BaseCard;
-	} else if (variant === 'inverted') {
-		StyledComponent = InvertedCard;
-	} else if (variant === 'profile') {
-		StyledComponent = ProfileCard;
-	} else if (variant === 'vrscan') {
-		StyledComponent = VRScanCard;
-	} else {
-		throw new Error(`Unrecognized Button variant: ${variant}`);
+	if (!StyledComponent) {
+		throw new Error(`Unrecognized Card variant: ${variant}`);
 	}
 
 	const handleSummary = (summaryArray) => {
@@ -99,9 +103,11 @@ function Card({
 	};
 
 	return (
-		<StyledComponent style={cardStyles}>
-			{summary?.length && <CardSummary {...handleSummary(summary)} />}
-			<ImageWrapper style={imageStyles}>
+		<StyledComponent style={cardStyles} data-testid="card">
+			{summary?.length > 0 && variant === 'vrscan' && (
+				<CardSummary {...handleSummary(summary)} style={imageStyles} />
+			)}
+			<ImageWrapper style={imageStyles} data-testid="card-image">
 				{Array.isArray(imageSrc) ? (
 					<Slider contents={imageSrc} />
 				) : (
@@ -122,7 +128,7 @@ function Card({
 					</Label>
 				)}
 			</ImageWrapper>
-			<CardDetails style={detailStyles}>
+			<CardDetails data-testid="card-details" style={detailStyles}>
 				{variant === 'inverted'
 					? name && <CardTitle>{name}</CardTitle>
 					: name && <CardName>{name}</CardName>}
@@ -142,85 +148,17 @@ const HeartIcon = styled(Heart)`
 	}
 `;
 
-// expects parent to be display:flex
-const BaseCard = styled.article`
-	width: 100%;
-	max-width: 1200px;
-	/* needs these styles when more than 1 of this component exists on page */
-	/* flex: 1; */
-	/* min-width: 0px; */
-	background-color: ${COLORS.white};
-	margin: ${SPACING.micro};
-	border-radius: 20px;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-`;
-
-const InvertedCard = styled(BaseCard)`
-	flex-direction: row;
-	align-items: stretch;
-	justify-content: center;
-	min-height: 50vh;
-
-	// expecting only 2 children in inverted card format
-	& > * {
-		flex-basis: 50%;
-		min-width: 0px;
-	}
-
-	@media ${QUERIES.tabletAndDown} {
-		flex-direction: column;
-	}
-`;
-
-const ProfileCard = styled(BaseCard)`
-	margin: 0;
-	padding: ${SPACING.large} ${SPACING.small};
-	max-width: 280px;
-	align-items: center;
-
-	& > * {
-		&:last-child {
-			margin-bottom: 0px;
-		}
-	}
-
-	@media ${QUERIES.tabletAndDown} {
-		width: 100%;
-
-		margin: 0 auto;
-	}
-`;
-
-const VRScanCard = styled(ProfileCard)`
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	border-radius: 20px;
-	padding: 0;
-	border: 1px solid ${COLORS.gray.light};
-	overflow: hidden;
-	position: relative;
-
-	& > * {
-		padding: 20px;
-	}
-
-	@media ${QUERIES.phoneAndDown} {
-		margin: 0 auto;
-	}
-`;
-
 const CardDetails = styled.section`
 	/* assuming the details are a flex-child */
-	width: 100%;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
 	align-items: var(--alignItems);
 	min-height: 92px;
+	padding: ${SPACING.micro} ${SPACING.medium};
+	background-color: var(--backgroundColor);
+	background-image: linear-gradient(var(--backgroundImage));
 `;
 
 const Label = styled.button`
@@ -237,6 +175,7 @@ const CardTitle = styled.h2`
 	font-weight: ${WEIGHTS.bold};
 	text-align: left;
 	margin-right: auto;
+	margin: ${SPACING.small} 0;
 `;
 const CardName = styled.p`
 	font-size: ${FONTS.text.normal};
@@ -249,8 +188,24 @@ const ImageWrapper = styled.div`
 	position: relative;
 	flex-grow: 1;
 	width: 100%;
+	max-height: 50%;
 	text-align: center;
-	background: var(--backgroundColor);
+	background-color: var(--backgroundColor);
+	display: var(--display);
+	align-items: var(--alignItems);
+	justify-content: var(--justifyContent);
 `;
 
 export default Card;
+
+Card.propTypes = {
+	scanId: PropTypes.number,
+	summary: PropTypes.array,
+	name: PropTypes.string,
+	variant: PropTypes.string.isRequired,
+	imageAlt: PropTypes.string,
+	imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+	favorited: PropTypes.bool,
+	toggleFavorite: PropTypes.func,
+	children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+};

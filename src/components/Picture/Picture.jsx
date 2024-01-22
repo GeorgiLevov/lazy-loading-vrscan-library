@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import defaultImage from '../../assets/images/default_image.svg';
 
 const Picture = ({
@@ -19,8 +20,10 @@ const Picture = ({
 			<img
 				className={className}
 				alt={alt}
-				src={source1x}
-				srcSet={`${source1x} 1x, ${source2x} 2x, ${source3x} 3x`}
+				src={src || source1x}
+				srcSet={`${src || source1x} 1x, ${src || source2x} 2x, ${
+					src || source3x
+				} 3x`}
 				onError={(event) => {
 					event.target.src = defaultImage;
 					event.onerror = null;
@@ -33,7 +36,7 @@ const Picture = ({
 				className={className}
 				alt={alt}
 				src={source1x}
-				srcSet={`${source1x} 1x, ${source2x} 2x, ${source2x} 3x`}
+				srcSet={`${src || source1x} 1x, ${src || source2x} 2x, ${source2x} 3x`}
 				onError={(event) => {
 					event.target.src = defaultImage;
 					event.onerror = null;
@@ -45,7 +48,7 @@ const Picture = ({
 			<img
 				className={className}
 				alt={alt}
-				src={source1x || src}
+				src={src || source1x || defaultImage}
 				onError={(event) => {
 					event.target.src = defaultImage;
 					event.onerror = null;
@@ -56,3 +59,12 @@ const Picture = ({
 };
 
 export default Picture;
+
+Picture.propTypes = {
+	src: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	alt: PropTypes.string,
+	source1x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	source2x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	source3x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	className: PropTypes.string,
+};

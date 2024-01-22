@@ -14,11 +14,19 @@
 
 import { useSelector } from 'react-redux';
 import { Compass, ArrowRight } from 'react-feather';
-import Header from '../../components/Header/Header';
+
+import Header from '../../components/Header';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
-import { HomeBackground, HeroContainer, FlexCenterWrapper } from './HomeStyles';
+import {
+	HomeBackground,
+	HeroContainer,
+	FlexCenterWrapper,
+	StyledVideo,
+} from './HomeStyles';
 import HeroText from './HeroText';
+import backgroundVideo from '../../assets/background_video_small.mp4';
+
 /**
  * @module Home
  * @description The main page component of the application, showcasing the hero section,
@@ -35,17 +43,14 @@ function Home() {
 	 * @property {Function} logout - Logout function.
 	 */
 
-	const { data: user, isLoggedIn } = useSelector((state) => state.user);
-
-	// console.log(user);
-	// console.log(isLoggedIn);
+	const { isLoggedIn } = useSelector((state) => state.user);
 
 	return (
 		<>
 			<Header />
 			<HomeBackground>
-				<video
-					src="https://res.cloudinary.com/boil-agency/video/upload/v1702747030/Chaos_Scans_Library_Various_Material_Samples_p9pttt.mp4"
+				<StyledVideo
+					src={backgroundVideo}
 					type="video/mp4"
 					muted
 					loop

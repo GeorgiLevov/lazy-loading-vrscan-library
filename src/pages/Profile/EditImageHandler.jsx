@@ -1,12 +1,13 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button';
 import { Edit } from 'react-feather';
 import Card from '../../components/Card';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader';
 import { SPACING } from '../../constants';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, updatePhoto } from '../../redux/slices/userSlice';
+import useToggle from '../../hooks/useToggle.hook';
 
 /**
  * @module EditImageHandler
@@ -16,9 +17,8 @@ import { logout, updatePhoto } from '../../redux/slices/userSlice';
  */
 
 function EditImageHandler() {
-	const { data: user, status, isLoggedIn } = useSelector((state) => state.user);
+	const { data: user, status } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-
 	const fileInputRef = useRef(null);
 
 	/**
@@ -52,7 +52,6 @@ function EditImageHandler() {
 
 	const handleLogout = () => {
 		dispatch(logout());
-		// navigate('/');
 	};
 
 	return (
@@ -60,7 +59,7 @@ function EditImageHandler() {
 			<Loader isLoading={status === 'loading'} variant="profile">
 				<Card
 					variant="profile"
-					imageSrc={user.prefs.photo || ''}
+					imageSrc={user?.prefs.photo || ''}
 					imageAlt="Profile image">
 					<input
 						type="file"
@@ -69,6 +68,7 @@ function EditImageHandler() {
 						onChange={handleFileChange}
 					/>
 					<Button
+						id="update-profile-image"
 						variant="secondary"
 						iconfirst={true}
 						size="medium"
@@ -94,6 +94,7 @@ function EditImageHandler() {
 }
 
 const UserInfoWrap = styled.div`
+	text-align: center;
 	padding-bottom: ${SPACING.medium};
 `;
 export default EditImageHandler;

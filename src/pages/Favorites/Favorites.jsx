@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useVRScans } from '../../../api/context/vrscans.context';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main';
@@ -6,7 +6,6 @@ import Card from '../../components/Card';
 import Footer from '../../components/Footer/Footer';
 import { Objectify } from '../../helpers';
 import styled from 'styled-components';
-import ViewScanDetails from '../../components/Modal/ViewScanDetails';
 import BackToTopButton from '../../components/Button/BackToTopButton';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import PageTitle from '../../components/PageTitle';
@@ -15,8 +14,9 @@ import { updatePrefs } from '../../redux/slices/userSlice';
 import NoResultsHeader from '../../components/NoResultsHeader';
 import Button from '../../components/Button';
 import { Compass } from 'react-feather';
+import ViewScanDetails from '../../components/ViewScanDetails';
 function Favorites() {
-	const { data: user, isLoggedIn, status } = useSelector((state) => state.user);
+	const { data: user, isLoggedIn } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const { favoriteScans, getFavorites } = useVRScans();
 
@@ -25,6 +25,7 @@ function Favorites() {
 	useEffect(() => {
 		setFavorites(favorites);
 		getFavorites(favorites);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [favorites]);
 
 	const toggleFavorite = (scanId) => {
@@ -44,7 +45,7 @@ function Favorites() {
 			<BackToTopButton />
 			<Main>
 				<Breadcrumbs />
-				<PageTitle>Favourites</PageTitle>
+				<PageTitle>Favorites</PageTitle>
 				{isLoggedIn && (
 					<VRScansContainer>
 						{favoriteScans.length > 0 ? (
@@ -61,27 +62,31 @@ function Favorites() {
 									toggleFavorite={toggleFavorite}>
 									{scan.manufacturer && (
 										<p className="manufacturer">
-											{Objectify(scan.manufacturer).name}
+											Manufacturer: {Objectify(scan.manufacturer).name}
 										</p>
 									)}
-									<p className="filename">
-										{scan.file_name.replace('.vrscan', '')}
-									</p>
+									{scan.industries.map((industry, index) => (
+										<p key={crypto.randomUUID()} className="filename">
+											{index === 0 && 'Industries: '}
+											{Objectify(industry).name}
+										</p>
+									))}
 									<ViewScanDetails scan={scan} />
 								</Card>
 							))
 						) : (
 							<>
 								<NoResultsHeader>
-									You haven't favorited any scans yet!
+									You haven&apos;t favorited any scans yet!
 									<br />
 									What are you waiting for?
+									<br />
 									<Button
 										href="/catalog"
 										variant="primary"
 										icon={Compass}
 										size="large"
-										style={{ margin: '20px auto' }}>
+										style={{ margin: '40px auto' }}>
 										Explore VRScans!
 									</Button>
 								</NoResultsHeader>

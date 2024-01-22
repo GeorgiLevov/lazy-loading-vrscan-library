@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SliderContainer, Slide } from './SliderStyles';
 import { AnimatePresence } from 'framer-motion';
 import CardImage from '../Card/CardImage';
+import PropTypes from 'prop-types';
 
 const variants = {
 	enter: { y: '-100%', opacity: 0 },
@@ -18,6 +19,7 @@ const variants = {
 };
 
 function Slider({ contents, autoplaySpeed = 3000 }) {
+	// eslint-disable-next-line no-unused-vars
 	const [[page, direction], setPage] = useState([0, 1]);
 	const pageIndex = page % contents.length;
 
@@ -41,6 +43,7 @@ function Slider({ contents, autoplaySpeed = 3000 }) {
 						<CardImage
 							src={contents[pageIndex]?.thumb}
 							alt={`${contents[pageIndex]?.name} | Image`}
+							variant="inverted"
 						/>
 					</Slide>
 				</AnimatePresence>
@@ -50,3 +53,8 @@ function Slider({ contents, autoplaySpeed = 3000 }) {
 }
 
 export default Slider;
+
+Slider.propTypes = {
+	contents: PropTypes.array,
+	autoplaySpeed: PropTypes.number,
+};

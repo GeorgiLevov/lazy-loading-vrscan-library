@@ -1,16 +1,16 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getUserLocalStatus } from '../../redux/store/user';
 
 const UserRoutes = () => {
-	const { data: user } = useSelector((state) => state.user);
 	const loginPagePath = '/login';
-	const loadingCounter = useSelector((state) => state.loader.loadingCounter);
 
-	if (user) {
-		return <Outlet />;
-	} else if (!user && loadingCounter === 0) {
+	const { data: user, isLoggedIn } = useSelector((state) => state.user);
+
+	if (isLoggedIn) {
+		return user ? <Outlet /> : <Navigate replace to={loginPagePath} />;
+	} else if (!getUserLocalStatus()) {
 		return <Navigate replace to={loginPagePath} />;
 	}
 };
-
 export default UserRoutes;

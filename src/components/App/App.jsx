@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useLayoutEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from '../../pages/Home';
 import Favorites from '../../pages/Favorites';
@@ -13,27 +12,28 @@ import { useDispatch } from 'react-redux';
 import { getUser } from '../../redux/slices/userSlice';
 import UserRoutes from '../../pages/Outlets/UserRoutes';
 import GuestRoutes from '../../pages/Outlets/GuestRoutes';
-import {
-	decrementLoadingCounter,
-	incrementLoadingCounter,
-} from '../../redux/slices/loaderSlice';
+import { getUserLocalStatus } from '../../redux/store/user';
 
 const UserProvider = ({ children }) => {
 	const dispatch = useDispatch();
-	dispatch(incrementLoadingCounter());
-
 	const getSession = async () => {
 		await dispatch(getUser());
-		dispatch(decrementLoadingCounter());
 	};
-	getSession();
+
+	const userSession = getUserLocalStatus();
+
+	useLayoutEffect(() => {
+		if (userSession) {
+			getSession();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return children;
 };
 
 function App() {
 	const location = useLocation();
-
 	return (
 		<>
 			<UserProvider>

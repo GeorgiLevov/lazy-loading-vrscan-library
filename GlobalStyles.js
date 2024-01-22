@@ -68,7 +68,6 @@ body {
     font-family: 'Helvetica', sans-serif;
     font-weight: 300;
     font-size: ${FONTS.text['normal']};
-    line-height: 26px;
   }
 
   input:focus,
