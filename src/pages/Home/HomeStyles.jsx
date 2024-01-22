@@ -3,7 +3,7 @@ import { QUERIES, FONTS } from '../../constants';
 
 const entranceAnimation = keyframes`
   0% {opacity:0}
-  60% {opacity:0}
+  50% {opacity:0}
   100% {opacity:1}
 `;
 

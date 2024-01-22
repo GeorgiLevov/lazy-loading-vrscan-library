@@ -19,7 +19,6 @@ import useToggle from '../../hooks/useToggle.hook';
 function EditImageHandler() {
 	const { data: user, status } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-	const [profileStatusPending, toggleProfileStatusPending] = useToggle();
 	const fileInputRef = useRef(null);
 
 	/**
@@ -41,12 +40,10 @@ function EditImageHandler() {
 	 */
 
 	const handleFileChange = async (event) => {
-		toggleProfileStatusPending();
 		const file = event.target.files[0];
 		if (file) {
 			try {
 				await dispatch(updatePhoto(file));
-				toggleProfileStatusPending();
 			} catch (error) {
 				console.error(error.message);
 			}
@@ -59,12 +56,10 @@ function EditImageHandler() {
 
 	return (
 		<>
-			<Loader
-				isLoading={status === 'loading' && profileStatusPending}
-				variant="profile">
+			<Loader isLoading={status === 'loading'} variant="profile">
 				<Card
 					variant="profile"
-					imageSrc={user.prefs.photo || ''}
+					imageSrc={user?.prefs.photo || ''}
 					imageAlt="Profile image">
 					<input
 						type="file"
@@ -73,6 +68,7 @@ function EditImageHandler() {
 						onChange={handleFileChange}
 					/>
 					<Button
+						id="update-profile-image"
 						variant="secondary"
 						iconfirst={true}
 						size="medium"

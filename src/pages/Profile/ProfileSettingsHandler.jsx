@@ -182,13 +182,18 @@ function ProfileSettingsHandler() {
 				/>
 				{isEditing.firstname ? (
 					<>
-						<SaveButton onClick={handleFirstNameUpdate}>Save</SaveButton>
+						<SaveButton
+							id="edit_first_name_save"
+							onClick={handleFirstNameUpdate}>
+							Save
+						</SaveButton>
 						<CancelButton onClick={() => cancelEdit('firstname')}>
 							Cancel
 						</CancelButton>
 					</>
 				) : (
 					<Button
+						id="edit_first_name"
 						variant="secondary"
 						iconfirst={true}
 						size="medium"
@@ -212,13 +217,16 @@ function ProfileSettingsHandler() {
 				/>
 				{isEditing.lastname ? (
 					<>
-						<SaveButton onClick={handleLastNameUpdate}>Save</SaveButton>
+						<SaveButton id="edit_last_name_save" onClick={handleLastNameUpdate}>
+							Save
+						</SaveButton>
 						<CancelButton onClick={() => cancelEdit('lastname')}>
 							Cancel
 						</CancelButton>
 					</>
 				) : (
 					<Button
+						id="edit_last_name"
 						variant="secondary"
 						iconfirst={true}
 						size="medium"
@@ -243,10 +251,13 @@ function ProfileSettingsHandler() {
 				/>{' '}
 				{isEditing.email ? (
 					<>
-						<SaveButton onClick={handleEmailEdit}>Save</SaveButton>
+						<SaveButton id="edit_email_save" onClick={handleEmailEdit}>
+							Save
+						</SaveButton>
 					</>
 				) : (
 					<Button
+						id="edit_email"
 						variant="secondary"
 						iconfirst={true}
 						size="medium"
@@ -267,11 +278,14 @@ function ProfileSettingsHandler() {
 						</EmailEditMessage>
 						<EmailEditInputContainer>
 							<InputField
+								id="email-update-confirmation"
 								type="password"
 								placeholder="Enter password"
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-							<SaveButton onClick={(e) => handleEmailUpdate(e)}>
+							<SaveButton
+								id="email-update-confirmation-save"
+								onClick={(e) => handleEmailUpdate(e)}>
 								Confirm
 							</SaveButton>
 						</EmailEditInputContainer>
@@ -298,7 +312,7 @@ function ProfileSettingsHandler() {
 				size="medium"
 				icon={ArrowRight}
 				href="/favorites">
-				<span>Your Favourites</span>
+				<span>Your Favorites</span>
 			</Button>
 		</>
 	);

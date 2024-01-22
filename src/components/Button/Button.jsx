@@ -189,6 +189,7 @@ const BORDER = {
 };
 
 const Button = ({
+	id,
 	variant,
 	size = 'medium',
 	icon: Icon,
@@ -209,12 +210,13 @@ const Button = ({
 	// Dynamic tag setup based on: https://styled-components.com/docs/api#as-polymorphic-prop
 	return (
 		<StyledComponent
+			id={id}
 			data-testid="button"
 			to={href}
 			as={href ? Link : 'button'}
 			$iconfirst={iconfirst}
 			style={{ ...sizeStyles, ...isSelectedStyles, ...style }}
-			onClick={() => onClick()}>
+			onClick={onClick ? () => onClick() : () => false}>
 			{Icon && <Icon strokeWidth={1.1} />}
 			{children}
 		</StyledComponent>
@@ -224,6 +226,7 @@ const Button = ({
 export default Button;
 
 Button.propTypes = {
+	id: PropTypes.string,
 	variant: PropTypes.string.isRequired,
 	size: PropTypes.string,
 	icon: PropTypes.object,

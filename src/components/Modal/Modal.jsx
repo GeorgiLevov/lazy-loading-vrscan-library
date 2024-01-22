@@ -32,7 +32,7 @@ function Modal({ closeDialog, title, children }) {
 					<Backdrop onClick={closeDialog} data-testid="backdrop" />
 					<Dialog role="dialog" aria-modal="true" aria-label={title}>
 						<CloseButton onClick={closeDialog} aria-label="Close Dialog">
-							<X strokeWidth={2} />
+							<X strokeWidth={1.5} size={32} />
 						</CloseButton>
 						{children}
 					</Dialog>
@@ -49,6 +49,10 @@ const Wrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	z-index: 900;
+
+	@media ${QUERIES.tabletAndDown} {
+		padding-top: 160px;
+	}
 `;
 
 const Backdrop = styled.div`
@@ -69,7 +73,7 @@ const Dialog = styled.div`
 		width: 780px;
 	}
 	@media ${QUERIES.tabletAndDown} {
-		width: 480px;
+		width: 420px;
 	}
 `;
 
@@ -80,11 +84,11 @@ const CloseButton = styled.button`
 	background: transparent;
 	overflow: hidden;
 	position: absolute;
-	top: 0;
-	right: 0;
-	padding-bottom: ${SPACING.small};
+	top: 52px;
+	right: -12px;
+	padding: ${SPACING.small};
 	transform: translateY(-100%);
-	color: ${COLORS.white};
+	color: ${COLORS.red};
 	cursor: pointer;
 `;
 
