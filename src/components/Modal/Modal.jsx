@@ -68,6 +68,9 @@ const Wrapper = styled.div`
 		padding-top: 160px;
 		z-index: 1001;
 	}
+	@media ${QUERIES.phoneAndDown} {
+		padding-top: 0px;
+	}
 `;
 
 const Backdrop = styled.div`
