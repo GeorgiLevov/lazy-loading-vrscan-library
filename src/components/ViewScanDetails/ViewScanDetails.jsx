@@ -32,6 +32,8 @@ const DetailName = styled.div`
 	display: inline-block;
 	color: ${COLORS.black};
 	line-height: 2rem;
+	font-family: 'Helvetica';
+    font-weight: 300;
 `;
 
 const DetailItem = styled.span`
