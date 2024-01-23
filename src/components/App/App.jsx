@@ -84,5 +84,3 @@ function App() {
 export default App;
 
 /* c8 ignore end */
-
-/* c8 ignore end */

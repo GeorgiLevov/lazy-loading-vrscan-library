@@ -29,5 +29,3 @@ const UserRoutes = () => {
 export default UserRoutes;
 
 /* c8 ignore end */
-
-/* c8 ignore end */
