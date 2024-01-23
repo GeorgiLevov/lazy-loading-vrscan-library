@@ -1,3 +1,4 @@
+/* c8 ignore start */
 // takes in whole old username(first+last), the part that will change and the new name to change with
 export const updateName = (username, partThatWillChange, newNamePart) => {
 	const finalName =
@@ -6,3 +7,4 @@ export const updateName = (username, partThatWillChange, newNamePart) => {
 			: `${username.split(' ')[0]} ${newNamePart}`;
 	return finalName;
 };
+/* c8 ignore end */

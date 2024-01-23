@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 export const COLORS = {
 	transparent: 'hsl(0deg 0% 100% / 0%)',
 	almostTransparent: 'hsl(0deg 0% 100% / 25%)',
@@ -69,12 +71,12 @@ export const WEIGHTS = {
 // generated through: https://www.joshwcomeau.com/shadow-palette/
 export const SHADOWS = {
 	low: `0px 0.5px 0.6px hsl(${COLORS.shadow} / 0.08),
-  0px 0.9px 1.1px -0.7px hsl(${COLORS.shadow} / 0.11),
-  0px 2.2px 2.8px -1.5px hsl(${COLORS.shadow} / 0.15)`,
+    0px 0.9px 1.1px -0.7px hsl(${COLORS.shadow} / 0.11),
+    0px 2.2px 2.8px -1.5px hsl(${COLORS.shadow} / 0.15)`,
 	medium: `0px 0.5px 0.6px hsl(${COLORS.shadow} / 0.08),
-  0px 2.1px 2.7px -0.5px hsl(${COLORS.shadow} / 0.11),
-  0px 4.8px 6.1px -1px hsl(${COLORS.shadow} / 0.14),
-  0px 11px 14px -1.5px hsl(${COLORS.shadow} / 0.16)`,
+    0px 2.1px 2.7px -0.5px hsl(${COLORS.shadow} / 0.11),
+    0px 4.8px 6.1px -1px hsl(${COLORS.shadow} / 0.14),
+    0px 11px 14px -1.5px hsl(${COLORS.shadow} / 0.16)`,
 	high: `0px 0.5px 0.6px hsl(${COLORS.shadow} / 0.07),
   0px 4.1px 5.2px -0.2px hsl(${COLORS.shadow} / 0.08),
   0px 7.4px 9.4px -0.4px hsl(${COLORS.shadow} / 0.09),
@@ -88,11 +90,11 @@ export const SHADOWS = {
 
 export const GRADIENTS = {
 	white: `
-        180deg,
-        hsl(0deg 0% 100%) 0%,
-        hsl(0deg 0% 100%) 50%,
-        hsl(0deg 0% 100%) 100%
-      `,
+    180deg,
+    hsl(0deg 0% 100%) 0%,
+    hsl(0deg 0% 100%) 50%,
+    hsl(0deg 0% 100%) 100%
+    `,
 	whiteToVRScan: `
     225deg,
     hsl(0deg 0% 100%) 0%,
@@ -107,6 +109,7 @@ export const GRADIENTS = {
     hsl(0deg 0% 97%) 82%,
     hsl(0deg 0% 96%) 91%,
     hsl(0deg 0% 96%) 100%
-`,
+    `,
 };
 
+/* c8 ignore end */

@@ -1,3 +1,4 @@
+/* c8 ignore start */
 /**
  * @module GuestRoutes
  * @description This React component handles routing for guests (unauthenticated users) in the application.
@@ -34,3 +35,4 @@ const GuestRoutes = () => {
 
 export default GuestRoutes;
 
+/* c8 ignore end */

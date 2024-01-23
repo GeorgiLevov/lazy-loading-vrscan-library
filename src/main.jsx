@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import store from './redux/store';
@@ -16,3 +18,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 	</BrowserRouter>
 	// </React.StrictMode>
 );
+
+/* c8 ignore end */

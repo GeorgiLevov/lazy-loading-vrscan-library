@@ -142,7 +142,6 @@ function Catalog() {
 				<Breadcrumbs />
 				<PageTitle>VRScans Catalog</PageTitle>
 				<FiltersContainer>
-					{/* <SearchFilter></SearchFilter> */}
 					<form
 						onSubmit={(event) => {
 							event.preventDefault();

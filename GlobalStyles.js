@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { createGlobalStyle } from 'styled-components';
 import { FONTS, COLORS } from './src/constants';
 
@@ -97,3 +98,5 @@ body {
 `;
 
 export default GlobalStyles;
+
+/* c8 ignore end */

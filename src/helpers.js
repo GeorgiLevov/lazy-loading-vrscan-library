@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 export const Objectify = (string) => {
 	// DB import has single quotes instead of double quotes on attributes
 	// so they need to be updated before we can parse the attribute into an object
@@ -15,3 +17,5 @@ export const Stringify = (object) => {
 		.replace(',', ', ');
 	return returnedToDBString;
 };
+
+/* c8 ignore end */

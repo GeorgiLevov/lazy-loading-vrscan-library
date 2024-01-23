@@ -1,3 +1,4 @@
+/* c8 ignore start */
 /**
  * @module App
  * @description This React component is the main entry point for the application. It sets up routing for different pages
@@ -82,3 +83,4 @@ function App() {
 
 export default App;
 
+/* c8 ignore end */

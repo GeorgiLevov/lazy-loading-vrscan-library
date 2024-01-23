@@ -1,16 +1,18 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PageTitle from '../../components/PageTitle';
+import Button from '../../components/Button';
+import { Home } from 'react-feather';
 
 function NotFound() {
 	return (
 		<StyledArticle>
-			<Title>ERROR - Page Not Found</Title>
+			<PageTitle>ERROR - Page Not Found</PageTitle>
 			<br />
 			<br />
-			<Link to="/">
-				<h1>Back to home</h1>
-			</Link>
+			<Button variant="primary" icon={Home} href="/">
+				Back to home
+			</Button>
 		</StyledArticle>
 	);
 }
@@ -22,11 +24,6 @@ const StyledArticle = styled.article`
 	justify-content: center;
 	align-content: center;
 	align-items: center;
-`;
-
-const Title = styled.h1`
-	font-size: '3rem';
-	margin: '64px';
 `;
 
 export default NotFound;

@@ -15,7 +15,7 @@
 		"hdev": "vite --host --open",
 		"build": "vite build",
 		"vitest": "vitest --watch",
-		"coverage": "vitest run --coverage",
+		"coverage": "vitest --coverage",
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"docs": "jsdoc -c jsdoc.json",

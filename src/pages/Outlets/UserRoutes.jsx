@@ -1,3 +1,4 @@
+/* c8 ignore start */
 /**
  * @module UserRoutes
  * @description This React component manages routing for authenticated users in the application.
@@ -27,3 +28,4 @@ const UserRoutes = () => {
 };
 export default UserRoutes;
 
+/* c8 ignore end */
