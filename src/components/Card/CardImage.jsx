@@ -13,7 +13,7 @@
 
 import styled from 'styled-components';
 import Picture from '../Picture/Picture';
-import { SPACING } from '../../constants';
+import { QUERIES, SPACING } from '../../constants';
 import PropTypes from 'prop-types';
 
 const CardImage = ({
@@ -52,6 +52,11 @@ const InvertedCardImage = styled(Picture)`
 	width: 279.6px;
 	height: 282px;
 	padding: 0;
+
+	@media ${QUERIES.phoneAndDown} {
+		width: revert;
+		height: revert;
+	}
 `;
 
 const ProfileImage = styled(Picture)`
@@ -79,4 +84,3 @@ CardImage.propTypes = {
 	source2x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	source3x: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
-

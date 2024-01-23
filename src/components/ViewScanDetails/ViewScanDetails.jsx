@@ -20,7 +20,11 @@ const AdditionalText = styled.span`
 const SingleDetail = styled.div`
 	font-family: 'Helvetica', sans-serif;
 	font-weight: 300;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	hyphens: auto;
 	line-break: anywhere;
+	word-break: break-all;
 `;
 
 const DetailName = styled.div`

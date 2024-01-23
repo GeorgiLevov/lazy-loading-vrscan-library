@@ -88,6 +88,8 @@ const Dialog = styled.div`
 	}
 	@media ${QUERIES.tabletAndDown} {
 		width: 420px;
+		padding: ${SPACING.micro};
+		max-width: 95%;
 	}
 `;
 
@@ -104,6 +106,12 @@ const CloseButton = styled.button`
 	transform: translateY(-100%);
 	color: ${COLORS.red};
 	cursor: pointer;
+	z-index: 1;
+
+	@media ${QUERIES.phoneAndDown} {
+		top: 60px;
+		right: 0px;
+	}
 `;
 
 export default Modal;
@@ -113,4 +121,3 @@ Modal.propTypes = {
 	title: PropTypes.string,
 	children: PropTypes.object,
 };
-

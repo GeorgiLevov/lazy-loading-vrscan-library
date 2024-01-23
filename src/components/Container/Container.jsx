@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useResponsivePadding from '../../hooks/useResponsivePadding';
+import { COLORS, QUERIES, SPACING } from '../../constants';
 
 function Container({ children, style }) {
 	const responsivePadding = useResponsivePadding();
@@ -18,6 +19,10 @@ export const StyledContainer = styled.div`
 	margin: 0 auto;
 	padding: 0 80px;
 	padding: 0 var(--padding);
+
+	@media ${QUERIES.phoneAndDown} {
+		padding: 0 ${SPACING.micro};
+	}
 `;
 
 export default Container;
