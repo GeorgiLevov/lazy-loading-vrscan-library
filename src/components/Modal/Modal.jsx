@@ -66,6 +66,7 @@ const Wrapper = styled.div`
 
 	@media ${QUERIES.tabletAndDown} {
 		padding-top: 160px;
+		z-index: 1001;
 	}
 `;
 
