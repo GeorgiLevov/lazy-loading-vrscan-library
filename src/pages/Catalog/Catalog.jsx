@@ -176,7 +176,7 @@ function Catalog() {
 					<VRScansContainer className="vr-scans-container">
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {
-									const isElementinMiddle = index === vrScans.length - 9;
+									const isElementinMiddle = index === vrScans.length - 17;
 									return (
 										<Card
 											key={`${scan.id}`}
