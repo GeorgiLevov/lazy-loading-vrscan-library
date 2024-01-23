@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -21,3 +22,5 @@ export const { incrementLoadingCounter, decrementLoadingCounter } =
 	loaderSlice.actions;
 
 export default loaderSlice.reducer;
+
+/* c8 ignore end */

@@ -8,6 +8,7 @@ describe('ViewScanDetails Component', () => {
 		thumb: 'test-thumb.jpg',
 		manufacturer: 'Test Manufacturer',
 		material: "{'name':'Test Material'}",
+		industries: ["{ 'id': 1, 'name': 'Automotive' }"],
 		colors: ["{'name':'Red'}", "{'name':'Blue'}"],
 		tags: ["{'name':'Outdoor'}", "{'name':'Indoor'}"],
 	};

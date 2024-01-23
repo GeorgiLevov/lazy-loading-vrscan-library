@@ -27,8 +27,7 @@ function Catalog() {
 	const { vrScans, search } = useVRScans();
 	const [favorites, setFavorites] = useState(
 		user?.prefs?.favorites?.length > 0 ? user.prefs.favorites : []
-	  );
-	  
+	);
 
 	const { ref: scrollRef } = useInView({
 		threshold: 1,
@@ -116,7 +115,6 @@ function Catalog() {
 				<Breadcrumbs />
 				<PageTitle>VRScans Catalog</PageTitle>
 				<FiltersContainer>
-					{/* <SearchFilter></SearchFilter> */}
 					<form
 						onSubmit={(event) => {
 							event.preventDefault();
@@ -147,7 +145,7 @@ function Catalog() {
 						setFilterSearchValues={setFilterSearchValues}
 					/>
 				</FiltersContainer>
-				<Loader isLoading={status === 'loading'} variant="vrscan" >
+				<Loader isLoading={status === 'loading'} variant="vrscan">
 					<VRScansContainer className="vr-scans-container">
 						{vrScans.length > 0
 							? vrScans.map((scan, index) => {

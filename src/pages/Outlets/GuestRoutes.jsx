@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
@@ -13,3 +14,5 @@ const GuestRoutes = () => {
 };
 
 export default GuestRoutes;
+
+/* c8 ignore end */

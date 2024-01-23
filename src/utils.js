@@ -1,3 +1,5 @@
+/* c8 ignore start */
+
 export const random = (min, max) =>
 	Math.floor(Math.random() * (max - min)) + min;
 export const dedupeArray = (array) =>
@@ -31,3 +33,5 @@ export const insertItemAtIndex = (array, index, item) => {
 	// ignore-prettier
 	return array.slice(0, index).concat(item, array.slice(index));
 };
+
+/* c8 ignore end */

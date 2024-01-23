@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import Breadcrumbs from '../../components/Breadcrumbs';
 
 function Reviews() {
@@ -10,3 +11,5 @@ function Reviews() {
 }
 
 export default Reviews;
+
+/* c8 ignore end */

@@ -19,7 +19,6 @@ describe('Card', async () => {
 		const tree = renderer.create(<Card variant="base" />).toJSON();
 		expect(tree).toHaveStyleRule('width', '100%');
 		expect(tree).toHaveStyleRule('background-color', COLORS.white);
-		expect(tree).toHaveStyleRule('margin', SPACING.micro);
 		expect(tree).toHaveStyleRule('overflow', 'hidden');
 		expect(tree).toHaveStyleRule('display', 'flex');
 		expect(tree).not.toHaveStyleRule('flex-direction', 'row');

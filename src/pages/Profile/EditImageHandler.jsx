@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import Button from '../../components/Button';
 import { Edit } from 'react-feather';
 import Card from '../../components/Card';
@@ -20,7 +20,7 @@ function EditImageHandler() {
 	const { data: user, status } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const fileInputRef = useRef(null);
-
+	const [profileImageLoading, toggleProfileImageLoading] = useToggle();
 	/**
 	 * Initiates the profile image update process by triggering a click on the hidden file input.
 	 * @function
@@ -40,10 +40,12 @@ function EditImageHandler() {
 	 */
 
 	const handleFileChange = async (event) => {
+		toggleProfileImageLoading();
 		const file = event.target.files[0];
 		if (file) {
 			try {
 				await dispatch(updatePhoto(file));
+				toggleProfileImageLoading();
 			} catch (error) {
 				console.error(error.message);
 			}
@@ -56,7 +58,9 @@ function EditImageHandler() {
 
 	return (
 		<>
-			<Loader isLoading={status === 'loading'} variant="profile">
+			<Loader
+				isLoading={status === 'loading' && profileImageLoading}
+				variant="profile">
 				<Card
 					variant="profile"
 					imageSrc={user?.prefs.photo || ''}

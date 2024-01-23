@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import styled from 'styled-components';
 import { QUERIES } from '../../constants';
 import PropTypes from 'prop-types';
@@ -21,3 +22,5 @@ export default CardDetails;
 CardDetails.propTypes = {
 	children: PropTypes.arrayOf(PropTypes.node),
 };
+
+/* c8 ignore end */

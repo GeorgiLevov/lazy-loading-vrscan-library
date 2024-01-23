@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { useLayoutEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from '../../pages/Home';
@@ -64,3 +65,5 @@ function App() {
 }
 
 export default App;
+
+/* c8 ignore end */

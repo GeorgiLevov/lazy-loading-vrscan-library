@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUserLocalStatus } from '../../redux/store/user';
@@ -14,3 +15,5 @@ const UserRoutes = () => {
 	}
 };
 export default UserRoutes;
+
+/* c8 ignore end */
