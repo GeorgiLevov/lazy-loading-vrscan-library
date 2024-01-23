@@ -8,10 +8,9 @@
  * @prop {Function} setFilterSearchValues - Function to update the selected filters.
  */
 
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CollapsibleFilterBox from './CollapsibleFilterBox';
-import { QUERIES, SHADOWS } from '../../constants';
+import { QUERIES } from '../../constants';
 
 const OuterFiltersWrapper = styled.div`
 	position: relative;
@@ -58,4 +57,3 @@ function Filters({ filterSearchValues, setFilterSearchValues }) {
 	);
 }
 export default Filters;
-

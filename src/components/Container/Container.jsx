@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import useResponsivePadding from '../../hooks/useResponsivePadding';
-import { COLORS, QUERIES, SPACING } from '../../constants';
+import { QUERIES, SPACING } from '../../constants';
 
 function Container({ children, style }) {
 	const responsivePadding = useResponsivePadding();

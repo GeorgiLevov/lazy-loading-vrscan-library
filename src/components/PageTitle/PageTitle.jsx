@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { FONTS, SPACING } from '../../constants';
 
@@ -13,4 +12,3 @@ const StyledPageTitle = styled.h1`
 `;
 
 export default PageTitle;
-

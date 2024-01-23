@@ -1,0 +1,19 @@
+# Exclude everything by default
+/**/*
+
+# But don't exclude folders (i.e. only exclude files)
+!/**/*/
+
+# Exclude node_modules folders at every level
+node_modules/
+
+# Also exclude the non-code folder at the top level
+/cypress/
+/docs/
+/coverage/
+
+# Include specific file extensions if they appear in a project folder,
+# which is always two levels deep
+!/*/*/src/**/*.jsx
+!/*/*/src/**/*.js
+!/*/*/config/**/*.json

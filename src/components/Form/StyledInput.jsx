@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { SPACING, COLORS } from '../../constants';
 
@@ -20,7 +19,7 @@ const StyledInputWrapper = styled.div`
 
 	& > input {
 		width: inherit;
-		background-color: ${COLORS.offwhite};
+		background-color: ${COLORS.white};
 		color: ${COLORS.black};
 		padding: ${SPACING.micro} ${SPACING.small};
 		border-radius: 30px;

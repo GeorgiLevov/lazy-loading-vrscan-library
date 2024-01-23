@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ArrowUp } from 'react-feather';
 import { COLORS } from '../../constants';

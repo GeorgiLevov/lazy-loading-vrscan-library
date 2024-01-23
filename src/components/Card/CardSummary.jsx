@@ -82,4 +82,5 @@ CardSummary.propTypes = {
 	material: PropTypes.string,
 	colors: PropTypes.array,
 	tags: PropTypes.array,
+	style: PropTypes.object,
 };

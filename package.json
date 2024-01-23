@@ -13,10 +13,13 @@
 	"scripts": {
 		"dev": "vite --open",
 		"hdev": "vite --host --open",
+		"build:lint": "eslint . --ext js,jsx",
+		"build:prettier": "prettier . --check",
+		"prebuild": "npm run build:lint && npm run build:prettier",
 		"build": "vite build",
 		"vitest": "vitest --watch",
 		"coverage": "vitest --coverage",
-		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+		"lint": "eslint . --ext js,jsx",
 		"preview": "vite preview",
 		"docs": "jsdoc -c jsdoc.json",
 		"generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
@@ -78,4 +81,3 @@
 		"@rollup/rollup-linux-x64-gnu": "4.6.1"
 	}
 }
-

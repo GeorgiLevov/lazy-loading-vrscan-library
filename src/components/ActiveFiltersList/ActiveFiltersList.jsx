@@ -18,7 +18,7 @@
  * @prop {Function} setFilterSearchValues - Function to update the filter search values.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Divider from '../Divider';
 import { insertItemAtIndex } from '../../utils';
 import styled from 'styled-components';
@@ -102,11 +102,11 @@ const ActiveFiltersList = ({
 		if (typeof textFilterPosition !== 'undefined') {
 			// when we remove a filter that is smaller than the textFilter - we want to move the text filter 1 position back as well
 			let removedFilterPosition;
-			const removedFilter = activeFilters.filter((element, index) => {
-				if (!filterSearchValues.has(element) && element.id !== 'text-filter') {
-					removedFilterPosition = index;
-				}
-			});
+			// const removedFilter = activeFilters.filter((element, index) => {
+			// 	if (!filterSearchValues.has(element) && element.id !== 'text-filter') {
+			// 		removedFilterPosition = index;
+			// 	}
+			// });
 			if (removedFilterPosition < textFilterPosition) {
 				textFilterPosition = textFilterPosition - 1;
 			}
@@ -120,6 +120,7 @@ const ActiveFiltersList = ({
 		} else {
 			setActiveFilters(newFilters);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filterSearchValues]);
 
 	return (
@@ -182,4 +183,3 @@ const StyledFilterName = styled.span`
 `;
 
 export default ActiveFiltersList;
-

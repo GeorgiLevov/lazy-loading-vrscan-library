@@ -4,7 +4,7 @@
  * Clicking the button smoothly scrolls the page back to the top. This component is useful for improving user navigation
  * on long pages. It uses conditional rendering based on the scroll position to either show or hide the button.
  */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ArrowUp } from 'react-feather';
 import { COLORS } from '../../constants';
@@ -69,4 +69,3 @@ const BackToTopButton = () => {
 };
 
 export default BackToTopButton;
-

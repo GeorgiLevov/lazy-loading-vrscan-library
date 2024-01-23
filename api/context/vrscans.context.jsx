@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { databases } from '../appwrite';
 import { Query } from 'appwrite';
 import { Stringify } from '../../src/helpers';
@@ -28,6 +28,7 @@ export function VRScansProvider({ children }) {
 	const [loginVRScans, setLoginVRScans] = useState([]);
 	const [vrScans, setVRScans] = useState([]);
 	const [favoriteScans, setFavoriteScans] = useState([]);
+	// eslint-disable-next-line no-unused-vars
 	const [offsetCount, setOffsetCount] = useState(24);
 	const [colors, setColors] = useState([]);
 	const [tags, setTags] = useState([]);
@@ -150,22 +151,23 @@ export function VRScansProvider({ children }) {
 		search();
 		get10VRScans();
 		fetchFilters();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// eslint-disable-next-line react/display-name
-	const exportedFunctions = React.memo(() => {
-		return {
-			vrScans,
-			favoriteScans,
-			search,
-			loginVRScans,
-			get10VRScans,
-			getFavorites,
-			colors,
-			tags,
-			materials,
-		};
-	});
+	// const exportedFunctions = React.memo(() => {
+	// 	return {
+	// 		vrScans,
+	// 		favoriteScans,
+	// 		search,
+	// 		loginVRScans,
+	// 		get10VRScans,
+	// 		getFavorites,
+	// 		colors,
+	// 		tags,
+	// 		materials,
+	// 	};
+	// });
 
 	return (
 		<vrScansContext.Provider

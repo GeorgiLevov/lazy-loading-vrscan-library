@@ -2,7 +2,7 @@ import { expect, it, describe, vi } from 'vitest';
 import { screen, render } from '../../test/test.utils';
 import renderer from 'react-test-renderer';
 import Card from './Card';
-import { COLORS, SPACING } from '../../constants';
+import { COLORS } from '../../constants';
 import defaultImg from '../../assets/images/default_image.svg';
 
 describe('Card', async () => {

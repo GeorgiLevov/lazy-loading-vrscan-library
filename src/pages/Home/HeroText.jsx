@@ -1,4 +1,3 @@
-import React from 'react';
 import { HeroTextContainer } from './HomeStyles';
 
 function HeroText() {
@@ -12,4 +11,3 @@ function HeroText() {
 }
 
 export default HeroText;
-

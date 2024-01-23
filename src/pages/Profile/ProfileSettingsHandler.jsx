@@ -26,7 +26,7 @@ import { updateName, updateEmail } from '../../redux/slices/userSlice';
  */
 
 function ProfileSettingsHandler() {
-	const { data: user, isLoggedIn } = useSelector((state) => state.user);
+	const { data: user } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const [firstname, setFirstname] = useState('');
 	const [lastname, setLastname] = useState('');

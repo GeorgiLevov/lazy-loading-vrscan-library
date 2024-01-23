@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const visuallyHiddenStyles = {
 	display: 'inline-block',
 	// position: 'absolute',
